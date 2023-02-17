@@ -7,13 +7,27 @@ function init(){
   const cells = []
   // currentScore = 0
   // highScore = currentScore //? saved in localStorage
-  // ghosts = [] // an array of ghosts, each one is an image file with it's own startingPosition and currentPosition variables
+  const ghostOne = {
+    ghostStartingPosition: 0,
+    ghostCurrentPosition: 0,
+  }
+  const ghostTwo = {
+    ghostStartingPosition: 10,
+    ghostCurrentPosition: 10,
+  }
+  const ghostThree = {
+    ghostStartingPosition: 20,
+    ghostCurrentPosition: 20,
+  }
+  const ghostFour = {
+    ghostStartingPosition: 30,
+    ghostCurrentPosition: 30,
+  }
+  const ghosts = [ghostOne, ghostTwo, ghostThree, ghostFour] // an array of ghosts, each one is an image file with it's own startingPosition and currentPosition variables
   const wallCells = [50, 51, 52, 300, 301, 302, 72, 73, 74, 322, 323, 324, 7, 32, 57, 17, 42, 67, 12, 37, 307, 332, 357, 317, 342, 367, 337, 362, 102, 103, 104, 127, 152, 202, 227, 252, 253, 254, 120, 121, 122, 147, 172, 222, 247, 272, 271, 270, 155, 156, 157, 205, 206, 207, 167, 168, 169, 217, 218, 219, 85, 86, 87, 88, 89, 285, 286, 287, 288, 289, 135, 160, 185, 210, 211, 212, 136, 137, 138, 213, 188] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
-  // ! Let's make collisions next
+  // ! Let's make ghosts move correcly next
   const startingPosition = 70
   let currentPosition = startingPosition
-  // ghostsStartingPosition
-  // ghostsCurrentPosition
   // lives = 3
   // food // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
   // flashingFood // will be an emoji or image file added to specific grid cells
@@ -27,7 +41,7 @@ function init(){
       cells.push(cell)
     }
     addPacman(startingPosition)
-    // addGhost(startingPosition)
+    addGhost()
     // food 
     // flashingFood
     addWall()
@@ -64,22 +78,41 @@ function init(){
 
   function addWall(){
     wallCells.forEach(wall => {
-      // console.log(wall) // so each of these is a number, that number needs to be a cells[i]
+      //? console.log(wall) // each of these is a number, that number needs to be a cells[i]
       cells[wall].classList.add('wall')
     })
   }
 
-  // ? get each Ghost's position
-  // function addGhost(position){
-    // ghosts.forEach((ghost) => {
-      // cells[position].classList.add('ghost')
-    // })
-  // }
+  //? get each Ghost's position
+  function addGhost(){
+    ghosts.forEach((ghost) => {
+      cells[ghost.ghostCurrentPosition]?.classList.add('ghost')
+    })
+  }
 
   //? Each ghost has it's own random path/style. Hard part is making them follow pacman - need a pathfinder. Similar to movePacman but with random numbers?
-  // function ghostMovement() {
-    // 
-  // }
+  function ghostMovement() {
+    const randomMvmt = ['nextCell', 'lastCell', 'cellAbove', 'cellBelow']
+    ghosts.forEach(ghost => { //! do i need to use a for loop or sth. instead of forEach? Because i can't addGhost(ghost...) outside of forEach block.
+      const random = Math.floor(Math.random() * ghosts.length)
+      // console.log(ghost.ghostCurrentPosition)
+      // console.log(randomMvmt[random])
+      if (randomMvmt[random] === 'nextCell' && currentPosition % width !== width - 1){
+        ghost.ghostCurrentPosition = parseInt(ghost.ghostCurrentPosition + 1)
+        addGhost(ghost.ghostCurrentPosition)
+      } else if (randomMvmt[random] === 'lastCell' && currentPosition % width !== 0){
+        ghost.ghostCurrentPosition = parseInt(ghost.ghostCurrentPosition - 1)
+        addGhost(ghost.ghostCurrentPosition)
+      } else if (randomMvmt[random] === 'cellBelow' && currentPosition + width < cellCount){
+        ghost.ghostCurrentPosition = parseInt(ghost.ghostCurrentPosition + width)
+        addGhost(ghost.ghostCurrentPosition)
+      } else if (randomMvmt[random] === 'cellAbove' && currentPosition >= width){
+        ghost.ghostCurrentPosition = parseInt(ghost.ghostCurrentPosition - width)
+        addGhost(ghost.ghostCurrentPosition)
+      }
+    }) 
+  }
+  ghostMovement()
 
   //? Current Ghost must be removed each time it moves position 
   // function removeGhost() {

@@ -79,6 +79,23 @@ section div{
   background-color: aqua;
 }
 
+.ghost{
+  background-color: black;
+}
+
+.ghost1{
+  background-color: black;
+}
+.ghost2{
+  background-color: gray;
+}
+.ghost3{
+  background-color: darkgrey;
+}
+.ghost4{
+  background-color: darkgreen;
+}
+
 .wall{
   background-color: blue;
 }
