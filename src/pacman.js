@@ -1,52 +1,65 @@
 function init(){
+  
   // ! Style it mobile-first if possible
-  // const grid = querySelect grid
-  // const cells = []
-  // const width = 15
-  // const cellCount = width * width
+  const grid = document.querySelector('.grid')
+  const width = 10
+  const cellCount = width * width
+  const cells = []
   // currentScore = 0
   // highScore = currentScore //? saved in localStorage
   // ghosts = [] // an array of ghosts, each one is an image file with it's own startingPosition and currentPosition variables
   // wallCells = [] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
-  // startingPosition = 47
-  // currentPosition = startingPosition //? current position of Pacman
+  const startingPosition = 72
+  let currentPosition = startingPosition
   // ghostsStartingPosition
   // ghostsCurrentPosition
   // lives = 3
   // food // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
   // flashingFood // will be an emoji or image file added to specific grid cells
   // ! can be bonus food worth * 100 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
-
   // ? create the grid and place Pacman, ghosts, food, and walls in it
-  // function createGrid(){
-    // use a for loop to create cell elements
-    // create cell div
-    // append cell div to grid
-    // push cell into cellCount array
-    // addPacman(startingPosition)
+  function createGrid(){
+    for (let i = 0; i < cellCount; i++){
+      const cell = document.createElement('div')
+      cell.innerText = i
+      grid.appendChild(cell)
+      cells.push(cell)
+    }
+    addPacman(startingPosition)
     // addGhost(startingPosition)
     // food 
     // flashingFood
     // addWall()
-  // }
+  }
 
   //? add Pacman to grid
-  // function addPacman(position){
-    // cells[position].classList.add('pacman')
-  // }
+  function addPacman(position){
+    cells[position].classList.add('pacman')
+  }
 
   //? Movement of Pacman triggered by keydown events
-  // movePacman(e) {
-    // const key = e.key
-    // if (e.key === 'ArrowLeft'){
-      // etc etc
-    // }
-  // }
+  function movePacman(e) {
+
+    removePacman()
+
+    if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
+      currentPosition--
+    } else if ((e.key === 'ArrowRight' || e.key ===  'd') && currentPosition % width !== width - 1) {
+      currentPosition++
+    } else if ((e.key === 'ArrowUp' || e.key === 'w') && currentPosition >= width) {
+      currentPosition -= width
+    } else if ((e.key === 'ArrowDown' || e.key === 's') && currentPosition + width < cellCount){
+      currentPosition += width
+    } else {
+      console.log('well now i\'m not doing it 🙅🏻‍♀️')
+    }
+    addPacman(currentPosition)
+  }
 
   //? Current Pacman must be removed each time we move his position 
-  // function removePacman() {
-    // cell[currentPosition].classList.remove(.pacman)
-  // }
+  function removePacman() {
+    cells[currentPosition].classList.remove('pacman')
+  }
 
   // ? get each Ghost's position
   // function addGhost(position){
@@ -117,14 +130,16 @@ function init(){
     // currentPosition = startingPosition
     // lives = 3
   // }
+
   
-  // document.addEventListener('keydown', movePacman)
+  document.addEventListener('keydown', movePacman)
   
   // ? If I have time left for swipes (eg: swipe left will do same thing as keypress ArrowLeft)
   // document.addEventListener('touchstart', swipeStart)
   // document.addEventListener('touchmove', swipeMove)
   // document.addEventListener('touchend', swipeEnd)
-
+  
+  createGrid()
 }
 
 window.addEventListener('DOMContentLoaded', init)
