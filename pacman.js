@@ -6,22 +6,28 @@ function init(){
   // const cellCount = width * width
   // currentScore = 0
   // highScore = currentScore //? saved in localStorage
-  // ghosts = [] // an array of pacmans
-  // wallCells = [] //! collisions, if you hit a wall you can't move through it -- how should i make these? either set blocks or random blocks
+  // ghosts = [] // an array of ghosts, each one is an image file with it's own startingPosition and currentPosition variables
+  // wallCells = [] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
   // startingPosition = 47
   // currentPosition = startingPosition //? current position of Pacman
-  // ghostsStartingPosition = []
+  // ghostsStartingPosition
   // ghostsCurrentPosition
   // lives = 3
-  // food = [] //? if you eat all the food you win!
+  // food // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
+  // flashingFood // will be an emoji or image file added to specific grid cells
+  // ! can be bonus food worth * 100 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
 
-  // ? create the grid and place Pacman in it
+  // ? create the grid and place Pacman, ghosts, food, and walls in it
   // function createGrid(){
     // use a for loop to create cell elements
     // create cell div
     // append cell div to grid
     // push cell into cellCount array
     // addPacman(startingPosition)
+    // addGhost(startingPosition)
+    // food 
+    // flashingFood
+    // addWall()
   // }
 
   //? add Pacman to grid
@@ -61,15 +67,15 @@ function init(){
 
   //? If flashing food is eaten, ghosts flash and you can catch them, which sends them back to their starting pos
   // function ateFlashingFood(){
-    // if (currentPosition === food position){
-      // cell[foodPosition].classList.remove(.food) //? make sure this cycles through whole food array
+    // if (currentPosition.classList.contains(flashingFood)){
+      // cell[flashingFoodPosition].classList.remove(.flashing-food) //? make sure this cycles through whole food array
       // flashingGhosts()
     // }
   // }
 
   //? if ghosts are flashing, you can catch them and they return to their starting position
   // function flashingGhosts(){
-    //? add flashing animation to all ghosts on setTimeout of 5 seconds
+    //? add flashing animation to all ghosts on setTimeout of 5 seconds (do they stay in the home spot for as long as the flashyfood is running or do they resume the chase immediately?)
     //? during those five seconds:
     // if (currentPosition === ghostsCurrentPosition){
       // ghostsCurrentPosition = ghostsStartingPosition
@@ -84,7 +90,7 @@ function init(){
   
   //? Checks if collision takes off a life and changes position back to startingPosition, or if it's a wall, prevents movement
   // function collision(){
-  //   if (currentPosition === ghostCurrentPosition || currentPosition === wallCells) {
+  //   if (currentPosition contains ghost/CurrentPosition || currentPosition next to wallCells) {
   //     lives--
   //     if (lives === 0) {
   //       gameOver() 
@@ -115,9 +121,9 @@ function init(){
   // document.addEventListener('keydown', movePacman)
   
   // ? If I have time left for swipes (eg: swipe left will do same thing as keypress ArrowLeft)
-// document.addEventListener('touchstart', swipeStart)
-// document.addEventListener('touchmove', swipeMove)
-// document.addEventListener('touchend', swipeEnd)
+  // document.addEventListener('touchstart', swipeStart)
+  // document.addEventListener('touchmove', swipeMove)
+  // document.addEventListener('touchend', swipeEnd)
 
 }
 
