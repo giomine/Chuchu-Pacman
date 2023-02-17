@@ -1,22 +1,23 @@
 function init(){
   
-  // ! Style it mobile-first if possible
   const grid = document.querySelector('.grid')
-  const width = 10
-  const cellCount = width * width
+  const width = 25
+  const length = 15
+  const cellCount = width * length
   const cells = []
   // currentScore = 0
   // highScore = currentScore //? saved in localStorage
   // ghosts = [] // an array of ghosts, each one is an image file with it's own startingPosition and currentPosition variables
-  // wallCells = [] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
-  const startingPosition = 72
+  // ! let's put walls on grid next
+  const wallCells = [50, 51, 52, 300, 301, 302, 72, 73, 74, 322, 323, 324, 7, 32, 57, 17, 42, 67, 12, 37, 307, 332, 357, 317, 342, 367, 337, 362, 102, 103, 104, 127, 152, 202, 227, 252, 253, 254, 120, 121, 122, 147, 172, 222, 247, 272, 271, 270, 155, 156, 157, 205, 206, 207, 167, 168, 169, 217, 218, 219, 85, 86, 87, 88, 89, 285, 286, 287, 288, 289, 135, 160, 185, 210, 211, 212, 136, 137, 138, 213, 188] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
+  const startingPosition = 70
   let currentPosition = startingPosition
   // ghostsStartingPosition
   // ghostsCurrentPosition
   // lives = 3
   // food // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
   // flashingFood // will be an emoji or image file added to specific grid cells
-  // ! can be bonus food worth * 100 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
+  // bonusFood // worth 100 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
   // ? create the grid and place Pacman, ghosts, food, and walls in it
   function createGrid(){
     for (let i = 0; i < cellCount; i++){
@@ -29,7 +30,7 @@ function init(){
     // addGhost(startingPosition)
     // food 
     // flashingFood
-    // addWall()
+    addWall()
   }
 
   //? add Pacman to grid
@@ -59,6 +60,14 @@ function init(){
   //? Current Pacman must be removed each time we move his position 
   function removePacman() {
     cells[currentPosition].classList.remove('pacman')
+  }
+
+  //? Add walls to grid
+  function addWall(){
+    wallCells.forEach(wall => {
+      console.log(wall) // so each of these is a number, that number needs to be a cells[i]
+      cells[wall].classList.add('wall')
+    })
   }
 
   // ? get each Ghost's position
@@ -94,11 +103,6 @@ function init(){
       // ghostsCurrentPosition = ghostsStartingPosition
       //? reset and restart ghost movement or not necessary?
     // }
-  // }
-
-  //? Add walls to grid
-  // function addWall(){
-    // cell[wallCell].classList.add(.wall)
   // }
   
   //? Checks if collision takes off a life and changes position back to startingPosition, or if it's a wall, prevents movement
