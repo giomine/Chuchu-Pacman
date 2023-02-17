@@ -8,8 +8,8 @@ function init(){
   // currentScore = 0
   // highScore = currentScore //? saved in localStorage
   // ghosts = [] // an array of ghosts, each one is an image file with it's own startingPosition and currentPosition variables
-  // ! let's put walls on grid next
   const wallCells = [50, 51, 52, 300, 301, 302, 72, 73, 74, 322, 323, 324, 7, 32, 57, 17, 42, 67, 12, 37, 307, 332, 357, 317, 342, 367, 337, 362, 102, 103, 104, 127, 152, 202, 227, 252, 253, 254, 120, 121, 122, 147, 172, 222, 247, 272, 271, 270, 155, 156, 157, 205, 206, 207, 167, 168, 169, 217, 218, 219, 85, 86, 87, 88, 89, 285, 286, 287, 288, 289, 135, 160, 185, 210, 211, 212, 136, 137, 138, 213, 188] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
+  // ! Let's make collisions next
   const startingPosition = 70
   let currentPosition = startingPosition
   // ghostsStartingPosition
@@ -33,39 +33,38 @@ function init(){
     addWall()
   }
 
-  //? add Pacman to grid
+
   function addPacman(position){
     cells[position].classList.add('pacman')
   }
 
-  //? Movement of Pacman triggered by keydown events
   function movePacman(e) {
-
+    const nextCell = currentPosition + 1
+    const lastCell = currentPosition - 1
+    const cellAbove = currentPosition - width
+    const cellBelow = currentPosition + width
     removePacman()
-
     if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
-      currentPosition--
+      cells[lastCell].classList.contains('wall') ? console.log('wall on left!') : currentPosition--
     } else if ((e.key === 'ArrowRight' || e.key ===  'd') && currentPosition % width !== width - 1) {
-      currentPosition++
+      cells[nextCell].classList.contains('wall') ? console.log('wall on right!') : currentPosition++
     } else if ((e.key === 'ArrowUp' || e.key === 'w') && currentPosition >= width) {
-      currentPosition -= width
+      cells[cellAbove].classList.contains('wall') ? console.log('wall above!') : currentPosition -= width
     } else if ((e.key === 'ArrowDown' || e.key === 's') && currentPosition + width < cellCount){
-      currentPosition += width
+      cells[cellBelow].classList.contains('wall') ? console.log('wall below!') : currentPosition += width
     } else {
       console.log('well now i\'m not doing it 🙅🏻‍♀️')
     }
     addPacman(currentPosition)
   }
 
-  //? Current Pacman must be removed each time we move his position 
   function removePacman() {
     cells[currentPosition].classList.remove('pacman')
   }
 
-  //? Add walls to grid
   function addWall(){
     wallCells.forEach(wall => {
-      console.log(wall) // so each of these is a number, that number needs to be a cells[i]
+      // console.log(wall) // so each of these is a number, that number needs to be a cells[i]
       cells[wall].classList.add('wall')
     })
   }
@@ -106,14 +105,15 @@ function init(){
   // }
   
   //? Checks if collision takes off a life and changes position back to startingPosition, or if it's a wall, prevents movement
-  // function collision(){
-  //   if (currentPosition contains ghost/CurrentPosition || currentPosition next to wallCells) {
-  //     lives--
-  //     if (lives === 0) {
-  //       gameOver() 
-  //     } else {
-  //       position resets to startingPosition
-  //     }
+  // collision()
+  // function collision(position){
+    // if (currentPosition contains ghost/CurrentPosition || currentPosition next to wallCells) {
+      // lives--
+      // if (lives === 0) {
+      //   gameOver() 
+      // } else {
+      //   position resets to startingPosition
+      // }
   //   }
   // }
     
