@@ -5,6 +5,7 @@ function init(){
   const length = 15
   const cellCount = width * length
   const cells = []
+  let interval
   // currentScore = 0
   // highScore = currentScore //? saved in localStorage
   const ghostOne = {
@@ -29,7 +30,7 @@ function init(){
   let currentPosition = startingPosition
   lives = 3
   livesDisplay = document.querySelector('#bottom div:nth-of-type(2) span')
-  console.log(livesDisplay)
+  // console.log(livesDisplay)
   livesDisplay.innerText = '♥️♥️♥️'
   // food // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
   // flashingFood // will be an emoji or image file added to specific grid cells
@@ -105,7 +106,7 @@ function init(){
   //? Each ghost has it's own random path/style. Hard part is making them follow pacman - need a pathfinder. Similar to movePacman but with random numbers?
   function ghostMovement(){
     
-    const interval = setInterval(() => {
+    interval = setInterval(() => {
       removeGhost()
       
       for (let i = 0; i < ghosts.length; i++){
@@ -137,7 +138,7 @@ function init(){
           ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
         }
 
-        console.log(ghosts[i].ghostCurrentPosition)
+        // console.log(ghosts[i].ghostCurrentPosition)
         addGhost(ghosts[i].ghostCurrentPosition)
       }
     }, 1000)
@@ -175,6 +176,7 @@ function init(){
       lives--
       livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔'
       if (lives === 0){
+        defaultValues()
         setTimeout(() => {
           alert('Game over!!!')
         }, 100)
@@ -195,11 +197,13 @@ function init(){
   // }
   
   //? All default game values incl. score, lives, positions, and empty grid
-  // defaultValues() {
+  function defaultValues() {
+    console.log('defaulting....')
+    clearInterval(interval)
     // currentScore = 0
-    // currentPosition = startingPosition
-    // lives = 3
-  // }
+    currentPosition = startingPosition
+    lives = 3
+  }
 
   
   document.addEventListener('keydown', movePacman)
