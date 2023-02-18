@@ -110,18 +110,26 @@ function init(){
         const lastCell = ghosts[i].ghostCurrentPosition - 1
         const cellAbove = ghosts[i].ghostCurrentPosition - width
         const cellBelow = ghosts[i].ghostCurrentPosition + width
-        // const randomMvmt = ['nextCell', 'lastCell', 'cellAbove', 'cellBelow']
-        const randomMvmt = ['cellBelow'] // testing one by one to make sure each direction/collision works
+        const randomMvmt = ['nextCell', 'lastCell', 'cellAbove', 'cellBelow']
+        // const randomMvmt = ['cellAbove'] // testing one by one to make sure each direction/collision works
         const random = Math.floor(Math.random() * randomMvmt.length)
 
         if (randomMvmt[random] === 'nextCell' && ghosts[i].ghostCurrentPosition % width !== width - 1){
-          cells[nextCell]?.classList.contains('wall') ? console.log('wall on right!') : ghosts[i].ghostCurrentPosition++
+          cells[nextCell]?.classList.contains('wall') ? 
+          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width :
+          ghosts[i].ghostCurrentPosition++
         } else if (randomMvmt[random] === 'lastCell' && ghosts[i].ghostCurrentPosition % width !== 0) {
-          cells[lastCell]?.classList.contains('wall') ? console.log('wall on left!') : ghosts[i].ghostCurrentPosition--
+          cells[lastCell]?.classList.contains('wall') ? 
+          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width : 
+          ghosts[i].ghostCurrentPosition--
         } else if (randomMvmt[random] === 'cellBelow' && ghosts[i].ghostCurrentPosition + width < cellCount){
-          cells[cellBelow]?.classList.contains('wall') ? console.log('wall below!') : ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
+          cells[cellBelow]?.classList.contains('wall') ? 
+          ghosts[i].ghostCurrentPosition++ : 
+          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
         } else if (randomMvmt[random] === 'cellAbove' && ghosts[i].ghostCurrentPosition >= width){
-          cells[cellAbove]?.classList.contains('wall') ? console.log('wall above!') : ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
+          cells[cellAbove]?.classList.contains('wall') ? 
+          ghosts[i].ghostCurrentPosition-- : 
+          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
         }
 
         console.log(ghosts[i].ghostCurrentPosition)
