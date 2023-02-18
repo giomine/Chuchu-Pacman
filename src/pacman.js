@@ -25,13 +25,12 @@ function init(){
   }
   const ghosts = [ghostOne, ghostTwo, ghostThree, ghostFour] // an array of ghosts, each one is an image file with it's own startingPosition and currentPosition variables
   const wallCells = [50, 51, 52, 300, 301, 302, 72, 73, 74, 322, 323, 324, 7, 32, 57, 17, 42, 67, 12, 37, 307, 332, 357, 317, 342, 367, 337, 362, 102, 103, 104, 127, 152, 202, 227, 252, 253, 254, 120, 121, 122, 147, 172, 222, 247, 272, 271, 270, 155, 156, 157, 205, 206, 207, 167, 168, 169, 217, 218, 219, 85, 86, 87, 88, 89, 285, 286, 287, 288, 289, 135, 160, 185, 210, 211, 212, 136, 137, 138, 213, 188] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
-  // ! Let's make ghosts unable to walk through walls next
   const startingPosition = 70
   let currentPosition = startingPosition
-  lives = '❤️❤️❤️'
+  lives = 3
   livesDisplay = document.querySelector('#bottom div:nth-of-type(2) span')
   console.log(livesDisplay)
-  livesDisplay.innerText = lives
+  livesDisplay.innerText = '♥️♥️♥️'
   // food // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
   // flashingFood // will be an emoji or image file added to specific grid cells
   // bonusFood // worth 100 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
@@ -75,6 +74,7 @@ function init(){
     }
 
     addPacman(currentPosition)
+    ghostCollision()
   }
 
   function removePacman() {
@@ -169,17 +169,19 @@ function init(){
   // }
   
   //? Checks if collision takes off a life and changes position back to startingPosition, or if it's a wall, prevents movement
-  // collision()
-  // function collision(position){
-    // if (currentPosition contains ghost/CurrentPosition || currentPosition next to wallCells) {
-      // lives--
-      // if (lives === 0) {
-      //   gameOver() 
-      // } else {
-      //   position resets to startingPosition
-      // }
-  //   }
-  // }
+  function ghostCollision(){
+    if (cells[currentPosition]?.classList.contains('ghost')){
+      console.log('ghost!!!')
+      lives--
+      livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔'
+      if (lives === 0){
+        setTimeout(() => {
+          alert('Game over!!!')
+        }, 100)
+      }
+    }
+  }
+  ghostCollision()
     
   //? Triggered when lives is 0
   // function gameOver(){
