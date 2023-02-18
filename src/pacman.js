@@ -28,7 +28,10 @@ function init(){
   // ! Let's make ghosts unable to walk through walls next
   const startingPosition = 70
   let currentPosition = startingPosition
-  // lives = 3
+  lives = '❤️❤️❤️'
+  livesDisplay = document.querySelector('#bottom div:nth-of-type(2) span')
+  console.log(livesDisplay)
+  livesDisplay.innerText = lives
   // food // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
   // flashingFood // will be an emoji or image file added to specific grid cells
   // bonusFood // worth 100 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
@@ -112,6 +115,8 @@ function init(){
         const cellBelow = ghosts[i].ghostCurrentPosition + width
         const randomMvmt = ['nextCell', 'lastCell', 'cellAbove', 'cellBelow']
         // const randomMvmt = ['cellAbove'] // testing one by one to make sure each direction/collision works
+        //! they now move randomly and can't walk through walls, but they can keep going eg left right left right left right
+        //! they need to walk a path, not go backwards and forwards
         const random = Math.floor(Math.random() * randomMvmt.length)
 
         if (randomMvmt[random] === 'nextCell' && ghosts[i].ghostCurrentPosition % width !== width - 1){
