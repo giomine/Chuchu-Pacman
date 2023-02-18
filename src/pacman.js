@@ -33,7 +33,6 @@ function init(){
   let currentPosition = startingPosition
   lives = 3
   livesDisplay = document.querySelector('#bottom div:nth-of-type(2) span')
-  // console.log(livesDisplay)
   livesDisplay.innerText = '♥️♥️♥️'
   // food // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
   // flashingFood // will be an emoji or image file added to specific grid cells
@@ -65,7 +64,6 @@ function init(){
     const cellBelow = currentPosition + width
     removePacman()
     if (cells[currentPosition].classList.contains('food')){
-      console.log('Yum!')
       cells[currentPosition].classList.remove('food')
       currentScore++
       currentScoreDisplay.innerText = currentScore
@@ -111,12 +109,9 @@ function init(){
   //? get each Ghost's position
   function addGhost(position){
     for (let i = 0; i < ghosts.length; i++){
-      // console.log('ghosts starting pos is::::' + ghosts[i].ghostStartingPosition)
       if (cells[position]?.classList.contains('ghost')){
-        // console.log('remove ghost')
       } 
       else {
-        // console.log('no ghost here!')
         cells[ghosts[i].ghostCurrentPosition]?.classList.add('ghost')
       }
     }
@@ -134,7 +129,6 @@ function init(){
         const cellAbove = ghosts[i].ghostCurrentPosition - width
         const cellBelow = ghosts[i].ghostCurrentPosition + width
         const randomMvmt = ['nextCell', 'lastCell', 'cellAbove', 'cellBelow']
-        // const randomMvmt = ['cellAbove'] // testing one by one to make sure each direction/collision works
         //! they now move randomly and can't walk through walls, but they can keep going eg left right left right left right
         //! they need to walk a path, not go backwards and forwards
         const random = Math.floor(Math.random() * randomMvmt.length)
@@ -157,7 +151,6 @@ function init(){
           ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
         }
 
-        // console.log(ghosts[i].ghostCurrentPosition)
         addGhost(ghosts[i].ghostCurrentPosition)
       }
     }, 1000)
