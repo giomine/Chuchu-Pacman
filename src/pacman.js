@@ -1,12 +1,13 @@
 function init(){
   
+  const startButton = document.querySelector('#top div')
   const grid = document.querySelector('.grid')
   const width = 25
   const length = 15
   const cellCount = width * length
   const cells = []
   let interval
-  // currentScore = 0
+  let currentScore = 0
   // highScore = currentScore //? saved in localStorage
   const ghostOne = {
     ghostStartingPosition: 0,
@@ -45,9 +46,9 @@ function init(){
     }
     addPacman(startingPosition)
     addGhost(ghosts.ghostStartingPosition)
-    // food 
     // flashingFood
     addWall()
+    addFood()
   }
 
 
@@ -61,6 +62,11 @@ function init(){
     const cellAbove = currentPosition - width
     const cellBelow = currentPosition + width
     removePacman()
+    if (cells[currentPosition].classList.contains('food')){
+      console.log('Yum!')
+      cells[currentPosition].classList.remove('food')
+      currentScore++
+    }
 
     if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
       cells[lastCell].classList.contains('wall') ? console.log('wall on left!') : currentPosition--
@@ -86,6 +92,16 @@ function init(){
     wallCells.forEach(wall => {
       //? console.log(wall) // each of these is a number, that number needs to be a cells[i]
       cells[wall].classList.add('wall')
+    })
+  }
+
+  function addFood(){
+    cells.forEach(cell => {
+      if (cell.classList.contains('wall')){
+        console.log('no')
+      } else {
+        cell.classList.add('food')
+      }
     })
   }
 
@@ -176,7 +192,8 @@ function init(){
       lives--
       livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔'
       if (lives === 0){
-        defaultValues()
+        console.log('stopping....')
+        clearInterval(interval)
         setTimeout(() => {
           alert('Game over!!!')
         }, 100)
@@ -197,15 +214,14 @@ function init(){
   // }
   
   //? All default game values incl. score, lives, positions, and empty grid
-  function defaultValues() {
-    console.log('defaulting....')
-    clearInterval(interval)
-    // currentScore = 0
-    currentPosition = startingPosition
+  function defaultValues() { //! call inside restartGame
+    currentScore = 0
+    currentPosition = startingPosition //! this needs changing, can still move pacman after game over
     lives = 3
+    livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔' 
   }
 
-  
+  // startButton.addEventListener('click', startGame)
   document.addEventListener('keydown', movePacman)
   
   // ? If I have time left for swipes (eg: swipe left will do same thing as keypress ArrowLeft)

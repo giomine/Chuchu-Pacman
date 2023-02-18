@@ -76,6 +76,10 @@ section div{
   padding: 0;
 }
 
+.food{
+  background-color: rgb(156, 191, 156);
+}
+
 .pacman{
   background-color: aqua;
 }
