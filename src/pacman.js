@@ -25,7 +25,7 @@ function init(){
   }
   const ghosts = [ghostOne, ghostTwo, ghostThree, ghostFour] // an array of ghosts, each one is an image file with it's own startingPosition and currentPosition variables
   const wallCells = [50, 51, 52, 300, 301, 302, 72, 73, 74, 322, 323, 324, 7, 32, 57, 17, 42, 67, 12, 37, 307, 332, 357, 317, 342, 367, 337, 362, 102, 103, 104, 127, 152, 202, 227, 252, 253, 254, 120, 121, 122, 147, 172, 222, 247, 272, 271, 270, 155, 156, 157, 205, 206, 207, 167, 168, 169, 217, 218, 219, 85, 86, 87, 88, 89, 285, 286, 287, 288, 289, 135, 160, 185, 210, 211, 212, 136, 137, 138, 213, 188] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
-  // ! Let's make ghosts move correcly next
+  // ! Let's make ghosts unable to walk through walls next
   const startingPosition = 70
   let currentPosition = startingPosition
   // lives = 3
@@ -58,6 +58,7 @@ function init(){
     const cellAbove = currentPosition - width
     const cellBelow = currentPosition + width
     removePacman()
+
     if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
       cells[lastCell].classList.contains('wall') ? console.log('wall on left!') : currentPosition--
     } else if ((e.key === 'ArrowRight' || e.key ===  'd') && currentPosition % width !== width - 1) {
@@ -69,6 +70,7 @@ function init(){
     } else {
       console.log('well now i\'m not doing it 🙅🏻‍♀️')
     }
+
     addPacman(currentPosition)
   }
 
@@ -102,18 +104,26 @@ function init(){
     
     const interval = setInterval(() => {
       removeGhost()
+      
       for (let i = 0; i < ghosts.length; i++){
-        const randomMvmt = ['nextCell', 'lastCell', 'cellAbove', 'cellBelow']
+        const nextCell = ghosts[i].ghostCurrentPosition + 1
+        const lastCell = ghosts[i].ghostCurrentPosition - 1
+        const cellAbove = ghosts[i].ghostCurrentPosition - width
+        const cellBelow = ghosts[i].ghostCurrentPosition + width
+        // const randomMvmt = ['nextCell', 'lastCell', 'cellAbove', 'cellBelow']
+        const randomMvmt = ['cellBelow'] // testing one by one to make sure each direction/collision works
         const random = Math.floor(Math.random() * randomMvmt.length)
+
         if (randomMvmt[random] === 'nextCell' && ghosts[i].ghostCurrentPosition % width !== width - 1){
-          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + 1
-        } else if (randomMvmt[random] === 'lastCell' && ghosts[i].ghostCurrentPosition % width !== 0){
-          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - 1
+          cells[nextCell]?.classList.contains('wall') ? console.log('wall on right!') : ghosts[i].ghostCurrentPosition++
+        } else if (randomMvmt[random] === 'lastCell' && ghosts[i].ghostCurrentPosition % width !== 0) {
+          cells[lastCell]?.classList.contains('wall') ? console.log('wall on left!') : ghosts[i].ghostCurrentPosition--
         } else if (randomMvmt[random] === 'cellBelow' && ghosts[i].ghostCurrentPosition + width < cellCount){
-          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
+          cells[cellBelow]?.classList.contains('wall') ? console.log('wall below!') : ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
         } else if (randomMvmt[random] === 'cellAbove' && ghosts[i].ghostCurrentPosition >= width){
-          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
+          cells[cellAbove]?.classList.contains('wall') ? console.log('wall above!') : ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
         }
+
         console.log(ghosts[i].ghostCurrentPosition)
         addGhost(ghosts[i].ghostCurrentPosition)
       }
