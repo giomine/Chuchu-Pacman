@@ -4,15 +4,14 @@
 
 body{
   margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 main{
-  width: 50vw;
-  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 section{
@@ -25,6 +24,8 @@ section{
 
 section:not(:nth-of-type(2)){
   height: 10vh;
+  width: 750px;
+  margin: 0 auto;
 }
 
 section div{
@@ -103,7 +104,7 @@ section div{
 @media (max-width: 1480px){
   main{
     width: 100vw;
-    height: 50vh;
+    /* height: 50vh; */
   }
   #grid-wrapper{
     padding: 0;
@@ -113,23 +114,23 @@ section div{
   }
 } 
 
-@media (max-width: 650px){
+/* @media (max-width: 650px){
   .grid{
     height: 50vh;
   }
-} 
+}  */
 
 @media (max-width: 500px){
-  .grid{
+  /* .grid{
     height: 40vh;
-  }
+  } */
   .grid div{
     border-radius: 1px;
   }
 } 
 
-@media (max-width: 380px){
+/* @media (max-width: 380px){
   .grid{
     height: 35vh;
   }
-} 
+}  */

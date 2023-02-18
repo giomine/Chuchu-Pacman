@@ -41,7 +41,7 @@ function init(){
       cells.push(cell)
     }
     addPacman(startingPosition)
-    addGhost()
+    addGhost(ghosts.ghostStartingPosition)
     // food 
     // flashingFood
     addWall()
@@ -84,34 +84,39 @@ function init(){
   }
 
   //? get each Ghost's position
-  function addGhost(){
-    ghosts.forEach((ghost) => {
-      cells[ghost.ghostCurrentPosition]?.classList.add('ghost')
-    })
+  function addGhost(position){
+    // ghosts.forEach((ghost) => {
+    //   cells[ghost.ghostCurrentPosition]?.classList.add('ghost')
+    // })
+    for (let i = 0; i < ghosts.length; i++){
+      console.log('ghosts starting pos is::::' + ghosts[i].ghostStartingPosition)
+      if (cells[position]?.classList.contains('ghost')){
+        console.log('remove ghost')
+      } 
+      else {
+        console.log('no ghost here!')
+        cells[ghosts[i].ghostCurrentPosition]?.classList.add('ghost')
+      }
+    }
   }
 
   //? Each ghost has it's own random path/style. Hard part is making them follow pacman - need a pathfinder. Similar to movePacman but with random numbers?
-  function ghostMovement() {
+  function ghostMovement(){
     const randomMvmt = ['nextCell', 'lastCell', 'cellAbove', 'cellBelow']
-    ghosts.forEach(ghost => { //! do i need to use a for loop or sth. instead of forEach? Because i can't addGhost(ghost...) outside of forEach block.
-      const random = Math.floor(Math.random() * ghosts.length)
-      // console.log(ghost.ghostCurrentPosition)
-      // console.log(randomMvmt[random])
-      if (randomMvmt[random] === 'nextCell' && currentPosition % width !== width - 1){
-        ghost.ghostCurrentPosition = parseInt(ghost.ghostCurrentPosition + 1)
-        addGhost(ghost.ghostCurrentPosition)
-      } else if (randomMvmt[random] === 'lastCell' && currentPosition % width !== 0){
-        ghost.ghostCurrentPosition = parseInt(ghost.ghostCurrentPosition - 1)
-        addGhost(ghost.ghostCurrentPosition)
-      } else if (randomMvmt[random] === 'cellBelow' && currentPosition + width < cellCount){
-        ghost.ghostCurrentPosition = parseInt(ghost.ghostCurrentPosition + width)
-        addGhost(ghost.ghostCurrentPosition)
-      } else if (randomMvmt[random] === 'cellAbove' && currentPosition >= width){
-        ghost.ghostCurrentPosition = parseInt(ghost.ghostCurrentPosition - width)
-        addGhost(ghost.ghostCurrentPosition)
+    const random = Math.floor(Math.random() * randomMvmt.length)
+    for (let i = 0; i < ghosts.length; i++){
+      console.log(`Ghost position ${ghosts[i].ghostCurrentPosition}`)
+      if (randomMvmt[random] === 'nextCell' && ghosts[i].ghostCurrentPosition % width !== width - 1){
+        ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + 1
+      } else if (randomMvmt[random] === 'lastCell' && ghosts[i].ghostCurrentPosition % width !== 0){
+        ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - 1
+      } else if (randomMvmt[random] === 'cellBelow' && ghosts[i].ghostCurrentPosition + width < cellCount){
+        ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
+      } else if (randomMvmt[random] === 'cellAbove' && ghosts[i].ghostCurrentPosition >= width){
+        ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
       }
-    }) 
-  }
+      addGhost(ghosts[i].ghostCurrentPosition)
+  }}
   ghostMovement()
 
   //? Current Ghost must be removed each time it moves position 
