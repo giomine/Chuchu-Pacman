@@ -8,6 +8,8 @@ function init(){
   const cells = []
   let interval
   let currentScore = 0
+  let currentScoreDisplay = document.querySelector('#bottom div span')
+  currentScoreDisplay.innerText = currentScore
   // highScore = currentScore //? saved in localStorage
   const ghostOne = {
     ghostStartingPosition: 0,
@@ -66,6 +68,7 @@ function init(){
       console.log('Yum!')
       cells[currentPosition].classList.remove('food')
       currentScore++
+      currentScoreDisplay.innerText = currentScore
     }
 
     if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
