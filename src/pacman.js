@@ -7,7 +7,9 @@ function init(){
   const cellCount = width * length
   const cells = []
   let interval
+  let timer
   let currentScore = 0
+  let ateFlashingFood = false
   let currentScoreDisplay = document.querySelector('#bottom div span')
   currentScoreDisplay.innerText = currentScore
   // highScore = currentScore //? saved in localStorage
@@ -34,7 +36,6 @@ function init(){
   lives = 3
   livesDisplay = document.querySelector('#bottom div:nth-of-type(2) span')
   livesDisplay.innerText = '♥️♥️♥️'
-  // food // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
   const flashingFood = [113, 200, 349, 99] // will be an emoji or image file added to specific grid cells
   // bonusFood // worth 100 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
   // ? create the grid and place Pacman, ghosts, food, and walls in it
@@ -49,7 +50,7 @@ function init(){
     addGhost(ghosts.ghostStartingPosition)
     addFlashingFood()
     addWall()
-    addFood()
+    addFood() // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
   }
 
 
@@ -69,6 +70,7 @@ function init(){
       currentScoreDisplay.innerText = currentScore
     }
     if (cells[currentPosition].classList.contains('flashing-food')){
+      ateFlashingFood = true
       currentScore += 100
       currentScoreDisplay.innerText = currentScore
       cells[currentPosition].classList.remove('flashing-food')
@@ -104,7 +106,6 @@ function init(){
   function addFood(){
     cells.forEach(cell => {
       if (cell.classList.contains('wall') || cell.classList.contains('flashing-food')){
-        console.log('no')
       } else {
         cell.classList.add('food')
       }
@@ -120,6 +121,25 @@ function init(){
         cells[ghosts[i].ghostCurrentPosition]?.classList.add('ghost')
       }
     }
+  }
+
+  //? if ghosts are flashing, you can catch them and they return to their starting position
+  //? add flashing animation to all ghosts on setTimeout of 5 seconds; during those 5 secs if Pacman eats them they go back to startingPos
+  function flashingGhosts(position){
+    for (let i = 0; i < ghosts.length; i++){
+      if (currentPosition === ghosts[i].ghostCurrentPosition && cells[position]?.classList.contains('flashing-ghost')){
+        console.log("Got 'im!!!")
+        ghosts[i].ghostCurrentPosition = ghosts[i].ghostStartingPosition
+      }
+
+      if (cells[position]?.classList.contains('flashing-ghost')){
+      } else {
+        cells[ghosts[i].ghostCurrentPosition]?.classList.add('flashing-ghost')
+      }
+    }
+    timer = setTimeout(() => {
+      ateFlashingFood = false
+    }, 5000)
   }
 
   //? Each ghost has it's own random path/style. Hard part is making them follow pacman - need a pathfinder. Similar to movePacman but with random numbers?
@@ -155,8 +175,7 @@ function init(){
           console.log('blocked!') : 
           ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
         }
-
-        addGhost(ghosts[i].ghostCurrentPosition)
+        ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
       }
     }, 500)
   }
@@ -164,32 +183,16 @@ function init(){
 
   function removeGhost() {
     for (let i = 0; i < ghosts.length; i++){
-      cells[ghosts[i].ghostCurrentPosition]?.classList.remove('ghost')
+      cells[ghosts[i].ghostCurrentPosition]?.classList.remove('ghost', 'flashing-ghost', 'caught-ghost')
     }
   }
 
-  //? If flashing food is eaten, ghosts flash and you can catch them, which sends them back to their starting pos
-  // function ateFlashingFood(){
-    // if (currentPosition.classList.contains(flashingFood)){
-      // cell[flashingFoodPosition].classList.remove(.flashing-food) //? make sure this cycles through whole food array
-      // flashingGhosts()
-    // }
-  // }
   function addFlashingFood(){
     flashingFood.forEach((food) => {
       cells[food].classList.add('flashing-food')
     })
   }
-
-  //? if ghosts are flashing, you can catch them and they return to their starting position
-  // function flashingGhosts(){
-    //? add flashing animation to all ghosts on setTimeout of 5 seconds (do they stay in the home spot for as long as the flashyfood is running or do they resume the chase immediately?)
-    //? during those five seconds:
-    // if (currentPosition === ghostsCurrentPosition){
-      // ghostsCurrentPosition = ghostsStartingPosition
-      //? reset and restart ghost movement or not necessary?
-    // }
-  // }
+  
   
   //? Checks if collision takes off a life and changes position back to startingPosition, or if it's a wall, prevents movement
   function ghostCollision(){

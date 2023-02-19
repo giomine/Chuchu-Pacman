@@ -93,7 +93,12 @@ section div{
   background-color: black;
 }
 
-.ghost1{
+.flashing-ghost{
+  background-color: lightblue;
+  /* animation: flash 0.7s infinite; */
+}
+
+/* .ghost1{
   background-color: black;
 }
 .ghost2{
@@ -104,7 +109,7 @@ section div{
 }
 .ghost4{
   background-color: darkgreen;
-}
+} */
 
 .wall{
   background-color: blue;
