@@ -186,6 +186,7 @@ function init(){
         }
         ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
       }
+      ghostCollision()
     }, 500)
   }
   ghostMovement()
@@ -218,7 +219,6 @@ function init(){
       }
     }
   }
-  ghostCollision()
     
   //? Triggered when lives is 0
   // function gameOver(){
