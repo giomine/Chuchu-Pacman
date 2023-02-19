@@ -35,7 +35,7 @@ function init(){
   livesDisplay = document.querySelector('#bottom div:nth-of-type(2) span')
   livesDisplay.innerText = '♥️♥️♥️'
   // food // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
-  // flashingFood // will be an emoji or image file added to specific grid cells
+  const flashingFood = [113, 200, 349, 99] // will be an emoji or image file added to specific grid cells
   // bonusFood // worth 100 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
   // ? create the grid and place Pacman, ghosts, food, and walls in it
   function createGrid(){
@@ -47,7 +47,7 @@ function init(){
     }
     addPacman(startingPosition)
     addGhost(ghosts.ghostStartingPosition)
-    // flashingFood
+    addFlashingFood()
     addWall()
     addFood()
   }
@@ -67,6 +67,11 @@ function init(){
       cells[currentPosition].classList.remove('food')
       currentScore++
       currentScoreDisplay.innerText = currentScore
+    }
+    if (cells[currentPosition].classList.contains('flashing-food')){
+      currentScore += 100
+      currentScoreDisplay.innerText = currentScore
+      cells[currentPosition].classList.remove('flashing-food')
     }
 
     if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
@@ -98,7 +103,7 @@ function init(){
 
   function addFood(){
     cells.forEach(cell => {
-      if (cell.classList.contains('wall')){
+      if (cell.classList.contains('wall') || cell.classList.contains('flashing-food')){
         console.log('no')
       } else {
         cell.classList.add('food')
@@ -128,38 +133,38 @@ function init(){
         const lastCell = ghosts[i].ghostCurrentPosition - 1
         const cellAbove = ghosts[i].ghostCurrentPosition - width
         const cellBelow = ghosts[i].ghostCurrentPosition + width
-        const randomMvmt = ['nextCell', 'lastCell', 'cellAbove', 'cellBelow']
+        const randomMvmt = [nextCell, lastCell, cellAbove, cellBelow]
         //! they now move randomly and can't walk through walls, but they can keep going eg left right left right left right
         //! they need to walk a path, not go backwards and forwards
         const random = Math.floor(Math.random() * randomMvmt.length)
 
-        if (randomMvmt[random] === 'nextCell' && ghosts[i].ghostCurrentPosition % width !== width - 1){
-          cells[nextCell]?.classList.contains('wall') ? 
-          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width :
+        if (randomMvmt[random] === nextCell && ghosts[i].ghostCurrentPosition % width !== width - 1){
+          cells[nextCell]?.classList.contains('wall') || cells[nextCell]?.classList.contains('ghost') ? 
+          console.log('blocked!') :
           ghosts[i].ghostCurrentPosition++
-        } else if (randomMvmt[random] === 'lastCell' && ghosts[i].ghostCurrentPosition % width !== 0) {
-          cells[lastCell]?.classList.contains('wall') ? 
-          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width : 
+        } else if (randomMvmt[random] === lastCell && ghosts[i].ghostCurrentPosition % width !== 0) {
+          cells[lastCell]?.classList.contains('wall') || cells[lastCell]?.classList.contains('ghost') ? 
+          console.log('blocked!') : 
           ghosts[i].ghostCurrentPosition--
-        } else if (randomMvmt[random] === 'cellBelow' && ghosts[i].ghostCurrentPosition + width < cellCount){
-          cells[cellBelow]?.classList.contains('wall') ? 
-          ghosts[i].ghostCurrentPosition++ : 
+        } else if (randomMvmt[random] === cellBelow && ghosts[i].ghostCurrentPosition + width < cellCount){
+          cells[cellBelow]?.classList.contains('wall') || cells[cellBelow]?.classList.contains('ghost') ? 
+          console.log('blocked!') : 
           ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
-        } else if (randomMvmt[random] === 'cellAbove' && ghosts[i].ghostCurrentPosition >= width){
-          cells[cellAbove]?.classList.contains('wall') ? 
-          ghosts[i].ghostCurrentPosition-- : 
+        } else if (randomMvmt[random] === cellAbove && ghosts[i].ghostCurrentPosition >= width){
+          cells[cellAbove]?.classList.contains('wall') || cells[cellAbove]?.classList.contains('ghost') ? 
+          console.log('blocked!') : 
           ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
         }
 
         addGhost(ghosts[i].ghostCurrentPosition)
       }
-    }, 1000)
+    }, 500)
   }
   ghostMovement()
 
   function removeGhost() {
     for (let i = 0; i < ghosts.length; i++){
-      cells[ghosts[i].ghostCurrentPosition].classList.remove('ghost')
+      cells[ghosts[i].ghostCurrentPosition]?.classList.remove('ghost')
     }
   }
 
@@ -170,6 +175,11 @@ function init(){
       // flashingGhosts()
     // }
   // }
+  function addFlashingFood(){
+    flashingFood.forEach((food) => {
+      cells[food].classList.add('flashing-food')
+    })
+  }
 
   //? if ghosts are flashing, you can catch them and they return to their starting position
   // function flashingGhosts(){

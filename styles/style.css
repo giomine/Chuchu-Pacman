@@ -76,6 +76,11 @@ section div{
   padding: 0;
 }
 
+.flashing-food{
+  background-color: gold;
+  animation: flash 0.7s infinite;
+}
+
 .food{
   background-color: rgb(156, 191, 156);
 }
@@ -103,6 +108,16 @@ section div{
 
 .wall{
   background-color: blue;
+}
+
+@keyframes flash {
+  0% {
+    transform: rotate(10deg) scale(50%) skew(30deg);
+  }
+
+  50% {
+    transform: rotate(-25deg) skew(30);
+  }
 }
 
 @media (max-width: 1480px){
