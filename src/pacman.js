@@ -61,43 +61,49 @@ function init(){
   }
 
   function movePacman(e) {
-    const nextCell = currentPosition + 1
-    const lastCell = currentPosition - 1
-    const cellAbove = currentPosition - width
-    const cellBelow = currentPosition + width
-    removePacman()
-    if (cells[currentPosition].classList.contains('food')){
-      cells[currentPosition].classList.remove('food')
-      currentScore++
-      currentScoreDisplay.innerText = currentScore
-    }
-    if (cells[currentPosition].classList.contains('flashing-food')){
-      ateFlashingFood = true
-      currentScore += 100
-      currentScoreDisplay.innerText = currentScore
-      cells[currentPosition].classList.remove('flashing-food')
-    }
-
-    if (currentScore > highScore){
-      highScore = currentScore
-      localStorage.setItem('highScore', highScore)
-      highScoreSpan.innerText = highScore
-    }
-
-    if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
-      cells[lastCell].classList.contains('wall') ? console.log('wall on left!') : currentPosition--
-    } else if ((e.key === 'ArrowRight' || e.key ===  'd') && currentPosition % width !== width - 1) {
-      cells[nextCell].classList.contains('wall') ? console.log('wall on right!') : currentPosition++
-    } else if ((e.key === 'ArrowUp' || e.key === 'w') && currentPosition >= width) {
-      cells[cellAbove].classList.contains('wall') ? console.log('wall above!') : currentPosition -= width
-    } else if ((e.key === 'ArrowDown' || e.key === 's') && currentPosition + width < cellCount){
-      cells[cellBelow].classList.contains('wall') ? console.log('wall below!') : currentPosition += width
+    if (lives === 0){
+      currentPosition = currentPosition
+      console.log('well he can\'t move now, he\s dead!')
     } else {
-      console.log('well now i\'m not doing it 🙅🏻‍♀️')
-    }
 
-    addPacman(currentPosition)
-    ghostCollision()
+      const nextCell = currentPosition + 1
+      const lastCell = currentPosition - 1
+      const cellAbove = currentPosition - width
+      const cellBelow = currentPosition + width
+      removePacman()
+      if (cells[currentPosition].classList.contains('food')){
+        cells[currentPosition].classList.remove('food')
+        currentScore++
+        currentScoreDisplay.innerText = currentScore
+      }
+      if (cells[currentPosition].classList.contains('flashing-food')){
+        ateFlashingFood = true
+        currentScore += 100
+        currentScoreDisplay.innerText = currentScore
+        cells[currentPosition].classList.remove('flashing-food')
+      }
+
+      if (currentScore > highScore){
+        highScore = currentScore
+        localStorage.setItem('highScore', highScore)
+        highScoreSpan.innerText = highScore
+      }
+
+      if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
+        cells[lastCell].classList.contains('wall') ? console.log('wall on left!') : currentPosition--
+      } else if ((e.key === 'ArrowRight' || e.key ===  'd') && currentPosition % width !== width - 1) {
+        cells[nextCell].classList.contains('wall') ? console.log('wall on right!') : currentPosition++
+      } else if ((e.key === 'ArrowUp' || e.key === 'w') && currentPosition >= width) {
+        cells[cellAbove].classList.contains('wall') ? console.log('wall above!') : currentPosition -= width
+      } else if ((e.key === 'ArrowDown' || e.key === 's') && currentPosition + width < cellCount){
+        cells[cellBelow].classList.contains('wall') ? console.log('wall below!') : currentPosition += width
+      } else {
+        console.log('well now i\'m not doing it 🙅🏻‍♀️')
+      }
+      
+      addPacman(currentPosition)
+      ghostCollision()
+    }
   }
 
   function removePacman() {
@@ -154,7 +160,7 @@ function init(){
   //? they now move randomly and can't walk through walls, but they can keep going eg left right left right left right
   //? they need to walk a path, not go backwards and forwards
   function ghostMovement(){
-    
+
     interval = setInterval(() => {
       removeGhost()
       
@@ -211,20 +217,19 @@ function init(){
       lives--
       livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔'
       if (lives === 0){
-        console.log('stopping....')
-        clearInterval(interval)
-        setTimeout(() => {
-          alert('Game over!!!')
-        }, 100)
+        gameOver()
       }
     }
   }
     
   //? Triggered when lives is 0
-  // function gameOver(){
-    // removePacman()
-    // removeGhosts()
-  // }
+  function gameOver(){
+    console.log('stopping....')
+    clearInterval(interval)
+    setTimeout(() => {
+      alert('Game over!!!')
+    }, 100)
+  }
     
   //? Start game + set everything back to defaultValue()
   // function startGame(){
