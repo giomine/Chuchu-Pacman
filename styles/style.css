@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+a{
+  text-decoration: none;
+}
+
 body{
   margin: 0;
 }
@@ -113,6 +117,20 @@ section div{
 
 .wall{
   background-color: blue;
+}
+
+#start-screen-top{
+  justify-content: end;
+}
+#start-screen-middle{
+  height: 300px;
+  width: 750px;
+  justify-content: center;
+}
+#start-bottom{
+  height: 30vh;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @keyframes flash {
