@@ -12,7 +12,9 @@ function init(){
   let ateFlashingFood = false
   let currentScoreDisplay = document.querySelector('#bottom div span')
   currentScoreDisplay.innerText = currentScore
-  // highScore = currentScore //? saved in localStorage
+  const highScoreSpan = document.querySelector('#top span')
+  let highScore = localStorage.getItem('highScore') //? saved in localStorage
+  highScoreSpan.innerText = highScore
   const ghostOne = {
     ghostStartingPosition: 0,
     ghostCurrentPosition: 0,
@@ -37,7 +39,7 @@ function init(){
   livesDisplay = document.querySelector('#bottom div:nth-of-type(2) span')
   livesDisplay.innerText = '♥️♥️♥️'
   const flashingFood = [113, 200, 349, 99] // will be an emoji or image file added to specific grid cells
-  // bonusFood // worth 100 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
+  // bonusFood // worth 200 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
   // ? create the grid and place Pacman, ghosts, food, and walls in it
   function createGrid(){
     for (let i = 0; i < cellCount; i++){
@@ -76,6 +78,12 @@ function init(){
       cells[currentPosition].classList.remove('flashing-food')
     }
 
+    if (currentScore > highScore){
+      highScore = currentScore
+      localStorage.setItem('highScore', highScore)
+      highScoreSpan.innerText = highScore
+    }
+
     if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
       cells[lastCell].classList.contains('wall') ? console.log('wall on left!') : currentPosition--
     } else if ((e.key === 'ArrowRight' || e.key ===  'd') && currentPosition % width !== width - 1) {
@@ -112,7 +120,6 @@ function init(){
     })
   }
 
-  //? get each Ghost's position
   function addGhost(position){
     for (let i = 0; i < ghosts.length; i++){
       if (cells[position]?.classList.contains('ghost')){
@@ -123,8 +130,9 @@ function init(){
     }
   }
 
-  //? if ghosts are flashing, you can catch them and they return to their starting position
-  //? add flashing animation to all ghosts on setTimeout of 5 seconds; during those 5 secs if Pacman eats them they go back to startingPos
+  //? if ghosts are flashing, 5 second timer starts in which you can catch them and they return to their starting position
+  //! sometimes timer only runs for 0.5 seconds
+  //! sometimes ghost doesn't return to starting position
   function flashingGhosts(position){
     for (let i = 0; i < ghosts.length; i++){
       if (currentPosition === ghosts[i].ghostCurrentPosition && cells[position]?.classList.contains('flashing-ghost')){
@@ -142,7 +150,9 @@ function init(){
     }, 5000)
   }
 
-  //? Each ghost has it's own random path/style. Hard part is making them follow pacman - need a pathfinder. Similar to movePacman but with random numbers?
+  //? Make them follow pacman - need a pathfinder.
+  //? they now move randomly and can't walk through walls, but they can keep going eg left right left right left right
+  //? they need to walk a path, not go backwards and forwards
   function ghostMovement(){
     
     interval = setInterval(() => {
@@ -154,8 +164,7 @@ function init(){
         const cellAbove = ghosts[i].ghostCurrentPosition - width
         const cellBelow = ghosts[i].ghostCurrentPosition + width
         const randomMvmt = [nextCell, lastCell, cellAbove, cellBelow]
-        //! they now move randomly and can't walk through walls, but they can keep going eg left right left right left right
-        //! they need to walk a path, not go backwards and forwards
+
         const random = Math.floor(Math.random() * randomMvmt.length)
 
         if (randomMvmt[random] === nextCell && ghosts[i].ghostCurrentPosition % width !== width - 1){
