@@ -14,7 +14,7 @@ function init(){
   let ateFlashingFood = false
   let currentScoreDisplay = document.querySelector('#bottom div span')
   currentScoreDisplay.innerText = currentScore
-  const highScoreSpan = document.querySelector('#top span')
+  const highScoreSpan = document.querySelector('.highscore span')
   let highScore = localStorage.getItem('highScore') //? saved in localStorage
   highScoreSpan.innerText = highScore
   const ghostOne = {
@@ -39,7 +39,7 @@ function init(){
   const wallCellsThirdLevel = [27, 51, 52, 53, 77, 55, 56, 57, 31, 81, 59, 60, 61, 35, 85, 63, 64, 65, 39, 89, 67, 68, 69, 43, 93, 71, 72, 73, 47, 97, 128, 129, 130, 104, 154, 132, 133, 134, 108, 158, 136, 137, 138, 112, 162, 140, 141, 142, 116, 166, 144, 145, 146, 120, 170, 201, 202, 203, 177, 227, 205, 206, 207, 181, 231, 209, 210, 211, 185, 235, 213, 214, 215, 189, 239, 217, 218, 219, 193, 243, 221, 222, 223, 197, 247, 278, 279, 280, 254, 304, 282, 283, 284, 258, 308, 286, 287, 288, 262, 312, 290, 291, 292, 266, 316, 294, 295, 296, 270, 320, 327, 352, 331, 356, 335, 360, 339, 364, 343, 368, 347, 372, 4, 8, 12, 16, 20, 124, 174, 274, 324, 100, 150, 250, 300]
   const startingPosition = 70
   let currentPosition = startingPosition
-  lives = 40 //!!!!!!!!!!!!!!! for testing
+  let lives = 3
   livesDisplay = document.querySelector('#bottom div:nth-of-type(2) span')
   livesDisplay.innerText = '♥️♥️♥️'
   const flashingFood = [113, 200, 349, 99] // will be an emoji or image file added to specific grid cells
@@ -52,7 +52,7 @@ function init(){
     for (let i = 0; i < cellCount; i++){
       const cell = document.createElement('div')
       cell.innerText = i
-      grid.appendChild(cell)
+      grid?.appendChild(cell)
       cells.push(cell)
     }
     addPacman(startingPosition)
@@ -64,6 +64,7 @@ function init(){
 
 
   function addPacman(position){
+    console.log(lives)
     cells[position].classList.add('pacman')
   }
 
@@ -139,7 +140,7 @@ function init(){
         cells[newWall].classList.add('wall')
       })
       ghostMovement()
-      addFlashingFood()
+      addFlashingFood()  //? it was important to call addFlashingFood before addFood, otherwise the color would be overwritten by CSS and the flashing food would be green instead of gold
       addFood()
     } else if (currentScore === 1572) {
       wallCellsSecondLevel.forEach(newWall => {
@@ -334,17 +335,43 @@ function init(){
         console.log('continuing!')
       }
     }
+
+
+  //! cheat code 😃🤓 only works if it's the first thing you do on gameload
+  const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
+  const arr = []
+  function arraysEqual(a, b){
+    if (a === b) return true
+    if (a === null || b === null) return false
+    if (a.length !== b.length) return false
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) return false
+    }
+    // infiniteLives = true //? maybe if i make this a variable and save it to localStorage the cheat would also work from the homescreen?
+    lives = 9999999999
+    livesDisplay.innerText = '♾️'
+    alert('You now have unlimited lives!! Enjoy 😎')
+    return true
+  }
+  function getKeys(e){
+    arr.push(e.key)
+    // console.log('Arr is:    ' + arr)
+    // console.log('Konami is: ' + konamiCode)
+    arraysEqual(arr, konamiCode)
+  }
+  window.addEventListener('keydown', getKeys)
+  //! end of cheat code
   
 
   // startButton.addEventListener('click', startGame)
-  restartButton.addEventListener('click', restartGame)
+  restartButton?.addEventListener('click', restartGame)
   document.addEventListener('keydown', movePacman)
   
   // ? If I have time left for swipes (eg: swipe left will do same thing as keypress ArrowLeft)
   // document.addEventListener('touchstart', swipeStart)
   // document.addEventListener('touchmove', swipeMove)
   // document.addEventListener('touchend', swipeEnd)
-  
+
   createGrid()
 }
 
