@@ -282,7 +282,7 @@ function init(){
     console.log('stopping....')
     clearInterval(interval)
     setTimeout(() => {
-      alert('Game over!!!')
+      alert(`Game over!!! Your final score is: ${currentScore}`)
     }, 100)
   }
 
@@ -302,7 +302,7 @@ function init(){
     currentScore = currentScore+= 500 // give 'em some bonus points
     currentScoreDisplay.innerHTML = currentScore
     setTimeout(() => {
-      alert('Holy crap! You beat the game!! Have 500 bonus points!!!')
+      alert(`Holy crap! You beat the game!! Have 500 bonus points!!! Your final score is: ${currentScore}`)
     }, 100)
   }
     
@@ -350,7 +350,7 @@ function init(){
     // infiniteLives = true //? maybe if i make this a variable and save it to localStorage the cheat would also work from the homescreen?
     lives = 9999999999
     livesDisplay.innerText = '♾️'
-    alert('You now have unlimited lives!! Enjoy 😎')
+    alert('You now have unlimited lives!! Go get \'em 😎')
     return true
   }
   function getKeys(e){
