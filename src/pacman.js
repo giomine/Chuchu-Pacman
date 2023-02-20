@@ -240,8 +240,14 @@ function init(){
   }
 
   function youWin(){
-    alert('winner!!!!')
-    // give 'em some bonus points
+    console.log('loading next level....')
+    clearInterval(interval)
+    currentScore = currentScore+= 100 // give 'em some bonus points
+    currentScoreDisplay.innerHTML = currentScore
+    setTimeout(() => {
+      alert('Winner!! Have 100 bonus points 😃')
+    }, 100)
+    
     // load next game board
   }
     
