@@ -2,6 +2,7 @@ function init(){
   
   // const startButton = document.querySelector('#start-bottom div')
   // startButton.addEventListener('click', function(){console.log('clicked start')})
+  // ! VISUAL THEMES
   let pacman = window.localStorage.getItem('pacman')
   const pacManTheme = document.querySelector('.pacman-theme')
   pacManTheme?.addEventListener('click', function(){
@@ -27,7 +28,38 @@ function init(){
     console.log(pacman)
   })
 
+  // ! LANGUAGE OPTIONS -- ONLY SET UP HERE, HAVE NOT UPDATED LANGUAGES IN DISPLAYS
+  let language = window.localStorage.getItem('language')
+  const english = document.querySelector('.en')
+  english?.addEventListener('click', function(){
+    console.log('Language set to English!') 
+    alert('Language set to English. Click start to play!')
+    window.localStorage.setItem('language', 'english')
+    console.log(language)
+  })
+  const arabic = document.querySelector('.ar')
+  arabic?.addEventListener('click', function(){
+    console.log('Language set to Arabic!') 
+    alert('Language set to Arabic. Click start to play!')
+    window.localStorage.setItem('language', 'arabic')
+    console.log(language)
+  })
+  const swedish = document.querySelector('.sv')
+  swedish?.addEventListener('click', function(){
+    console.log('Language set to Swedish!') 
+    alert('Language set to Swedish. Click start to play!')
+    window.localStorage.setItem('language', 'swedish')
+    console.log(language)
+  })
+  const japanese = document.querySelector('.jp')
+  japanese?.addEventListener('click', function(){
+    console.log('Language set to Japanese!') 
+    alert('Language set to Japanese. Click start to play!')
+    window.localStorage.setItem('language', 'japanese')
+    console.log(language)
+  })
 
+  // ! VARIABLES
   const restartButton = document.querySelector('#top div')
   const grid = document.querySelector('.grid')
   const width = 25
@@ -73,6 +105,7 @@ function init(){
   const flashingFoodThirdLevel = [315, 271, 178, 19]
   // bonusFood // worth 200 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
   
+  // ! FUNCTIONS
   // ? create the grid and place Pacman, ghosts, food, and walls in it
   function createGrid(){
     for (let i = 0; i < cellCount; i++){
@@ -382,8 +415,7 @@ function init(){
       }
     }
   }
-    
-
+  
   function gameOver(){
     console.log('stopping....')
     clearInterval(interval)
@@ -412,7 +444,7 @@ function init(){
     }, 100)
   }
     
-  //! call startGame() when click startButton, and keep defaultValues() function so that we use restart button within game too
+  // ! call startGame() when click startButton, and keep defaultValues() function so that we use restart button within game too
   //? Start game + set everything back to defaultValue()
   // function startGame(){
     // defaultValues()
@@ -443,7 +475,7 @@ function init(){
     }
 
 
-  //! cheat code 😃🤓 only works if it's the first thing you do on gameload
+  // ! CHEAT CODE 😃🤓 only works if it's the first thing you do on gameload
   const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
   const arr = []
   function arraysEqual(a, b){
@@ -469,6 +501,7 @@ function init(){
   //! end of cheat code
   
 
+  // ! EVENT LISTENERS
   // startButton.addEventListener('click', startGame)
   restartButton?.addEventListener('click', restartGame)
   document.addEventListener('keydown', movePacman)
