@@ -77,33 +77,91 @@ section div{
 }
 
 .grid div{
-  border: 1px solid lightgray;
+  border: none;
   flex-grow: 1;
   width: 4%;
   height: 6.6%;
   padding: 0;
 }
 
-.flashing-food{
-  background-color: gold;
-  animation: flash 0.7s infinite;
+.food{
+  background-image: url('./themes/food/yellow-food.svg');
+  background-position: center;
+  background-size: 15px;
+  background-repeat: no-repeat;
 }
 
-.food{
-  background-color: rgb(156, 191, 156);
+.flashing-food{
+  background-image: url('./themes/food/purple-food.svg');
+  background-position: center;
+  background-size: 15px;
+  background-repeat: no-repeat;
+  animation: flash 0.2s infinite;
+}
+.parappa-flashing-food{
+  background-image: url('./themes/parappa_theme/sunny\(flashingFood\).png');
+  background-position: center;
+  background-size: contain;
+  border: 1px solid gold;
+  animation: flash 0.2s infinite;
+}
+.chuchu-flashing-food{
+  background-image: url('./themes/chuchurocket_theme/angel\(flashingFood\).png');
+  background-position: center;
+  background-size: contain;
+  border: 1px solid pink;
+  animation: flash 0.2s infinite;
 }
 
 .pacman{
-  background-color: aqua;
+  background-image: url('./themes/pacman_theme/pacman.png');
+  background-position: center;
+  background-size: contain;
+}
+.parappa-pacman{
+  background-image: url('./themes/parappa_theme/parappa\(pacman\).png');
+  background-position: center;
+  background-size: contain;
+}
+.chuchu-pacman{
+  background-image: url('./themes/chuchurocket_theme/mouse\(pacman\).png');
+  background-position: center;
+  background-size: contain;
 }
 
 .ghost{
-  background-color: black;
+  background-image: url('./themes/pacman_theme/ghost.png');
+  background-position: center;
+  background-size: contain;
+}
+.parappa-ghost{
+  background-image: url('./themes/parappa_theme/onion\(ghost\).png');
+  background-position: center;
+  background-size: contain;
+}
+.chuchu-ghost{
+  background-image: url('./themes/chuchurocket_theme/cat\(ghost\).png');
+  background-position: center;
+  background-size: contain;
 }
 
 .flashing-ghost{
-  background-color: lightblue;
-  /* animation: flash 0.7s infinite; */
+  background-image: url('./themes/pacman_theme/ghost.png');
+  background-position: center;
+  background-size: contain;
+  animation: flash 0.4s infinite;
+}
+.flashing-parappa-ghost{
+  background-image: url('./themes/parappa_theme/onion\(ghost\).png');
+  background-position: center;
+  background-size: contain;
+  animation: flash 0.4s infinite;
+}
+.flashing-chuchu-ghost{
+  background-image: url('./themes/chuchurocket_theme/cat\(ghost\).png');
+  background-position: center;
+  background-size: contain;
+  animation: flash 0.4s infinite;
 }
 
 /* .ghost1{
@@ -120,7 +178,13 @@ section div{
 } */
 
 .wall{
-  background-color: blue;
+  background-color: rgb(70, 70, 215);
+}
+.parappa-walls{
+  background-color: rgb(226, 66, 66);
+}
+.chuchu-walls{
+  background-color: rgb(110, 225, 225);
 }
 
 #start-screen-top{
@@ -140,14 +204,44 @@ section div{
   flex-direction: column;
   justify-content: center;
 }
+.themes{
+  flex-direction: column;
+  height: 80px;
+}
+.theme-options{
+  width: 470px;
+  justify-content: space-around;
+  border: none;
+}
+.theme-options div{
+  text-align: center;
+  width: 200px;
+  height: 30px;
+  cursor: pointer;
+}
 
-@keyframes flash {
-  0% {
+/* @keyframes scaling { */
+  /* 0% {
     transform: rotate(10deg) scale(50%) skew(30deg);
   }
-
   50% {
     transform: rotate(-25deg) skew(30);
+  } */
+  /* from {
+    transform: scale(0.75);
+  }
+  to {
+    transform: scale(1);
+  }
+} */
+
+@keyframes flash {
+  from {
+    opacity: 40%;
+  }
+
+  to {
+    opacity: 100%;
   }
 }
 
@@ -159,9 +253,9 @@ section div{
   #grid-wrapper{
     padding: 0;
   }
-  .grid div{
+  /* .grid div{
     font-size: 8px;
-  }
+  } */
 } 
 
 /* @media (max-width: 650px){

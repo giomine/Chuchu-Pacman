@@ -2,6 +2,32 @@ function init(){
   
   // const startButton = document.querySelector('#start-bottom div')
   // startButton.addEventListener('click', function(){console.log('clicked start')})
+  let pacman = window.localStorage.getItem('pacman')
+  const pacManTheme = document.querySelector('.pacman-theme')
+  pacManTheme?.addEventListener('click', function(){
+    console.log('chose pacman!') 
+    alert('Pacman theme chosen. Click start to play!')
+    window.localStorage.setItem('pacman', 'pacman')
+    console.log(pacman)
+  })
+
+  const parappaTheme = document.querySelector('.parappa-theme')
+  parappaTheme?.addEventListener('click', function(){ 
+  console.log('chose parappa!') 
+  alert('Parappa theme chosen. Click start to play!')
+  window.localStorage.setItem('pacman', 'parappa')
+  console.log(pacman)
+})
+
+  const chuchuTheme = document.querySelector('.chuchu-theme')
+  chuchuTheme?.addEventListener('click', function(){
+    console.log('chose chuchu!') 
+    alert('Chuchu theme chosen. Click start to play!')
+    window.localStorage.setItem('pacman', 'chuchu')
+    console.log(pacman)
+  })
+
+
   const restartButton = document.querySelector('#top div')
   const grid = document.querySelector('.grid')
   const width = 25
@@ -51,7 +77,7 @@ function init(){
   function createGrid(){
     for (let i = 0; i < cellCount; i++){
       const cell = document.createElement('div')
-      cell.innerText = i
+      // cell.innerText = i
       grid?.appendChild(cell)
       cells.push(cell)
     }
@@ -65,7 +91,14 @@ function init(){
 
   function addPacman(position){
     console.log(lives)
-    cells[position].classList.add('pacman')
+    console.log(pacman)
+    if (window.localStorage.getItem('pacman') === 'pacman'){
+      cells[position].classList.add('pacman')
+    } else if (window.localStorage.getItem('pacman') === 'parappa'){
+      cells[position].classList.add('parappa-pacman')
+    } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+      cells[position].classList.add('chuchu-pacman')
+    }
   }
 
   function movePacman(e) {
@@ -84,11 +117,11 @@ function init(){
         currentScore++
         currentScoreDisplay.innerText = currentScore
       }
-      if (cells[currentPosition].classList.contains('flashing-food')){
+      if (cells[currentPosition].classList.contains('flashing-food') || cells[currentPosition].classList.contains('parappa-flashing-food') || cells[currentPosition].classList.contains('chuchu-flashing-food')){
         ateFlashingFood = true
         currentScore += 100
         currentScoreDisplay.innerText = currentScore
-        cells[currentPosition].classList.remove('flashing-food')
+        cells[currentPosition].classList.remove('flashing-food') || cells[currentPosition].classList.remove('parappa-flashing-food') || cells[currentPosition].classList.remove('chuchu-flashing-food')
       }
 
       if (currentScore > highScore){
@@ -106,13 +139,13 @@ function init(){
       }
 
       if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
-        cells[lastCell].classList.contains('wall') ? console.log('wall on left!') : currentPosition--
+        cells[lastCell].classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls')  ? console.log('wall on left!') : currentPosition--
       } else if ((e.key === 'ArrowRight' || e.key ===  'd') && currentPosition % width !== width - 1) {
-        cells[nextCell].classList.contains('wall') ? console.log('wall on right!') : currentPosition++
+        cells[nextCell].classList.contains('wall') || cells[nextCell].classList.contains('parappa-walls') || cells[nextCell].classList.contains('chuchu-walls') ? console.log('wall on right!') : currentPosition++
       } else if ((e.key === 'ArrowUp' || e.key === 'w') && currentPosition >= width) {
-        cells[cellAbove].classList.contains('wall') ? console.log('wall above!') : currentPosition -= width
+        cells[cellAbove].classList.contains('wall') || cells[cellAbove].classList.contains('parappa-walls') || cells[cellAbove].classList.contains('chuchu-walls') ? console.log('wall above!') : currentPosition -= width
       } else if ((e.key === 'ArrowDown' || e.key === 's') && currentPosition + width < cellCount){
-        cells[cellBelow].classList.contains('wall') ? console.log('wall below!') : currentPosition += width
+        cells[cellBelow].classList.contains('wall') || cells[cellBelow].classList.contains('parappa-walls') || cells[cellBelow].classList.contains('chuchu-walls') ? console.log('wall below!') : currentPosition += width
       } else {
         console.log('well now i\'m not doing it 🙅🏻‍♀️')
       }
@@ -123,31 +156,55 @@ function init(){
   }
 
   function removePacman() {
-    cells[currentPosition].classList.remove('pacman')
+    if (window.localStorage.getItem('pacman') === 'pacman'){
+      cells[currentPosition].classList.remove('pacman')
+    } else if (window.localStorage.getItem('pacman') === 'parappa'){
+      cells[currentPosition].classList.remove('parappa-pacman')
+    } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+      cells[currentPosition].classList.remove('chuchu-pacman')
+    }
   }
 
   function addWall(){
     if (currentScore < 790){
       wallCells.forEach(wall => {
         //? console.log(wall) // each of these is a number, that number needs to be a cells[i]
-        cells[wall].classList.add('wall')
+        if (window.localStorage.getItem('pacman') === 'pacman'){
+          cells[wall].classList.add('wall')
+        } else if (window.localStorage.getItem('pacman') === 'parappa'){
+          cells[wall].classList.add('parappa-walls')
+        } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+          cells[wall].classList.add('chuchu-walls')
+        }
       })
     } else if (currentScore === 790){
       wallCells.forEach(wall => {
-        cells[wall].classList.remove('wall')
+        cells[wall].classList.remove('wall') || cells[wall].classList.remove('parappa-walls') || cells[wall].classList.remove('chuchu-walls')
       })
       wallCellsSecondLevel.forEach(newWall => {
-        cells[newWall].classList.add('wall')
+        if (window.localStorage.getItem('pacman') === 'pacman'){
+          cells[newWall].classList.add('wall')
+        } else if (window.localStorage.getItem('pacman') === 'parappa'){
+          cells[newWall].classList.add('parappa-walls')
+        } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+          cells[newWall].classList.add('chuchu-walls')
+        }
       })
       ghostMovement()
       addFlashingFood()  //? it was important to call addFlashingFood before addFood, otherwise the color would be overwritten by CSS and the flashing food would be green instead of gold
       addFood()
     } else if (currentScore === 1572) {
       wallCellsSecondLevel.forEach(newWall => {
-        cells[newWall].classList.remove('wall')
+        cells[newWall].classList.remove('wall') || cells[newWall].classList.remove('parappa-walls') || cells[newWall].classList.remove('chuchu-walls')
       })
       wallCellsThirdLevel.forEach(wall => {
-        cells[wall].classList.add('wall')
+        if (window.localStorage.getItem('pacman') === 'pacman'){
+          cells[wall].classList.add('wall')
+        } else if (window.localStorage.getItem('pacman') === 'parappa'){
+          cells[wall].classList.add('parappa-walls')
+        } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+          cells[wall].classList.add('chuchu-walls')
+        }
       })
       ghostMovement()
       addFlashingFood()
@@ -157,7 +214,7 @@ function init(){
 
   function addFood(){
     cells.forEach(cell => {
-      if (cell.classList.contains('wall') || cell.classList.contains('flashing-food')){
+      if (cell.classList.contains('wall') || cell.classList.contains('parappa-walls') || cell.classList.contains('chuchu-walls') || cell.classList.contains('flashing-food')){
         console.log(flashingFood.length) //? this shows we can either change food to a stupidly long array and pop off until 0, or find another way to check if all food has been eaten
       } else {
         cell.classList.add('food')
@@ -170,7 +227,13 @@ function init(){
       if (cells[position]?.classList.contains('ghost')){
       } 
       else {
-        cells[ghosts[i].ghostCurrentPosition]?.classList.add('ghost')
+        if (window.localStorage.getItem('pacman') === 'pacman'){
+          cells[ghosts[i].ghostCurrentPosition]?.classList.add('ghost')
+        } else if (window.localStorage.getItem('pacman') === 'parappa'){
+          cells[ghosts[i].ghostCurrentPosition]?.classList.add('parappa-ghost')
+        } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+          cells[ghosts[i].ghostCurrentPosition]?.classList.add('chuchu-ghost')
+        }
       }
     }
   }
@@ -180,14 +243,20 @@ function init(){
   //! sometimes ghost doesn't return to starting position
   function flashingGhosts(position){
     for (let i = 0; i < ghosts.length; i++){
-      if (currentPosition === ghosts[i].ghostCurrentPosition && cells[position]?.classList.contains('flashing-ghost')){
+      if (currentPosition === ghosts[i].ghostCurrentPosition && cells[position]?.classList.contains('flashing-ghost') || cells[position]?.classList.contains('flashing-parappa-ghost') || cells[position]?.classList.contains('flashing-chuchu-ghost')){
         console.log("Got 'im!!!")
         ghosts[i].ghostCurrentPosition = ghosts[i].ghostStartingPosition
       }
 
-      if (cells[position]?.classList.contains('flashing-ghost')){
+      if (cells[position]?.classList.contains('flashing-ghost') || cells[position]?.classList.contains('flashing-parappa-ghost') || cells[position]?.classList.contains('flashing-chuchu-ghost')){ //!!!!! ?? need to add others here?
       } else {
-        cells[ghosts[i].ghostCurrentPosition]?.classList.add('flashing-ghost')
+        if (window.localStorage.getItem('pacman') === 'pacman'){
+          cells[ghosts[i].ghostCurrentPosition]?.classList.add('flashing-ghost')
+        } else if (window.localStorage.getItem('pacman') === 'parappa'){
+          cells[ghosts[i].ghostCurrentPosition]?.classList.add('flashing-parappa-ghost')
+        } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+          cells[ghosts[i].ghostCurrentPosition]?.classList.add('flashing-chuchu-ghost')
+        }
       }
     }
     timer = setTimeout(() => {
@@ -201,9 +270,9 @@ function init(){
   function ghostMovement(){
 
     interval = setInterval(() => {
-      removeGhost()
       
       for (let i = 0; i < ghosts.length; i++){
+        removeGhost()
         const nextCell = ghosts[i].ghostCurrentPosition + 1
         const lastCell = ghosts[i].ghostCurrentPosition - 1
         const cellAbove = ghosts[i].ghostCurrentPosition - width
@@ -213,19 +282,19 @@ function init(){
         const random = Math.floor(Math.random() * randomMvmt.length)
 
         if (randomMvmt[random] === nextCell && ghosts[i].ghostCurrentPosition % width !== width - 1){
-          cells[nextCell]?.classList.contains('wall') || cells[nextCell]?.classList.contains('ghost') ? 
+          cells[nextCell]?.classList.contains('wall') || cells[nextCell]?.classList.contains('parappa-walls') || cells[nextCell]?.classList.contains('chuchu-walls') || cells[nextCell]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
           console.log('blocked!') :
           ghosts[i].ghostCurrentPosition++
         } else if (randomMvmt[random] === lastCell && ghosts[i].ghostCurrentPosition % width !== 0) {
-          cells[lastCell]?.classList.contains('wall') || cells[lastCell]?.classList.contains('ghost') ? 
+          cells[lastCell]?.classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls') || cells[lastCell]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
           console.log('blocked!') : 
           ghosts[i].ghostCurrentPosition--
         } else if (randomMvmt[random] === cellBelow && ghosts[i].ghostCurrentPosition + width < cellCount){
-          cells[cellBelow]?.classList.contains('wall') || cells[cellBelow]?.classList.contains('ghost') ? 
+          cells[cellBelow]?.classList.contains('wall') || cells[cellBelow]?.classList.contains('parappa-walls') || cells[cellBelow]?.classList.contains('chuchu-walls') || cells[cellBelow]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
           console.log('blocked!') : 
           ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
         } else if (randomMvmt[random] === cellAbove && ghosts[i].ghostCurrentPosition >= width){
-          cells[cellAbove]?.classList.contains('wall') || cells[cellAbove]?.classList.contains('ghost') ? 
+          cells[cellAbove]?.classList.contains('wall') || cells[cellAbove]?.classList.contains('parappa-walls')  || cells[cellAbove]?.classList.contains('chuchu-walls') || cells[cellAbove]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
           console.log('blocked!') : 
           ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
         }
@@ -238,28 +307,65 @@ function init(){
 
   function removeGhost() {
     for (let i = 0; i < ghosts.length; i++){
-      cells[ghosts[i].ghostCurrentPosition]?.classList.remove('ghost', 'flashing-ghost', 'caught-ghost')
+      // cells[ghosts[i].ghostCurrentPosition]?.classList.remove('ghost', 'flashing-ghost', 'flashing-parappa-ghost', 'flashing-chuchu-ghost', 'caught-ghost')
+      if (window.localStorage.getItem('pacman') === 'pacman'){
+        cells[ghosts[i].ghostCurrentPosition]?.classList.remove('ghost', 'flashing-ghost', 'caught-ghost')
+      } else if (window.localStorage.getItem('pacman') === 'parappa'){
+        cells[ghosts[i].ghostCurrentPosition]?.classList.remove('parappa-ghost', 'flashing-parappa-ghost', 'caught-ghost')
+      } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+        cells[ghosts[i].ghostCurrentPosition]?.classList.remove('chuchu-ghost', 'flashing-chuchu-ghost', 'caught-ghost')
+      }
     }
   }
 
   function addFlashingFood(){
     if (currentScore < 790){
     flashingFood.forEach((food) => {
-      cells[food].classList.add('flashing-food')
+      if (window.localStorage.getItem('pacman') === 'pacman'){
+        cells[food].classList.add('flashing-food')
+      } else if (window.localStorage.getItem('pacman') === 'parappa'){
+        cells[food].classList.add('parappa-flashing-food')
+      } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+        cells[food].classList.add('chuchu-flashing-food')
+      }
     })
     } else if (currentScore === 790){
       flashingFood.forEach((food) => {
-        cells[food].classList.remove('flashing-food')
+        if (window.localStorage.getItem('pacman') === 'pacman'){
+          cells[food].classList.remove('flashing-food')
+        } else if (window.localStorage.getItem('pacman') === 'parappa'){
+          cells[food].classList.remove('parappa-flashing-food')
+        } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+          cells[food].classList.remove('chuchu-flashing-food')
+        }
       })
       flashingFoodSecondLevel.forEach((newFood) => {
-        cells[newFood].classList.add('flashing-food')
+        if (window.localStorage.getItem('pacman') === 'pacman'){
+          cells[newFood].classList.add('flashing-food')
+        } else if (window.localStorage.getItem('pacman') === 'parappa'){
+          cells[newFood].classList.add('parappa-flashing-food')
+        } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+          cells[newFood].classList.add('chuchu-flashing-food')
+        }
       })
     } else if (currentScore === 1572) {
       flashingFoodSecondLevel.forEach((food) => {
-        cells[food].classList.remove('flashing-food')
+        if (window.localStorage.getItem('pacman') === 'pacman'){
+          cells[food].classList.remove('flashing-food')
+        } else if (window.localStorage.getItem('pacman') === 'parappa'){
+          cells[food].classList.remove('parappa-flashing-food')
+        } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+          cells[food].classList.remove('chuchu-flashing-food')
+        }
       })
       flashingFoodThirdLevel.forEach((newFood) => {
-        cells[newFood].classList.add('flashing-food')
+        if (window.localStorage.getItem('pacman') === 'pacman'){
+          cells[newFood].classList.add('flashing-food')
+        } else if (window.localStorage.getItem('pacman') === 'parappa'){
+          cells[newFood].classList.add('parappa-flashing-food')
+        } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+          cells[newFood].classList.add('chuchu-flashing-food')
+        }
       })
     }
   }
@@ -267,10 +373,10 @@ function init(){
   
   //? Checks if collision takes off a life and changes position back to startingPosition, or if it's a wall, prevents movement
   function ghostCollision(){
-    if (cells[currentPosition]?.classList.contains('ghost')){
+    if (cells[currentPosition]?.classList.contains('ghost') || cells[currentPosition]?.classList.contains('parappa-ghost') || cells[currentPosition]?.classList.contains('chuchu-ghost')){
       console.log('ghost!!!')
       lives--
-      livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔'
+      livesDisplay.innerText = lives ? '♥️'.repeat(lives) : '💔'
       if (lives === 0){
         gameOver()
       }
