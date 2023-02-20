@@ -2,6 +2,7 @@ function init(){
   
   // const startButton = document.querySelector('#start-bottom div')
   // startButton.addEventListener('click', function(){console.log('clicked start')})
+  const restartButton = document.querySelector('#top div')
   const grid = document.querySelector('.grid')
   const width = 25
   const length = 15
@@ -41,6 +42,7 @@ function init(){
   livesDisplay.innerText = '♥️♥️♥️'
   const flashingFood = [113, 200, 349, 99] // will be an emoji or image file added to specific grid cells
   // bonusFood // worth 200 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
+  
   // ? create the grid and place Pacman, ghosts, food, and walls in it
   function createGrid(){
     for (let i = 0; i < cellCount; i++){
@@ -256,7 +258,26 @@ function init(){
     livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔' 
   }
 
+  function restartGame(){
+    //? I can't find a way to remove the grid in order to recreate it from scratch 🤷‍♀️
+    // remove grid and then call createGrid() again
+    // clearInterval(interval)
+    // clearTimeout(timer)
+    // currentScore = 0
+    // currentScoreDisplay.innerText = currentScore
+    // lives = 3
+    // livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔' 
+      if (confirm("Are you sure you want to restart?") === true){
+        console.log('roger that')
+        window.location.reload()
+      } else {
+        console.log('continuing!')
+      }
+    }
+  
+
   // startButton.addEventListener('click', startGame)
+  restartButton.addEventListener('click', restartGame)
   document.addEventListener('keydown', movePacman)
   
   // ? If I have time left for swipes (eg: swipe left will do same thing as keypress ArrowLeft)
