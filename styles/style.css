@@ -44,6 +44,10 @@ section div{
   text-align: left;
 }
 
+#top div{
+  cursor: pointer;
+}
+
 #top div:nth-child(2){
   flex-direction: column;
   height: 70px;
@@ -121,6 +125,10 @@ section div{
 
 #start-screen-top{
   justify-content: end;
+}
+#start-screen-top div{
+  height: 70px;
+  flex-direction: column;
 }
 #start-screen-middle{
   height: 300px;
