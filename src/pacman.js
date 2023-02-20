@@ -1,6 +1,7 @@
 function init(){
   
-  const startButton = document.querySelector('#top div')
+  // const startButton = document.querySelector('#start-bottom div')
+  // startButton.addEventListener('click', function(){console.log('clicked start')})
   const grid = document.querySelector('.grid')
   const width = 25
   const length = 15
@@ -89,6 +90,10 @@ function init(){
         highScoreSpan.innerText = highScore
       }
 
+      if(currentScore === 690){
+        youWin()
+      }
+
       if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
         cells[lastCell].classList.contains('wall') ? console.log('wall on left!') : currentPosition--
       } else if ((e.key === 'ArrowRight' || e.key ===  'd') && currentPosition % width !== width - 1) {
@@ -120,6 +125,7 @@ function init(){
   function addFood(){
     cells.forEach(cell => {
       if (cell.classList.contains('wall') || cell.classList.contains('flashing-food')){
+        console.log(flashingFood.length) //? this shows we can either change food to a stupidly long array and pop off until 0, or find another way to check if all food has been eaten
       } else {
         cell.classList.add('food')
       }
@@ -222,7 +228,7 @@ function init(){
     }
   }
     
-  //? Triggered when lives is 0
+
   function gameOver(){
     console.log('stopping....')
     clearInterval(interval)
@@ -230,16 +236,22 @@ function init(){
       alert('Game over!!!')
     }, 100)
   }
+
+  function youWin(){
+    alert('winner!!!!')
+    // give 'em some bonus points
+    // load next game board
+  }
     
+  //! call startGame() when click startButton, and keep defaultValues() function so that we use restart button within game too
   //? Start game + set everything back to defaultValue()
   // function startGame(){
     // defaultValues()
   // }
   
   //? All default game values incl. score, lives, positions, and empty grid
-  function defaultValues() { //! call inside restartGame
+  function defaultValues() {
     currentScore = 0
-    currentPosition = startingPosition //! this needs changing, can still move pacman after game over
     lives = 3
     livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔' 
   }
