@@ -28,6 +28,17 @@ function init(){
     console.log(pacman)
   })
 
+  // ! AUDIOS
+  let audio = document.querySelector('audio')
+  audio.controls = true;
+  if (window.localStorage.getItem('pacman') === 'pacman'){
+    audio.src = './sounds/pacman.mp3'
+  } else if (window.localStorage.getItem('pacman') === 'parappa'){
+    audio.src = './sounds/parappa.mp3'
+  } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+    audio.src = './sounds/chuchulevel1.mp3'
+  }
+
   // ! LANGUAGE OPTIONS -- ONLY SET UP HERE, HAVE NOT UPDATED LANGUAGES IN DISPLAYS
   let language = window.localStorage.getItem('language')
   const english = document.querySelector('.en')
@@ -443,6 +454,7 @@ function init(){
       alert(`Holy crap! You beat the game!! Have 500 bonus points!!! Your final score is: ${currentScore}`)
     }, 100)
   }
+
     
   // ! call startGame() when click startButton, and keep defaultValues() function so that we use restart button within game too
   //? Start game + set everything back to defaultValue()
