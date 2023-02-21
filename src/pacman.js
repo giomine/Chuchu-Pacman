@@ -366,21 +366,29 @@ function init(){
       
       for (let i = 0; i < ghosts.length; i++){
         removeGhost()
-        const nextCell = ghosts[i].ghostCurrentPosition + 1
-        const lastCell = ghosts[i].ghostCurrentPosition - 1
-        const cellAbove = ghosts[i].ghostCurrentPosition - width
-        const cellBelow = ghosts[i].ghostCurrentPosition + width
+        let nextCell = ghosts[i].ghostCurrentPosition + 1
+        let lastCell = ghosts[i].ghostCurrentPosition - 1
+        let cellAbove = ghosts[i].ghostCurrentPosition - width
+        let cellBelow = ghosts[i].ghostCurrentPosition + width
+        let nextCellCoords = cells[nextCell]?.getBoundingClientRect()
+        let nextCellCoordsX = nextCellCoords?.x
+        let nextCellCoordsY = nextCellCoords?.y
+        let lastCellCoords = cells[lastCell]?.getBoundingClientRect()
+        let lastCellCoordsX = lastCellCoords?.x
+        let lastCellCoordsY = lastCellCoords?.y
+        let cellAboveCoords = cells[cellAbove]?.getBoundingClientRect()
+        let cellAboveCoordsX = cellAboveCoords?.x
+        let cellAboveCoordsY = cellAboveCoords?.y
+        let cellBelowCoords = cells[cellBelow]?.getBoundingClientRect()
+        let cellBelowCoordsX = cellBelowCoords?.x
+        let cellBelowCoordsY = cellBelowCoords?.y
 
         // ! Ghost coordinates
         ghostCoords = cells[ghosts[i].ghostCurrentPosition].getBoundingClientRect()
         ghostCoordsX = ghostCoords.x
         ghostCoordsY = ghostCoords.y 
-        // console.log('Distance from Pacman: X')
         distanceVertical = ghostCoordsX - pacmanCoordsX // this is how many pixels away they are vertically, so if pacman is below or above ghost distance is 0
-        // console.log(distanceVertical) 
-        // console.log('Distance from Pacman: Y')
         distanceHorizontal = ghostCoordsY - pacmanCoordsY // this is how many pixels away they are horizontally, so if pacman is on left or right of ghost distance is 0
-        // console.log(distanceHorizontal) 
 
         ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
       }
