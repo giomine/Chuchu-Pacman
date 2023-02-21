@@ -102,6 +102,7 @@ section div{
   background-image: url('./themes/parappa_theme/sunny\(flashingFood\).png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
   border: 1px solid gold;
   animation: flash 0.2s infinite;
 }
@@ -109,6 +110,7 @@ section div{
   background-image: url('./themes/chuchurocket_theme/angel\(flashingFood\).png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
   border: 1px solid pink;
   animation: flash 0.2s infinite;
 }
@@ -117,50 +119,59 @@ section div{
   background-image: url('./themes/pacman_theme/pacman.png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 .parappa-pacman{
   background-image: url('./themes/parappa_theme/parappa\(pacman\).png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 .chuchu-pacman{
   background-image: url('./themes/chuchurocket_theme/mouse\(pacman\).png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .ghost{
   background-image: url('./themes/pacman_theme/ghost.png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 .parappa-ghost{
   background-image: url('./themes/parappa_theme/onion\(ghost\).png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 .chuchu-ghost{
   background-image: url('./themes/chuchurocket_theme/cat\(ghost\).png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .flashing-ghost{
   background-image: url('./themes/pacman_theme/ghost.png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
   animation: flash 0.4s infinite;
 }
 .flashing-parappa-ghost{
   background-image: url('./themes/parappa_theme/onion\(ghost\).png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
   animation: flash 0.4s infinite;
 }
 .flashing-chuchu-ghost{
   background-image: url('./themes/chuchurocket_theme/cat\(ghost\).png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
   animation: flash 0.4s infinite;
 }
 

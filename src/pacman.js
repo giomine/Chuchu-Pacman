@@ -71,6 +71,14 @@ function init(){
   })
 
   // ! VARIABLES
+  let pacmanCoords
+  let pacmanCoordsX
+  let pacmanCoordsY
+  let ghostCoords
+  let ghostCoordsX
+  let ghostCoordsY
+  let distanceVertical
+  let distanceHorizontal
   const restartButton = document.querySelector('#top div')
   const grid = document.querySelector('.grid')
   const width = 25
@@ -197,11 +205,9 @@ function init(){
       ghostCollision()
 
       // ! Pacman coordinates
-      const pacmanCoords = cells[currentPosition].getBoundingClientRect()
-      const pacmanCoordsX = pacmanCoords.x
-      const pacmanCoordsY = pacmanCoords.y 
-      console.error('PACMAN COORDS')
-      console.error(pacmanCoordsX, pacmanCoordsY)
+      pacmanCoords = cells[currentPosition].getBoundingClientRect()
+      pacmanCoordsX = pacmanCoords.x
+      pacmanCoordsY = pacmanCoords.y 
     }
   }
 
@@ -349,18 +355,39 @@ function init(){
           ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
         }
         ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
-
-        // ! Ghost coordinates
-        const ghostCoords = cells[ghosts[i].ghostCurrentPosition].getBoundingClientRect()
-        const ghostCoordsX = ghostCoords.x
-        const ghostCoordsY = ghostCoords.y 
-        console.warn('GHOST COORDS:')
-        console.warn(ghostCoordsX, ghostCoordsY)
       }
       ghostCollision()
     }, 500)
   }
-  ghostMovement()
+  // ghostMovement() //! this function makes the ghosts move purely at random. maybe keep for easy mode?
+
+  function ghostPathFinderMovement(){
+    interval = setInterval(() => {
+      
+      for (let i = 0; i < ghosts.length; i++){
+        removeGhost()
+        const nextCell = ghosts[i].ghostCurrentPosition + 1
+        const lastCell = ghosts[i].ghostCurrentPosition - 1
+        const cellAbove = ghosts[i].ghostCurrentPosition - width
+        const cellBelow = ghosts[i].ghostCurrentPosition + width
+
+        // ! Ghost coordinates
+        ghostCoords = cells[ghosts[i].ghostCurrentPosition].getBoundingClientRect()
+        ghostCoordsX = ghostCoords.x
+        ghostCoordsY = ghostCoords.y 
+        // console.log('Distance from Pacman: X')
+        distanceVertical = ghostCoordsX - pacmanCoordsX // this is how many pixels away they are vertically, so if pacman is below or above ghost distance is 0
+        // console.log(distanceVertical) 
+        // console.log('Distance from Pacman: Y')
+        distanceHorizontal = ghostCoordsY - pacmanCoordsY // this is how many pixels away they are horizontally, so if pacman is on left or right of ghost distance is 0
+        // console.log(distanceHorizontal) 
+
+        ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
+      }
+      ghostCollision()
+    }, 500)
+  }
+  ghostPathFinderMovement()
 
   function removeGhost() {
     for (let i = 0; i < ghosts.length; i++){
