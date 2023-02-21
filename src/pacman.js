@@ -133,8 +133,8 @@ function init(){
   }
 
   function addPacman(position){
-    console.log(lives)
-    console.log(pacman)
+    // console.log(lives)
+    // console.log(pacman)
     if (window.localStorage.getItem('pacman') === 'pacman'){
       cells[position].classList.add('pacman')
     } else if (window.localStorage.getItem('pacman') === 'parappa'){
@@ -147,7 +147,7 @@ function init(){
   function movePacman(e) {
     if (lives === 0){
       currentPosition = currentPosition
-      console.log('well he can\'t move now, he\s dead!')
+      // console.log('well he can\'t move now, he\s dead!')
     } else {
 
       const nextCell = currentPosition + 1
@@ -190,11 +190,18 @@ function init(){
       } else if ((e.key === 'ArrowDown' || e.key === 's') && currentPosition + width < cellCount){
         cells[cellBelow].classList.contains('wall') || cells[cellBelow].classList.contains('parappa-walls') || cells[cellBelow].classList.contains('chuchu-walls') ? console.log('wall below!') : currentPosition += width
       } else {
-        console.log('well now i\'m not doing it 🙅🏻‍♀️')
+        // console.log('well now i\'m not doing it 🙅🏻‍♀️')
       }
       
       addPacman(currentPosition)
       ghostCollision()
+
+      // ! Pacman coordinates
+      const pacmanCoords = cells[currentPosition].getBoundingClientRect()
+      const pacmanCoordsX = pacmanCoords.x
+      const pacmanCoordsY = pacmanCoords.y 
+      console.error('PACMAN COORDS')
+      console.error(pacmanCoordsX, pacmanCoordsY)
     }
   }
 
@@ -258,7 +265,7 @@ function init(){
   function addFood(){
     cells.forEach(cell => {
       if (cell.classList.contains('wall') || cell.classList.contains('parappa-walls') || cell.classList.contains('chuchu-walls') || cell.classList.contains('flashing-food')){
-        console.log(flashingFood.length) //? this shows we can either change food to a stupidly long array and pop off until 0, or find another way to check if all food has been eaten
+        // console.log(flashingFood.length) //? this shows we can either change food to a stupidly long array and pop off until 0, or find another way to check if all food has been eaten
       } else {
         cell.classList.add('food')
       }
@@ -287,7 +294,7 @@ function init(){
   function flashingGhosts(position){
     for (let i = 0; i < ghosts.length; i++){
       if (currentPosition === ghosts[i].ghostCurrentPosition && cells[position]?.classList.contains('flashing-ghost') || cells[position]?.classList.contains('flashing-parappa-ghost') || cells[position]?.classList.contains('flashing-chuchu-ghost')){
-        console.log("Got 'im!!!")
+        // console.log("Got 'im!!!")
         ghosts[i].ghostCurrentPosition = ghosts[i].ghostStartingPosition
       }
 
@@ -342,6 +349,13 @@ function init(){
           ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
         }
         ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
+
+        // ! Ghost coordinates
+        const ghostCoords = cells[ghosts[i].ghostCurrentPosition].getBoundingClientRect()
+        const ghostCoordsX = ghostCoords.x
+        const ghostCoordsY = ghostCoords.y 
+        console.warn('GHOST COORDS:')
+        console.warn(ghostCoordsX, ghostCoordsY)
       }
       ghostCollision()
     }, 500)
@@ -417,7 +431,7 @@ function init(){
   //? Checks if collision takes off a life and changes position back to startingPosition, or if it's a wall, prevents movement
   function ghostCollision(){
     if (cells[currentPosition]?.classList.contains('ghost') || cells[currentPosition]?.classList.contains('parappa-ghost') || cells[currentPosition]?.classList.contains('chuchu-ghost')){
-      console.log('ghost!!!')
+      // console.log('ghost!!!')
       lives--
       livesDisplay.innerText = lives ? '♥️'.repeat(lives) : '💔'
       if (lives === 0){
@@ -427,7 +441,7 @@ function init(){
   }
   
   function gameOver(){
-    console.log('stopping....')
+    // console.log('stopping....')
     clearInterval(interval)
     setTimeout(() => {
       alert(`Game over!!! Your final score is: ${currentScore}`)
@@ -435,7 +449,7 @@ function init(){
   }
 
   function youWin(){
-    console.log('loading next level....')
+    // console.log('loading next level....')
     clearInterval(interval)
     currentScore = currentScore+= 100 // give 'em some bonus points
     currentScoreDisplay.innerHTML = currentScore
@@ -478,10 +492,10 @@ function init(){
     // lives = 3
     // livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔' 
       if (confirm("Are you sure you want to restart?") === true){
-        console.log('roger that')
+        // console.log('roger that')
         window.location.reload()
       } else {
-        console.log('continuing!')
+        // console.log('continuing!')
       }
     }
 
