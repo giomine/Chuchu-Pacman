@@ -132,7 +132,6 @@ function init(){
     addFood() // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
   }
 
-
   function addPacman(position){
     console.log(lives)
     console.log(pacman)
