@@ -115,25 +115,6 @@ section div{
   animation: flash 0.2s infinite;
 }
 
-.pacman{
-  background-image: url('./themes/pacman_theme/pacman.png');
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.parappa-pacman{
-  background-image: url('./themes/parappa_theme/parappa\(pacman\).png');
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.chuchu-pacman{
-  background-image: url('./themes/chuchurocket_theme/mouse\(pacman\).png');
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
 .ghost{
   background-image: url('./themes/pacman_theme/ghost.png');
   background-position: center;
@@ -173,6 +154,25 @@ section div{
   background-size: contain;
   background-repeat: no-repeat;
   animation: flash 0.4s infinite;
+}
+
+.pacman{
+  background-image: url('./themes/pacman_theme/pacman.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.parappa-pacman{
+  background-image: url('./themes/parappa_theme/parappa\(pacman\).png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.chuchu-pacman{
+  background-image: url('./themes/chuchurocket_theme/mouse\(pacman\).png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 /* .ghost1{
