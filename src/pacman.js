@@ -36,6 +36,7 @@ function init(){
   let audio = document.querySelector('audio')
   audio.controls = true
   audio.loop = true
+  audio.volume = 0.5
   if (window.localStorage.getItem('pacman') === 'pacman'){
     audio.src = './sounds/pacman.m4a'
   } else if (window.localStorage.getItem('pacman') === 'parappa'){
@@ -88,11 +89,11 @@ function init(){
   let interval
   let timer
   let currentScore = 0
-  let levelOneEnd = 697 // triggers youWin (all of these will need altering if i change level designs)
-  let levelOnePlusBonus = 797 // bonus points after the youWin alert trigers next level
-  let levelTwoEnd = 1486
-  let levelTwoPlusBonus = 1586
-  let levelThreeEnd = 2245
+  let levelOneEnd = 693 // triggers youWin (all of these will need altering if i change level designs)
+  let levelOnePlusBonus = 793 // bonus points after the youWin alert trigers next level
+  let levelTwoEnd = 1479
+  let levelTwoPlusBonus = 1579
+  let levelThreeEnd = 2235
   // let levelThreePlusBonus = 2306
   let ateFlashingFood = false
   let currentScoreDisplay = document.querySelector('#bottom div span')
@@ -536,7 +537,7 @@ function init(){
     clearInterval(interval)
     audio.pause()
     audio.loop = false
-    audio.src = './sounds/game-over-yeah.mp3'
+    audio.src = './sounds/parappa-game_over clipped.m4a'
     setTimeout(() => {
       alert(`Game over!!! Your final score is: ${currentScore}`)
     }, 100)
