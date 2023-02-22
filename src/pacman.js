@@ -89,19 +89,19 @@ function init(){
   const highScoreSpan = document.querySelector('.highscore span')
   let highScore = localStorage.getItem('highScore') //? saved in localStorage
   highScoreSpan.innerText = highScore
-  const ghostOne = {
+  let ghostOne = {
     ghostStartingPosition: 161,
     ghostCurrentPosition: 161,
   }
-  const ghostTwo = {
+  let ghostTwo = {
     ghostStartingPosition: 186,
     ghostCurrentPosition: 186,
   }
-  const ghostThree = {
+  let ghostThree = {
     ghostStartingPosition: 186,
     ghostCurrentPosition: 186,
   }
-  const ghostFour = {
+  let ghostFour = {
     ghostStartingPosition: 187,
     ghostCurrentPosition: 187,
   }
@@ -124,7 +124,7 @@ function init(){
   function createGrid(){
     for (let i = 0; i < cellCount; i++){
       const cell = document.createElement('div')
-      cell.innerText = i
+      // cell.innerText = i
       grid?.appendChild(cell)
       cells.push(cell)
     }
@@ -358,101 +358,105 @@ function init(){
   }
   // ghostMovement() //! this function makes the ghosts move purely at random. maybe keep for easy mode?
 
+
   function ghostPathFinderMovement(){
-    interval = setInterval(() => {
+
+    interval = setInterval(() => { //! start of intervals (this is how often the ghosts will move)
       let arrOfXOptions
       let arrOfYOptions
       for (let i = 0; i < ghosts.length; i++){
-        arrOfXOptions = []
-        arrOfYOptions = []
-        removeGhost()
-        let nextCell = ghosts[i].ghostCurrentPosition + 1
-        let lastCell = ghosts[i].ghostCurrentPosition - 1
-        let cellAbove = ghosts[i].ghostCurrentPosition - width
-        let cellBelow = ghosts[i].ghostCurrentPosition + width
-        let xCoordsArr = []
-        let yCoordsArr = []
-        let nextCellCoords = cells[nextCell]?.getBoundingClientRect()
-        let nextCellCoordsX = nextCellCoords?.x
-        let nextCellCoordsY = nextCellCoords?.y
-        xCoordsArr.push(nextCellCoordsX)
-        yCoordsArr.push(nextCellCoordsY)
-        let lastCellCoords = cells[lastCell]?.getBoundingClientRect()
-        let lastCellCoordsX = lastCellCoords?.x
-        let lastCellCoordsY = lastCellCoords?.y
-        xCoordsArr.push(lastCellCoordsX)
-        yCoordsArr.push(lastCellCoordsY)
-        let cellAboveCoords = cells[cellAbove]?.getBoundingClientRect()
-        let cellAboveCoordsX = cellAboveCoords?.x
-        let cellAboveCoordsY = cellAboveCoords?.y
-        xCoordsArr.push(cellAboveCoordsX)
-        yCoordsArr.push(cellAboveCoordsY)
-        let cellBelowCoords = cells[cellBelow]?.getBoundingClientRect()
-        let cellBelowCoordsX = cellBelowCoords?.x
-        let cellBelowCoordsY = cellBelowCoords?.y
-        xCoordsArr.push(cellBelowCoordsX) //? xCoordsArr is in order of nextCell, lastCell, cellAbove, cellBelow, so if index 0 is smallest number, move to nextCell; if index 1 is smallest, move to lastCell etc.
-        yCoordsArr.push(cellBelowCoordsY)
-        // console.log(yCoordsArr)
+        setTimeout(() => { //! start of timer to stagger ghost movement (this is when each ghost will start moving)
+          arrOfXOptions = []
+          arrOfYOptions = []
+          removeGhost()
+          let nextCell = ghosts[i].ghostCurrentPosition + 1
+          let lastCell = ghosts[i].ghostCurrentPosition - 1
+          let cellAbove = ghosts[i].ghostCurrentPosition - width
+          let cellBelow = ghosts[i].ghostCurrentPosition + width
+          let xCoordsArr = []
+          let yCoordsArr = []
+          let nextCellCoords = cells[nextCell]?.getBoundingClientRect()
+          let nextCellCoordsX = nextCellCoords?.x
+          let nextCellCoordsY = nextCellCoords?.y
+          xCoordsArr.push(nextCellCoordsX)
+          yCoordsArr.push(nextCellCoordsY)
+          let lastCellCoords = cells[lastCell]?.getBoundingClientRect()
+          let lastCellCoordsX = lastCellCoords?.x
+          let lastCellCoordsY = lastCellCoords?.y
+          xCoordsArr.push(lastCellCoordsX)
+          yCoordsArr.push(lastCellCoordsY)
+          let cellAboveCoords = cells[cellAbove]?.getBoundingClientRect()
+          let cellAboveCoordsX = cellAboveCoords?.x
+          let cellAboveCoordsY = cellAboveCoords?.y
+          xCoordsArr.push(cellAboveCoordsX)
+          yCoordsArr.push(cellAboveCoordsY)
+          let cellBelowCoords = cells[cellBelow]?.getBoundingClientRect()
+          let cellBelowCoordsX = cellBelowCoords?.x
+          let cellBelowCoordsY = cellBelowCoords?.y
+          xCoordsArr.push(cellBelowCoordsX) //? xCoordsArr is in order of nextCell, lastCell, cellAbove, cellBelow, so if index 0 is smallest number, move to nextCell; if index 1 is smallest, move to lastCell etc.
+          yCoordsArr.push(cellBelowCoordsY)
+          // console.log(yCoordsArr)
 
-        //? check all the coordinates around the ghost and see which one is closest to 'distance from pacman'
-        //? X MOVEMENT
-        xCoordsArr.map((x) => {
-          arrOfXOptions.push(Math.abs(x - pacmanCoordsX)) // perfect, now we have an array of the x options for each ghost, we need choose the one closest to 0
-        })
+          //? check all the coordinates around the ghost and see which one is closest to 'distance from pacman'
+          //? X MOVEMENT
+          xCoordsArr.map((x) => {
+            arrOfXOptions.push(Math.abs(x - pacmanCoordsX)) // perfect, now we have an array of the x options for each ghost, we need choose the one closest to 0
+          })
 
-        let lowestX = 0
-        for (let j = 0; j < arrOfXOptions.length; j++){
-          if (arrOfXOptions[j] !== arrOfXOptions[j]){
-          } else if (arrOfXOptions[j] < arrOfXOptions[lowestX]) {
-            lowestX = j
+          let lowestX = 0
+          for (let j = 0; j < arrOfXOptions.length; j++){
+            if (arrOfXOptions[j] !== arrOfXOptions[j]){
+            } else if (arrOfXOptions[j] < arrOfXOptions[lowestX]) {
+              lowestX = j
+            }
+            // console.warn('lowestX is: ' + j + ': ' + lowestX) //? This is the smallest index :D
           }
-          // console.warn('lowestX is: ' + j + ': ' + lowestX) //? This is the smallest index :D
-        }
-        
-        //? Y MOVEMENT
-        yCoordsArr.map((y) => {
-          arrOfYOptions.push(Math.abs(y - pacmanCoordsY)) // perfect, now we have an array of the y options for each ghost, we need choose the one closest to 0
-        })
-        
-        let lowestY = 0
-        for (let k = 0; k < arrOfYOptions.length; k++){
-          if (arrOfYOptions[k] !== arrOfYOptions[k]){
-          } else if (arrOfYOptions[k] < arrOfYOptions[lowestY]) {
-            lowestY = k
+          
+          //? Y MOVEMENT
+          yCoordsArr.map((y) => {
+            arrOfYOptions.push(Math.abs(y - pacmanCoordsY)) // perfect, now we have an array of the y options for each ghost, we need choose the one closest to 0
+          })
+          
+          let lowestY = 0
+          for (let k = 0; k < arrOfYOptions.length; k++){
+            if (arrOfYOptions[k] !== arrOfYOptions[k]){
+            } else if (arrOfYOptions[k] < arrOfYOptions[lowestY]) {
+              lowestY = k
+            }
+            // console.log(arrOfYOptions)
+            // console.warn('lowestY is: ' + k + ': ' + lowestY) //? This is the smallest index :D
+          } 
+          //? random choice between X and Y movement
+          const xOrYMovement = Math.floor(Math.random() * 2)
+          if (xOrYMovement === 0){
+            if (lowestX === 0 && ghosts[i].ghostCurrentPosition % width !== width - 1){
+                cells[nextCell]?.classList.contains('wall') || cells[nextCell]?.classList.contains('parappa-walls') || cells[nextCell]?.classList.contains('chuchu-walls') || cells[nextCell]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
+                console.log('blocked right!') :
+                ghosts[i].ghostCurrentPosition++
+              } else if (lowestX === 1 && ghosts[i].ghostCurrentPosition % width !== 0){
+                cells[lastCell]?.classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls') || cells[lastCell]?.classList.contains('ghost') || cells[lastCell]?.classList.contains('parappa-ghost') || cells[lastCell]?.classList.contains('chuchu-ghost') ? 
+                console.log('blocked left!') : 
+                ghosts[i].ghostCurrentPosition--
+              } 
+          } else if (xOrYMovement === 1){
+            if (lowestY === 2 && ghosts[i].ghostCurrentPosition >= width){
+              cells[cellAbove]?.classList.contains('wall') || cells[cellAbove]?.classList.contains('parappa-walls') || cells[cellAbove]?.classList.contains('chuchu-walls') || cells[cellAbove]?.classList.contains('ghost') || cells[cellAbove]?.classList.contains('parappa-ghost') || cells[cellAbove]?.classList.contains('chuchu-ghost') ? 
+              console.log('blocked above!') : 
+              ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
+            } else if (lowestY === 3 && ghosts[i].ghostCurrentPosition + width < cellCount){
+              cells[cellBelow]?.classList.contains('wall') || cells[cellBelow]?.classList.contains('parappa-walls')  || cells[cellBelow]?.classList.contains('chuchu-walls') || cells[cellBelow]?.classList.contains('ghost') || cells[cellBelow]?.classList.contains('parappa-ghost') || cells[cellBelow]?.classList.contains('chuchu-ghost') ? 
+              console.log('blocked below!') : 
+              ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
+            }
           }
-          // console.log(arrOfYOptions)
-          // console.warn('lowestY is: ' + k + ': ' + lowestY) //? This is the smallest index :D
-        } 
-        //? random choice between X and Y movement
-        const xOrYMovement = Math.floor(Math.random() * 2)
-        if (xOrYMovement === 0){
-          if (lowestX === 0 && ghosts[i].ghostCurrentPosition % width !== width - 1){
-              cells[nextCell]?.classList.contains('wall') || cells[nextCell]?.classList.contains('parappa-walls') || cells[nextCell]?.classList.contains('chuchu-walls') || cells[nextCell]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
-              console.log('blocked right!') :
-              ghosts[i].ghostCurrentPosition++
-            } else if (lowestX === 1 && ghosts[i].ghostCurrentPosition % width !== 0){
-              cells[lastCell]?.classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls') || cells[lastCell]?.classList.contains('ghost') || cells[lastCell]?.classList.contains('parappa-ghost') || cells[lastCell]?.classList.contains('chuchu-ghost') ? 
-              console.log('blocked left!') : 
-              ghosts[i].ghostCurrentPosition--
-            } 
-        } else if (xOrYMovement === 1){
-          if (lowestY === 2 && ghosts[i].ghostCurrentPosition >= width){
-            cells[cellAbove]?.classList.contains('wall') || cells[cellAbove]?.classList.contains('parappa-walls') || cells[cellAbove]?.classList.contains('chuchu-walls') || cells[cellAbove]?.classList.contains('ghost') || cells[cellAbove]?.classList.contains('parappa-ghost') || cells[cellAbove]?.classList.contains('chuchu-ghost') ? 
-            console.log('blocked above!') : 
-            ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
-          } else if (lowestY === 3 && ghosts[i].ghostCurrentPosition + width < cellCount){
-            cells[cellBelow]?.classList.contains('wall') || cells[cellBelow]?.classList.contains('parappa-walls')  || cells[cellBelow]?.classList.contains('chuchu-walls') || cells[cellBelow]?.classList.contains('ghost') || cells[cellBelow]?.classList.contains('parappa-ghost') || cells[cellBelow]?.classList.contains('chuchu-ghost') ? 
-            console.log('blocked below!') : 
-            ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
-          }
-        }
-        console.log('loop: ' + lowestX, lowestY)
-        // console.warn('position: ' + ghosts[i].ghostCurrentPosition)
-        ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
+          // console.log('loop: ' + lowestX, lowestY)
+          // console.warn('position: ' + ghosts[i].ghostCurrentPosition)
+          ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
+        }, i * 5000) //! end of timer
       }
 
       ghostCollision()
-    }, 500)
+    }, 500) //! end of intervals
   }
   ghostPathFinderMovement()
 
