@@ -139,7 +139,7 @@ function init(){
       cells.push(cell)
     }
     addPacman(startingPosition)
-    addGhost(ghosts.ghostStartingPosition)
+    addGhost()
     addFlashingFood()
     addWall()
     addFood()
@@ -309,9 +309,9 @@ function init(){
 
   function addGhost(position){
     for (let i = 0; i < ghosts.length; i++){
-      if (cells[position]?.classList.contains('ghost')){
-      } 
-      else {
+      // if (cells[position]?.classList.contains('ghost')){
+      // } 
+      // else {
         if (window.localStorage.getItem('pacman') === 'pacman'){
           cells[ghosts[i].ghostCurrentPosition]?.classList.add('ghost')
         } else if (window.localStorage.getItem('pacman') === 'parappa'){
@@ -319,7 +319,7 @@ function init(){
         } else if (window.localStorage.getItem('pacman') === 'chuchu'){
           cells[ghosts[i].ghostCurrentPosition]?.classList.add('chuchu-ghost')
         }
-      }
+      // }
     }
   }
 
@@ -355,7 +355,6 @@ function init(){
       let arrOfXOptions
       let arrOfYOptions
       for (let i = 0; i < ghosts.length; i++){
-
         setTimeout(() => { //! start of timer to stagger ghost movement (this is when each ghost will start moving)
           arrOfXOptions = []
           arrOfYOptions = []
@@ -447,7 +446,6 @@ function init(){
 
       }
       ghostCollision()
-
     }, 500) //! end of intervals
   }
   ghostPathFinderMovement()
