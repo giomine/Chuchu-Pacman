@@ -393,19 +393,12 @@ function init(){
         let cellBelowCoords = cells[cellBelow]?.getBoundingClientRect()
         let cellBelowCoordsX = cellBelowCoords?.x
         let cellBelowCoordsY = cellBelowCoords?.y
-        xCoordsArr.push(cellBelowCoordsX) //! xCoordsArr is in order of nextCell, lastCell, cellAbove, cellBelow, so if index 0 is smallest number, move to nextCell; if index 1 is smallest, move to lastCell etc.
+        xCoordsArr.push(cellBelowCoordsX) //? xCoordsArr is in order of nextCell, lastCell, cellAbove, cellBelow, so if index 0 is smallest number, move to nextCell; if index 1 is smallest, move to lastCell etc.
         yCoordsArr.push(cellBelowCoordsY)
-        // console.log(xCoordsArr)
-
-        // ! Ghost coordinates Maybe I don't need this bit actually? just the ones above, keep checking their surrounding cells against pacmans coords
-        // ghostCoords = cells[ghosts[i].ghostCurrentPosition]?.getBoundingClientRect()
-        // ghostCoordsX = ghostCoords.x
-        // ghostCoordsY = ghostCoords.y 
-        // distanceVertical = ghostCoordsX - pacmanCoordsX // this is how many pixels away they are vertically, so if pacman is below or above ghost distance is 0
-        // distanceHorizontal = ghostCoordsY - pacmanCoordsY // this is how many pixels away they are horizontally, so if pacman is on left or right of ghost distance is 0
+        // console.log(yCoordsArr)
 
         //? check all the coordinates around the ghost and see which one is closest to 'distance from pacman'
-        // ! X MOVEMENT
+        //? X MOVEMENT
         xCoordsArr.map((x) => {
           arrOfXOptions.push(Math.abs(x - pacmanCoordsX)) // perfect, now we have an array of the x options for each ghost, we need choose the one closest to 0
         })
@@ -413,80 +406,56 @@ function init(){
         let lowestX = 0
         for (let j = 0; j < arrOfXOptions.length; j++){
           if (arrOfXOptions[j] !== arrOfXOptions[j]){
-            continue
           } else if (arrOfXOptions[j] < arrOfXOptions[lowestX]) {
             lowestX = j
           }
-          // console.log('lowestX is: ' + j + ': ' + lowestX) //! This is the smallest index :D
+          // console.warn('lowestX is: ' + j + ': ' + lowestX) //? This is the smallest index :D
         }
-
-        // ! Y MOVEMENT
+        
+        //? Y MOVEMENT
         yCoordsArr.map((y) => {
-          arrOfYOptions.push(Math.abs(y - pacmanCoordsY)) // perfect, now we have an array of the x options for each ghost, we need choose the one closest to 0
+          arrOfYOptions.push(Math.abs(y - pacmanCoordsY)) // perfect, now we have an array of the y options for each ghost, we need choose the one closest to 0
         })
-
+        
         let lowestY = 0
         for (let k = 0; k < arrOfYOptions.length; k++){
           if (arrOfYOptions[k] !== arrOfYOptions[k]){
-            continue
           } else if (arrOfYOptions[k] < arrOfYOptions[lowestY]) {
             lowestY = k
           }
-          // console.log('lowestX is: ' + j + ': ' + lowestX) //!? This is the smallest index?
+          // console.log(arrOfYOptions)
+          // console.warn('lowestY is: ' + k + ': ' + lowestY) //? This is the smallest index :D
         } 
-        //! random choice between X and Y movement
-        const randomGhost = Math.floor(Math.random() * 2)
-        console.log(randomGhost)
-          if (randomGhost === 0){
-            // if (lowestX === 0 || lowestX === 1){
-              //   yMovement()
-              // }
-              if (lowestX === 0 && ghosts[i].ghostCurrentPosition % width !== width - 1){
-                cells[nextCell]?.classList.contains('wall') || cells[nextCell]?.classList.contains('parappa-walls') || cells[nextCell]?.classList.contains('chuchu-walls') || cells[nextCell]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
-                console.log('blocked!') :
-                ghosts[i].ghostCurrentPosition++
+        //? random choice between X and Y movement
+        const xOrYMovement = Math.floor(Math.random() * 2)
+        if (xOrYMovement === 0){
+          if (lowestX === 0 && ghosts[i].ghostCurrentPosition % width !== width - 1){
+              cells[nextCell]?.classList.contains('wall') || cells[nextCell]?.classList.contains('parappa-walls') || cells[nextCell]?.classList.contains('chuchu-walls') || cells[nextCell]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
+              console.log('blocked right!') :
+              ghosts[i].ghostCurrentPosition++
             } else if (lowestX === 1 && ghosts[i].ghostCurrentPosition % width !== 0){
               cells[lastCell]?.classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls') || cells[lastCell]?.classList.contains('ghost') || cells[lastCell]?.classList.contains('parappa-ghost') || cells[lastCell]?.classList.contains('chuchu-ghost') ? 
-              console.log('blocked!') : 
+              console.log('blocked left!') : 
               ghosts[i].ghostCurrentPosition--
             } 
-          //   else if (lowestX === 2 && ghosts[i].ghostCurrentPosition + width < cellCount){
-            //   cells[cellBelow]?.classList.contains('wall') || cells[cellBelow]?.classList.contains('parappa-walls') || cells[cellBelow]?.classList.contains('chuchu-walls') || cells[cellBelow]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
-            //   console.log('blocked!') : 
-            //   ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
-            // } else if (lowestX === 3 && ghosts[i].ghostCurrentPosition >= width){
-              //   cells[cellAbove]?.classList.contains('wall') || cells[cellAbove]?.classList.contains('parappa-walls')  || cells[cellAbove]?.classList.contains('chuchu-walls') || cells[cellAbove]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
-              //   console.log('blocked!') : 
-              //   ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
-              // }
-        } else if (randomGhost === 1){
-            // if (lowestY === 0 && ghosts[i].ghostCurrentPosition % width !== width - 1){
-            //   cells[nextCell]?.classList.contains('wall') || cells[nextCell]?.classList.contains('parappa-walls') || cells[nextCell]?.classList.contains('chuchu-walls') || cells[nextCell]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
-            //   console.log('blocked!') :
-            //   ghosts[i].ghostCurrentPosition++
-            // } else if (lowestY === 1 && ghosts[i].ghostCurrentPosition % width !== 0){
-              //   cells[lastCell]?.classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls') || cells[lastCell]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
-              //   console.log('blocked!') : 
-              //   ghosts[i].ghostCurrentPosition--
-              // }
-              if (lowestY === 2 && ghosts[i].ghostCurrentPosition + width < cellCount){
-                cells[cellAbove]?.classList.contains('wall') || cells[cellAbove]?.classList.contains('parappa-walls') || cells[cellAbove]?.classList.contains('chuchu-walls') || cells[cellAbove]?.classList.contains('ghost') || cells[cellAbove]?.classList.contains('parappa-ghost') || cells[cellAbove]?.classList.contains('chuchu-ghost') ? 
-                console.log('blocked!') : 
-                ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
-              } else if (lowestY === 3 && ghosts[i].ghostCurrentPosition >= width){
-                cells[cellBelow]?.classList.contains('wall') || cells[cellBelow]?.classList.contains('parappa-walls')  || cells[cellBelow]?.classList.contains('chuchu-walls') || cells[cellBelow]?.classList.contains('ghost') || cells[cellBelow]?.classList.contains('parappa-ghost') || cells[cellBelow]?.classList.contains('chuchu-ghost') ? 
-                console.log('blocked!') : 
-                ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
-              
-            }
+        } else if (xOrYMovement === 1){
+          if (lowestY === 2 && ghosts[i].ghostCurrentPosition >= width){
+            cells[cellAbove]?.classList.contains('wall') || cells[cellAbove]?.classList.contains('parappa-walls') || cells[cellAbove]?.classList.contains('chuchu-walls') || cells[cellAbove]?.classList.contains('ghost') || cells[cellAbove]?.classList.contains('parappa-ghost') || cells[cellAbove]?.classList.contains('chuchu-ghost') ? 
+            console.log('blocked above!') : 
+            ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
+          } else if (lowestY === 3 && ghosts[i].ghostCurrentPosition + width < cellCount){
+            cells[cellBelow]?.classList.contains('wall') || cells[cellBelow]?.classList.contains('parappa-walls')  || cells[cellBelow]?.classList.contains('chuchu-walls') || cells[cellBelow]?.classList.contains('ghost') || cells[cellBelow]?.classList.contains('parappa-ghost') || cells[cellBelow]?.classList.contains('chuchu-ghost') ? 
+            console.log('blocked below!') : 
+            ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
           }
+        }
         console.log('loop: ' + lowestX, lowestY)
-        
+        // console.warn('position: ' + ghosts[i].ghostCurrentPosition)
         ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
       }
 
       ghostCollision()
-    }, 250)
+    }, 500)
   }
   ghostPathFinderMovement()
 
