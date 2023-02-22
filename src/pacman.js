@@ -116,7 +116,7 @@ function init(){
     ghostStartingPosition: 187,
     ghostCurrentPosition: 187,
   }
-  const ghosts = [ghostOne, ghostTwo, ghostThree, ghostFour] // an array of ghosts, each one is an image file with it's own startingPosition and currentPosition variables
+  const ghosts = [ghostOne, ghostTwo, ghostThree, ghostFour]
   const wallCells = [50, 51, 52, 300, 301, 302, 72, 73, 74, 322, 323, 324, 7, 32, 57, 17, 42, 67, 12, 37, 307, 332, 357, 317, 342, 367, 337, 362, 102, 103, 104, 127, 152, 202, 227, 252, 253, 254, 120, 121, 122, 147, 172, 222, 247, 272, 271, 270, 155, 156, 157, 205, 206, 207, 167, 168, 169, 217, 218, 219, 85, 86, 87, 88, 89, 285, 286, 287, 288, 289, 237, 137, 185, 189, 239, 139, 135, 235] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
   const wallCellsSecondLevel = [25, 26, 27, 28, 29, 30, 125, 126, 127, 128, 129, 154, 179, 44, 45, 46, 47, 48, 49, 145, 146, 147, 148, 149, 170, 195, 325, 326, 327, 328, 329, 330, 344, 345, 346, 347, 348, 349, 252, 253, 254, 228, 278, 270, 271, 272, 246, 296, 282, 283, 284, 285, 289, 290, 291, 292, 81, 82, 83, 84, 85, 33, 58, 108, 133, 89, 90, 91, 92, 93, 41, 66, 116, 141, 185, 189, 12, 37, 337, 362, 135, 136, 138, 139, 212]
   const wallCellsThirdLevel = [27, 51, 52, 53, 77, 55, 56, 57, 59, 60, 61, 35, 85, 63, 64, 65, 67, 68, 69, 43, 93, 71, 72, 73, 128, 129, 130, 104, 154, 133, 108, 158, 136, 137, 138, 112, 162, 141, 116, 166, 144, 145, 146, 120, 170, 201, 202, 203, 205, 206, 207, 181, 231, 209, 210, 211, 213, 214, 215, 189, 239, 217, 218, 219, 221, 222, 223, 197, 247, 278, 279, 280, 254, 304, 283, 282, 284, 286, 287, 288, 262, 312, 290, 291, 292, 294, 295, 296, 270, 320, 327, 352, 331, 356, 335, 360, 339, 364, 343, 368, 347, 372, 4, 8, 12, 16, 20, 124, 174, 274, 324, 100, 150, 250, 300]
@@ -125,10 +125,9 @@ function init(){
   let lives = 3
   livesDisplay = document.querySelector('#bottom div:nth-of-type(2) span')
   livesDisplay.innerText = '♥️♥️♥️'
-  const flashingFood = [113, 200, 349, 99] // will be an emoji or image file added to specific grid cells
+  const flashingFood = [113, 200, 349, 99]
   const flashingFoodSecondLevel = [277, 213, 59, 171]
   const flashingFoodThirdLevel = [315, 271, 178, 19]
-  // bonusFood // worth 200 points, comes to a random place on a timeOut so you only get bonus points if you eat it in time
   
   // ! FUNCTIONS
   // ? create the grid and place Pacman, ghosts, food, and walls in it
@@ -143,11 +142,10 @@ function init(){
     addGhost(ghosts.ghostStartingPosition)
     addFlashingFood()
     addWall()
-    addFood() // if you eat all the food you win! will be an emoji or image file added to specific grid cells 
+    addFood()
   }
 
   function addPacman(position){
-    // console.log(lives)
     // console.log(pacman)
     if (window.localStorage.getItem('pacman') === 'pacman'){
       cells[position].classList.add('pacman')
@@ -270,7 +268,7 @@ function init(){
           sections.forEach(section => section.style.backgroundColor = 'white')
         }
       })
-      // ghostMovement()
+
       ghostPathFinderMovement()
       addFlashingFood()  //? it was important to call addFlashingFood before addFood, otherwise the color would be overwritten by CSS and the flashing food would be green instead of gold
       addFood()
@@ -293,7 +291,7 @@ function init(){
           main.style.backgroundColor = 'rgba(0,0,0,0.6)'
         }
       })
-      // ghostMovement()
+
       ghostPathFinderMovement()
       addFlashingFood()
       addFood()
@@ -303,7 +301,6 @@ function init(){
   function addFood(){
     cells.forEach(cell => {
       if (cell.classList.contains('wall') || cell.classList.contains('parappa-walls') || cell.classList.contains('chuchu-walls') || cell.classList.contains('flashing-food')){
-        // console.log(flashingFood.length) //? this shows we can either change food to a stupidly long array and pop off until 0, or find another way to check if all food has been eaten
       } else {
         cell.classList.add('food')
       }
@@ -352,54 +349,13 @@ function init(){
     }, 5000)
   }
 
-  //? Make them follow pacman - need a pathfinder.
-  //? they now move randomly and can't walk through walls, but they can keep going eg left right left right left right
-  //? they need to walk a path, not go backwards and forwards
-  function ghostMovement(){
-
-    interval = setInterval(() => {
-      
-      for (let i = 0; i < ghosts.length; i++){
-        removeGhost()
-        const nextCell = ghosts[i].ghostCurrentPosition + 1
-        const lastCell = ghosts[i].ghostCurrentPosition - 1
-        const cellAbove = ghosts[i].ghostCurrentPosition - width
-        const cellBelow = ghosts[i].ghostCurrentPosition + width
-        const randomMvmt = [nextCell, lastCell, cellAbove, cellBelow]
-
-        const random = Math.floor(Math.random() * randomMvmt.length)
-
-        if (randomMvmt[random] === nextCell && ghosts[i].ghostCurrentPosition % width !== width - 1){
-          cells[nextCell]?.classList.contains('wall') || cells[nextCell]?.classList.contains('parappa-walls') || cells[nextCell]?.classList.contains('chuchu-walls') || cells[nextCell]?.classList.contains('ghost') || cells[nextCell]?.classList.contains('parappa-ghost') || cells[nextCell]?.classList.contains('chuchu-ghost') ? 
-          console.log('blocked!') :
-          ghosts[i].ghostCurrentPosition++
-        } else if (randomMvmt[random] === lastCell && ghosts[i].ghostCurrentPosition % width !== 0) {
-          cells[lastCell]?.classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls') || cells[lastCell]?.classList.contains('ghost') || cells[lastCell]?.classList.contains('parappa-ghost') || cells[lastCell]?.classList.contains('chuchu-ghost') ? 
-          console.log('blocked!') : 
-          ghosts[i].ghostCurrentPosition--
-        } else if (randomMvmt[random] === cellBelow && ghosts[i].ghostCurrentPosition + width < cellCount){
-          cells[cellBelow]?.classList.contains('wall') || cells[cellBelow]?.classList.contains('parappa-walls') || cells[cellBelow]?.classList.contains('chuchu-walls') || cells[cellBelow]?.classList.contains('ghost') || cells[cellBelow]?.classList.contains('parappa-ghost') || cells[cellBelow]?.classList.contains('chuchu-ghost') ? 
-          console.log('blocked!') : 
-          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition + width 
-        } else if (randomMvmt[random] === cellAbove && ghosts[i].ghostCurrentPosition >= width){
-          cells[cellAbove]?.classList.contains('wall') || cells[cellAbove]?.classList.contains('parappa-walls')  || cells[cellAbove]?.classList.contains('chuchu-walls') || cells[cellAbove]?.classList.contains('ghost') || cells[cellAbove]?.classList.contains('parappa-ghost') || cells[cellAbove]?.classList.contains('chuchu-ghost') ? 
-          console.log('blocked!') : 
-          ghosts[i].ghostCurrentPosition = ghosts[i].ghostCurrentPosition - width 
-        }
-        ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
-      }
-      ghostCollision()
-    }, 500)
-  }
-  // ghostMovement() //! this function makes the ghosts move purely at random. maybe keep for easy mode?
-
-
   function ghostPathFinderMovement(){
 
     interval = setInterval(() => { //! start of intervals (this is how often the ghosts will move)
       let arrOfXOptions
       let arrOfYOptions
       for (let i = 0; i < ghosts.length; i++){
+
         setTimeout(() => { //! start of timer to stagger ghost movement (this is when each ghost will start moving)
           arrOfXOptions = []
           arrOfYOptions = []
@@ -488,9 +444,10 @@ function init(){
           // console.warn('position: ' + ghosts[i].ghostCurrentPosition)
           ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
         }, i * 5500) //! end of timer
-      }
 
+      }
       ghostCollision()
+
     }, 500) //! end of intervals
   }
   ghostPathFinderMovement()
@@ -626,18 +583,9 @@ function init(){
 
   function restartGame(){
     //? I can't find a way to remove the grid in order to recreate it from scratch 🤷‍♀️
-    // remove grid and then call createGrid() again
-    // clearInterval(interval)
-    // clearTimeout(timer)
-    // currentScore = 0
-    // currentScoreDisplay.innerText = currentScore
-    // lives = 3
-    // livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔' 
       if (confirm("Are you sure you want to restart?") === true){
-        // console.log('roger that')
         window.location.reload()
       } else {
-        // console.log('continuing!')
       }
     }
 
