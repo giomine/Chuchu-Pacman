@@ -32,6 +32,7 @@ function init(){
   })
 
   // ! AUDIOS
+  let ouch = document.querySelector('.ouch')
   let audio = document.querySelector('audio')
   audio.controls = true
   audio.loop = true
@@ -564,6 +565,9 @@ function init(){
   function ghostCollision(){
     if (cells[currentPosition]?.classList.contains('ghost') || cells[currentPosition]?.classList.contains('parappa-ghost') || cells[currentPosition]?.classList.contains('chuchu-ghost')){
       // console.log('ghost!!!')
+      // ouch.src = './sounds/ouch/nngh.m4a'
+      ouch.src = './sounds/ouch/mlmlml.m4a'
+      ouch.play()
       lives--
       livesDisplay.innerText = lives ? '♥️'.repeat(lives) : '💔'
       if (lives === 0){
