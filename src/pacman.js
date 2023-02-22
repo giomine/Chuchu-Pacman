@@ -30,11 +30,12 @@ function init(){
 
   // ! AUDIOS
   let audio = document.querySelector('audio')
-  audio.controls = true;
+  audio.controls = true
+  audio.loop = true
   if (window.localStorage.getItem('pacman') === 'pacman'){
-    audio.src = './sounds/pacman.mp3'
+    audio.src = './sounds/pacman.m4a'
   } else if (window.localStorage.getItem('pacman') === 'parappa'){
-    audio.src = './sounds/parappa.mp3'
+    audio.src = './sounds/parappa.m4a'
   } else if (window.localStorage.getItem('pacman') === 'chuchu'){
     audio.src = './sounds/chuchulevel1.mp3'
   }
@@ -251,8 +252,6 @@ function init(){
       ghostPathFinderMovement()
       addFlashingFood()  //? it was important to call addFlashingFood before addFood, otherwise the color would be overwritten by CSS and the flashing food would be green instead of gold
       addFood()
-      removeGhost()
-      addGhost(ghosts.ghostStartingPosition)
     } else if (currentScore === levelTwoPlusBonus) {
       wallCellsSecondLevel.forEach(newWall => {
         cells[newWall].classList.remove('wall') || cells[newWall].classList.remove('parappa-walls') || cells[newWall].classList.remove('chuchu-walls')
@@ -549,6 +548,9 @@ function init(){
   function gameOver(){
     // console.log('stopping....')
     clearInterval(interval)
+    audio.pause()
+    audio.loop = false
+    audio.src = './sounds/game-over-yeah.mp3'
     setTimeout(() => {
       alert(`Game over!!! Your final score is: ${currentScore}`)
     }, 100)
@@ -567,6 +569,9 @@ function init(){
 
   function youWinGame(){
     clearInterval(interval)
+    audio.pause()
+    audio.loop = false
+    audio.src = './sounds/ffviivictory.mp3'
     currentScore = currentScore+= 500 // give 'em some bonus points
     currentScoreDisplay.innerHTML = currentScore
     setTimeout(() => {
