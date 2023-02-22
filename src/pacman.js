@@ -74,11 +74,6 @@ function init(){
   let pacmanCoords
   let pacmanCoordsX
   let pacmanCoordsY
-  let ghostCoords
-  let ghostCoordsX
-  let ghostCoordsY
-  let distanceVertical
-  let distanceHorizontal
   const restartButton = document.querySelector('#top div')
   const grid = document.querySelector('.grid')
   const width = 25
@@ -95,24 +90,24 @@ function init(){
   let highScore = localStorage.getItem('highScore') //? saved in localStorage
   highScoreSpan.innerText = highScore
   const ghostOne = {
-    ghostStartingPosition: 0,
-    ghostCurrentPosition: 0,
+    ghostStartingPosition: 161,
+    ghostCurrentPosition: 161,
   }
   const ghostTwo = {
-    ghostStartingPosition: 10,
-    ghostCurrentPosition: 10,
+    ghostStartingPosition: 186,
+    ghostCurrentPosition: 186,
   }
   const ghostThree = {
-    ghostStartingPosition: 20,
-    ghostCurrentPosition: 20,
+    ghostStartingPosition: 186,
+    ghostCurrentPosition: 186,
   }
   const ghostFour = {
-    ghostStartingPosition: 30,
-    ghostCurrentPosition: 30,
+    ghostStartingPosition: 187,
+    ghostCurrentPosition: 187,
   }
   const ghosts = [ghostOne, ghostTwo, ghostThree, ghostFour] // an array of ghosts, each one is an image file with it's own startingPosition and currentPosition variables
-  const wallCells = [50, 51, 52, 300, 301, 302, 72, 73, 74, 322, 323, 324, 7, 32, 57, 17, 42, 67, 12, 37, 307, 332, 357, 317, 342, 367, 337, 362, 102, 103, 104, 127, 152, 202, 227, 252, 253, 254, 120, 121, 122, 147, 172, 222, 247, 272, 271, 270, 155, 156, 157, 205, 206, 207, 167, 168, 169, 217, 218, 219, 85, 86, 87, 88, 89, 285, 286, 287, 288, 289, 135, 160, 185, 210, 211, 212, 136, 137, 138, 213, 188] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
-  const wallCellsSecondLevel = [25, 26, 27, 28, 29, 30, 125, 126, 127, 128, 129, 154, 179, 44, 45, 46, 47, 48, 49, 145, 146, 147, 148, 149, 170, 195, 325, 326, 327, 328, 329, 330, 344, 345, 346, 347, 348, 349, 252, 253, 254, 228, 278, 270, 271, 272, 246, 296, 282, 283, 284, 285, 289, 290, 291, 292, 81, 82, 83, 84, 85, 33, 58, 108, 133, 89, 90, 91, 92, 93, 41, 66, 116, 141, 185, 186, 187, 188, 235, 236, 237, 238, 189, 214, 239, 12, 37, 337, 362]
+  const wallCells = [50, 51, 52, 300, 301, 302, 72, 73, 74, 322, 323, 324, 7, 32, 57, 17, 42, 67, 12, 37, 307, 332, 357, 317, 342, 367, 337, 362, 102, 103, 104, 127, 152, 202, 227, 252, 253, 254, 120, 121, 122, 147, 172, 222, 247, 272, 271, 270, 155, 156, 157, 205, 206, 207, 167, 168, 169, 217, 218, 219, 85, 86, 87, 88, 89, 285, 286, 287, 288, 289, 135, 160, 185, 210, 211, 212, 136, 137, 138, 213] // collisions, if you hit a wall you can't move through it. walls are styled as a CSS class added to specific grid cells.
+  const wallCellsSecondLevel = [25, 26, 27, 28, 29, 30, 125, 126, 127, 128, 129, 154, 179, 44, 45, 46, 47, 48, 49, 145, 146, 147, 148, 149, 170, 195, 325, 326, 327, 328, 329, 330, 344, 345, 346, 347, 348, 349, 252, 253, 254, 228, 278, 270, 271, 272, 246, 296, 282, 283, 284, 285, 289, 290, 291, 292, 81, 82, 83, 84, 85, 33, 58, 108, 133, 89, 90, 91, 92, 93, 41, 66, 116, 141, 185, 189, 12, 37, 337, 362, 160, 135, 136, 137, 138, 139, 164]
   const wallCellsThirdLevel = [27, 51, 52, 53, 77, 55, 56, 57, 31, 81, 59, 60, 61, 35, 85, 63, 64, 65, 39, 89, 67, 68, 69, 43, 93, 71, 72, 73, 47, 97, 128, 129, 130, 104, 154, 132, 133, 134, 108, 158, 136, 137, 138, 112, 162, 140, 141, 142, 116, 166, 144, 145, 146, 120, 170, 201, 202, 203, 177, 227, 205, 206, 207, 181, 231, 209, 210, 211, 185, 235, 213, 214, 215, 189, 239, 217, 218, 219, 193, 243, 221, 222, 223, 197, 247, 278, 279, 280, 254, 304, 282, 283, 284, 258, 308, 286, 287, 288, 262, 312, 290, 291, 292, 266, 316, 294, 295, 296, 270, 320, 327, 352, 331, 356, 335, 360, 339, 364, 343, 368, 347, 372, 4, 8, 12, 16, 20, 124, 174, 274, 324, 100, 150, 250, 300]
   const startingPosition = 70
   let currentPosition = startingPosition
@@ -129,7 +124,7 @@ function init(){
   function createGrid(){
     for (let i = 0; i < cellCount; i++){
       const cell = document.createElement('div')
-      // cell.innerText = i
+      cell.innerText = i
       grid?.appendChild(cell)
       cells.push(cell)
     }
@@ -246,7 +241,8 @@ function init(){
           cells[newWall].classList.add('chuchu-walls')
         }
       })
-      ghostMovement()
+      // ghostMovement()
+      ghostPathFinderMovement()
       addFlashingFood()  //? it was important to call addFlashingFood before addFood, otherwise the color would be overwritten by CSS and the flashing food would be green instead of gold
       addFood()
     } else if (currentScore === 1572) {
@@ -262,7 +258,8 @@ function init(){
           cells[wall].classList.add('chuchu-walls')
         }
       })
-      ghostMovement()
+      // ghostMovement()
+      ghostPathFinderMovement()
       addFlashingFood()
       addFood()
     }
