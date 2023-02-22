@@ -3,6 +3,9 @@ function init(){
   // const startButton = document.querySelector('#start-bottom div')
   // startButton.addEventListener('click', function(){console.log('clicked start')})
   // ! VISUAL THEMES
+  let bg = document.querySelector('body')
+  let main = document.querySelector('main')
+  let sections = document.querySelectorAll('section')
   let pacman = window.localStorage.getItem('pacman')
   const pacManTheme = document.querySelector('.pacman-theme')
   pacManTheme?.addEventListener('click', function(){
@@ -229,10 +232,19 @@ function init(){
         //? console.log(wall) // each of these is a number, that number needs to be a cells[i]
         if (window.localStorage.getItem('pacman') === 'pacman'){
           cells[wall].classList.add('wall')
+          bg.style.backgroundImage = "url('./styles/themes/pacman_theme/bg.png')" 
+          main.style.backgroundColor = 'rgba(0,0,0,0.8)'
+          sections.forEach(section => section.style.backgroundColor = 'white')
         } else if (window.localStorage.getItem('pacman') === 'parappa'){
           cells[wall].classList.add('parappa-walls')
+          bg.style.backgroundImage = "url('./styles/themes/parappa_theme/bg.png')" 
+          main.style.backgroundColor = 'rgba(0,0,0,0.8)'
+          sections.forEach(section => section.style.backgroundColor = 'white')
         } else if (window.localStorage.getItem('pacman') === 'chuchu'){
           cells[wall].classList.add('chuchu-walls')
+          bg.style.backgroundImage = "url('./styles/themes/chuchurocket_theme/bg.png')" 
+          main.style.backgroundColor = 'rgba(0,0,0,0.6)'
+          sections.forEach(section => section.style.backgroundColor = 'white')
         }
       })
     } else if (currentScore === levelOnePlusBonus){
@@ -242,10 +254,19 @@ function init(){
       wallCellsSecondLevel.forEach(newWall => {
         if (window.localStorage.getItem('pacman') === 'pacman'){
           cells[newWall].classList.add('wall')
+          bg.style.backgroundImage = "url('./styles/themes/pacman_theme/bg.png')" 
+          main.style.backgroundColor = 'rgba(0,0,0,0.8)'
+          sections.forEach(section => section.style.backgroundColor = 'white')
         } else if (window.localStorage.getItem('pacman') === 'parappa'){
           cells[newWall].classList.add('parappa-walls')
+          bg.style.backgroundImage = "url('./styles/themes/parappa_theme/bg.png')" 
+          main.style.backgroundColor = 'rgba(0,0,0,0.8)'
+          sections.forEach(section => section.style.backgroundColor = 'white')
         } else if (window.localStorage.getItem('pacman') === 'chuchu'){
           cells[newWall].classList.add('chuchu-walls')
+          bg.style.backgroundImage = "url('./styles/themes/chuchurocket_theme/bg.png')" 
+          main.style.backgroundColor = 'rgba(0,0,0,0.6)'
+          sections.forEach(section => section.style.backgroundColor = 'white')
         }
       })
       // ghostMovement()
@@ -259,10 +280,16 @@ function init(){
       wallCellsThirdLevel.forEach(wall => {
         if (window.localStorage.getItem('pacman') === 'pacman'){
           cells[wall].classList.add('wall')
+          bg.style.backgroundImage = "url('./styles/themes/pacman_theme/bg.png')" 
+          main.style.backgroundColor = 'rgba(0,0,0,0.8)'
         } else if (window.localStorage.getItem('pacman') === 'parappa'){
           cells[wall].classList.add('parappa-walls')
+          bg.style.backgroundImage = "url('./styles/themes/parappa_theme/bg.png')" 
+          main.style.backgroundColor = 'rgba(0,0,0,0.8)'
         } else if (window.localStorage.getItem('pacman') === 'chuchu'){
           cells[wall].classList.add('chuchu-walls')
+          bg.style.backgroundImage = "url('./styles/themes/chuchurocket_theme/bg.png')" 
+          main.style.backgroundColor = 'rgba(0,0,0,0.6)'
         }
       })
       // ghostMovement()

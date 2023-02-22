@@ -15,6 +15,8 @@ body{
 
 main{
   height: 100vh;
+  width: 100vw;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,8 +24,7 @@ main{
 }
 
 section{
-  /* border: 1px solid blue; */
-  padding: 0 20px;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -47,14 +48,23 @@ section div{
 
 #top div{
   cursor: pointer;
+  border: 1px solid gray;
+  height: 50px;
 }
-
+#top div:nth-child(1):hover{
+  transform: scale(1.1);
+  transition: transform 150ms;
+  background-color: gray;
+  color: white;
+}
 #top div:nth-child(2){
   flex-direction: column;
   height: 70px;
 }
 #bottom div{
   justify-content: space-around;
+  border: 1px solid gray;
+  height: 50px;
 }
 
 #grid-wrapper {
@@ -88,7 +98,7 @@ section div{
 .food{
   background-image: url('./themes/food/yellow-food.svg');
   background-position: center;
-  background-size: 15px;
+  background-size: 7px;
   background-repeat: no-repeat;
 }
 
@@ -177,10 +187,12 @@ section div{
 }
 
 .wall{
-  background-color: rgb(70, 70, 215);
+  background-color: rgba(0,0,255,0.9);
+  background-color: rgba(86, 86, 236, 0.75);
 }
 .parappa-walls{
-  background-color: rgb(226, 66, 66);
+  background-color: rgba(234, 213, 22, 0.7);
+  background-color: rgb(178, 178, 178);
 }
 .chuchu-walls{
   background-color: rgb(110, 225, 225);
@@ -247,9 +259,18 @@ a{
   border: 1px solid blue;
   border-radius: 5px;
   padding: 15px;
+
 }
 .theme-options div:hover, a:hover{
   transform: scale(1.1);
+  color: red;
+  background-color: white;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(255, 255, 255, 0.5);
+  transition: transform 150ms;
+}
+
+audio{
+  outline: none;
 }
 
 
