@@ -87,11 +87,11 @@ function init(){
   let interval
   let timer
   let currentScore = 0
-  let levelOneEnd = 696 // triggers youWin (all of these will need altering if i change level designs)
-  let levelOnePlusBonus = 796 // bonus points after the youWin alert trigers next level
-  let levelTwoEnd = 1485
-  let levelTwoPlusBonus = 1585
-  let levelThreeEnd = 2244
+  let levelOneEnd = 697 // triggers youWin (all of these will need altering if i change level designs)
+  let levelOnePlusBonus = 797 // bonus points after the youWin alert trigers next level
+  let levelTwoEnd = 1486
+  let levelTwoPlusBonus = 1586
+  let levelThreeEnd = 2245
   // let levelThreePlusBonus = 2306
   let ateFlashingFood = false
   let currentScoreDisplay = document.querySelector('#bottom div span')
