@@ -87,7 +87,8 @@ function init(){
   let pacmanCoords
   let pacmanCoordsX
   let pacmanCoordsY
-  const restartButton = document.querySelector('#top div')
+  const homeButton = document.querySelector('.home-button')
+  const restartButton = document.querySelector('.restart-button')
   const grid = document.querySelector('.grid')
   const width = 25
   const length = 15
@@ -595,6 +596,13 @@ function init(){
       }
     }
 
+    function clickedHomeButton(){
+        if (confirm("Are you sure you want to return to home screen?") === true){
+          window.location = 'index.html'
+        } else {
+        }
+      }
+
 
   // ! CHEAT CODE 😃🤓 only works if it's the first thing you do on gameload
   const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
@@ -624,6 +632,7 @@ function init(){
 
   // ! EVENT LISTENERS
   // startButton.addEventListener('click', startGame)
+  homeButton.addEventListener('click', clickedHomeButton)
   restartButton?.addEventListener('click', restartGame)
   document.addEventListener('keydown', movePacman)
   
