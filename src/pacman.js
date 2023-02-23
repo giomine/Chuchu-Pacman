@@ -46,19 +46,19 @@ function init(){
   const hardMode = document.querySelector('.hard')
   easyMode?.addEventListener('click', function(){
     console.log('chose easy mode!') 
-    clicked.src = './sounds/pacwakawaka.m4a'
+    clicked.src = './sounds/shenmue-start.m4a'
     clicked.play()
     window.localStorage.setItem('difficulty', 'easy')
   })
   mediumMode?.addEventListener('click', function(){
     console.log('chose medium mode!') 
-    clicked.src = './sounds/pacwakawaka.m4a'
+    clicked.src = './sounds/shenmue-start.m4a'
     clicked.play()
     window.localStorage.setItem('difficulty', 'medium')
   })
   hardMode?.addEventListener('click', function(){
     console.log('chose hard mode!') 
-    clicked.src = './sounds/pacwakawaka.m4a'
+    clicked.src = './sounds/shenmue-start.m4a'
     clicked.play()
     window.localStorage.setItem('difficulty', 'hard')
   })
