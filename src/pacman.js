@@ -15,7 +15,6 @@ function init(){
     clicked.src = './sounds/pacwakawaka.m4a'
     clicked.play()
     window.localStorage.setItem('pacman', 'pacman')
-    console.log(pacman)
   })
 
   const parappaTheme = document.querySelector('.parappa-theme')
@@ -25,7 +24,6 @@ function init(){
   clicked.src = './sounds/badabada.m4a'
   clicked.play()
   window.localStorage.setItem('pacman', 'parappa')
-  console.log(pacman)
 })
 
   const chuchuTheme = document.querySelector('.chuchu-theme')
@@ -35,7 +33,6 @@ function init(){
     clicked.src = './sounds/chuchu-start.m4a'
     clicked.play()
     window.localStorage.setItem('pacman', 'chuchu')
-    console.log(pacman)
   })
 
   //! DIFFICULTY MODES
@@ -73,15 +70,18 @@ function init(){
   // ! AUDIOS
   let ouch = document.querySelector('.ouch')
   let audio = document.querySelector('audio')
-  audio.controls = true
-  audio.loop = true
-  audio.volume = 0.5
-  if (window.localStorage.getItem('pacman') === 'pacman'){
-    audio.src = './sounds/pacman.m4a'
-  } else if (window.localStorage.getItem('pacman') === 'parappa'){
-    audio.src = './sounds/parappa.m4a'
-  } else if (window.localStorage.getItem('pacman') === 'chuchu'){
-    audio.src = './sounds/chuchulevel1.mp3'
+  if (audio){
+    audio.controls = true
+    audio.loop = true
+    audio.volume = 0.5
+    if (window.localStorage.getItem('pacman') === 'pacman'){
+      audio.src = './sounds/pacman.m4a'
+    } else if (window.localStorage.getItem('pacman') === 'parappa'){
+      audio.src = './sounds/parappa.m4a'
+    } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+      audio.src = './sounds/chuchulevel1.mp3'
+    }
+
   }
 
   // ! LANGUAGE OPTIONS -- ONLY SET UP HERE, HAVE NOT UPDATED LANGUAGES IN DISPLAYS
@@ -129,11 +129,11 @@ function init(){
   let interval
   let timer
   let currentScore = 0
-  let levelOneEnd = 693 // triggers youWin (all of these will need altering if i change level designs)
-  let levelOnePlusBonus = 793 // bonus points after the youWin alert trigers next level
-  let levelTwoEnd = 1479
-  let levelTwoPlusBonus = 1579
-  let levelThreeEnd = 2235
+  let levelOneEnd = 696 // triggers youWin (all of these will need altering if i change level designs)
+  let levelOnePlusBonus = 796 // bonus points after the youWin alert trigers next level
+  let levelTwoEnd = 1485
+  let levelTwoPlusBonus = 1585
+  let levelThreeEnd = 2244
   // let levelThreePlusBonus = 2306
   let ateFlashingFood = false
   let currentScoreDisplay = document.querySelector('#bottom div span')
