@@ -336,12 +336,12 @@ function init(){
   //! sometimes ghost doesn't return to starting position
   function flashingGhosts(position){
     for (let i = 0; i < ghosts.length; i++){
-      if (currentPosition === ghosts[i].ghostCurrentPosition && cells[position]?.classList.contains('flashing-ghost') || cells[position]?.classList.contains('flashing-parappa-ghost') || cells[position]?.classList.contains('flashing-chuchu-ghost')){
+      if (currentPosition === ghosts[i].ghostCurrentPosition){
         // console.log("Got 'im!!!")
         ghosts[i].ghostCurrentPosition = ghosts[i].ghostStartingPosition
       }
 
-      if (cells[position]?.classList.contains('flashing-ghost') || cells[position]?.classList.contains('flashing-parappa-ghost') || cells[position]?.classList.contains('flashing-chuchu-ghost')){ //!!!!! ?? need to add others here?
+      if (cells[position]?.classList.contains('flashing-ghost') || cells[position].classList.contains('flashing-parappa-ghost') || cells[position].classList.contains('flashing-chuchu-ghost')){ //!!!!! ?? need to add others here?
       } else {
         if (window.localStorage.getItem('pacman') === 'pacman'){
           cells[ghosts[i].ghostCurrentPosition]?.classList.add('flashing-ghost')
