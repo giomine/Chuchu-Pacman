@@ -556,6 +556,10 @@ function init(){
     clearInterval(interval)
     currentScore = currentScore+= 100 // give 'em some bonus points
     currentScoreDisplay.innerHTML = currentScore
+    removeGhost()
+    for (let i = 0; i < ghosts.length; i++){
+      ghosts[i].ghostCurrentPosition = ghosts[i].ghostStartingPosition
+    }
     addWall()
     setTimeout(() => {
       alert('Winner!! Have 100 bonus points 😃')
