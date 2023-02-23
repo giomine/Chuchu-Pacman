@@ -6,11 +6,14 @@ function init(){
   let bg = document.querySelector('body')
   let main = document.querySelector('main')
   let sections = document.querySelectorAll('section')
+  const clicked = document.createElement('audio')
   let pacman = window.localStorage.getItem('pacman')
   const pacManTheme = document.querySelector('.pacman-theme')
   pacManTheme?.addEventListener('click', function(){
     console.log('chose pacman!') 
-    alert('Pacman theme chosen. Click start to play!')
+    // alert('Pacman theme chosen. Click start to play!')
+    clicked.src = './sounds/pacwakawaka.m4a'
+    clicked.play()
     window.localStorage.setItem('pacman', 'pacman')
     console.log(pacman)
   })
@@ -18,7 +21,9 @@ function init(){
   const parappaTheme = document.querySelector('.parappa-theme')
   parappaTheme?.addEventListener('click', function(){ 
   console.log('chose parappa!') 
-  alert('Parappa theme chosen. Click start to play!')
+  // alert('Parappa theme chosen. Click start to play!')
+  clicked.src = './sounds/badabada.m4a'
+  clicked.play()
   window.localStorage.setItem('pacman', 'parappa')
   console.log(pacman)
 })
@@ -26,7 +31,9 @@ function init(){
   const chuchuTheme = document.querySelector('.chuchu-theme')
   chuchuTheme?.addEventListener('click', function(){
     console.log('chose chuchu!') 
-    alert('Chuchu theme chosen. Click start to play!')
+    // alert('Chuchu theme chosen. Click start to play!')
+    clicked.src = './sounds/chuchu-start.m4a'
+    clicked.play()
     window.localStorage.setItem('pacman', 'chuchu')
     console.log(pacman)
   })
