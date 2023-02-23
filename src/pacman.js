@@ -38,6 +38,38 @@ function init(){
     console.log(pacman)
   })
 
+  //! DIFFICULTY MODES
+  let difficulty = window.localStorage.getItem('difficulty')
+  let speed = 0
+  const easyMode = document.querySelector('.easy')
+  const mediumMode = document.querySelector('.medium')
+  const hardMode = document.querySelector('.hard')
+  easyMode?.addEventListener('click', function(){
+    console.log('chose easy mode!') 
+    clicked.src = './sounds/pacwakawaka.m4a'
+    clicked.play()
+    window.localStorage.setItem('difficulty', 'easy')
+  })
+  mediumMode?.addEventListener('click', function(){
+    console.log('chose medium mode!') 
+    clicked.src = './sounds/pacwakawaka.m4a'
+    clicked.play()
+    window.localStorage.setItem('difficulty', 'medium')
+  })
+  hardMode?.addEventListener('click', function(){
+    console.log('chose hard mode!') 
+    clicked.src = './sounds/pacwakawaka.m4a'
+    clicked.play()
+    window.localStorage.setItem('difficulty', 'hard')
+  })
+  if (window.localStorage.getItem('difficulty') === 'easy'){
+    speed = 800
+  } else if (window.localStorage.getItem('difficulty') === 'medium'){
+    speed = 500
+  } else if (window.localStorage.getItem('difficulty') === 'hard'){
+    speed = 380
+  }
+
   // ! AUDIOS
   let ouch = document.querySelector('.ouch')
   let audio = document.querySelector('audio')
@@ -451,11 +483,11 @@ function init(){
           // console.log('loop: ' + lowestX, lowestY)
           // console.warn('position: ' + ghosts[i].ghostCurrentPosition)
           ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
-        }, i * 5500) //! end of timer
+        }, i * (speed + 500)) //! end of timer
 
       }
       ghostCollision()
-    }, 500) //! end of intervals
+    }, speed ) //! end of intervals
   }
   ghostPathFinderMovement()
 
