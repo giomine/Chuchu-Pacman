@@ -116,6 +116,7 @@ function init(){
   })
 
   // ! VARIABLES
+  let levelsCleared = 0
   let pacmanCoords
   let pacmanCoordsX
   let pacmanCoordsY
@@ -129,11 +130,11 @@ function init(){
   let interval
   let timer
   let currentScore = 0
-  let levelOneEnd = 696 // triggers youWin (all of these will need altering if i change level designs)
-  let levelOnePlusBonus = 796 // bonus points after the youWin alert trigers next level
-  let levelTwoEnd = 1485
-  let levelTwoPlusBonus = 1585
-  let levelThreeEnd = 2244
+  // let levelOneEnd = 696 // triggers youWin (all of these will need altering if i change level designs)
+  // let levelOnePlusBonus = 796 // bonus points after the youWin alert trigers next level
+  // let levelTwoEnd = 1485
+  // let levelTwoPlusBonus = 1585
+  // let levelThreeEnd = 2244
   // let levelThreePlusBonus = 2306
   let ateFlashingFood = false
   let currentScoreDisplay = document.querySelector('#bottom div span')
@@ -220,19 +221,30 @@ function init(){
         cells[currentPosition].classList.remove('flashing-food') || cells[currentPosition].classList.remove('parappa-flashing-food') || cells[currentPosition].classList.remove('chuchu-flashing-food')
       }
 
-      if (currentScore > highScore){
-        highScore = currentScore
-        localStorage.setItem('highScore', highScore)
-        highScoreSpan.innerText = highScore
+      let stillFood = document.getElementsByClassName('food')
+      if (stillFood.length > 0){
+      } else {
+        levelsCleared++
+        if (levelsCleared < 3){
+          youWin()
+        } else {
+        youWinGame()
+        }
       }
 
-      if(currentScore === levelOneEnd){
-        youWin()
-      } else if (currentScore === levelTwoEnd){
-        youWin()
-      } else if (currentScore === levelThreeEnd){ 
-        youWinGame()
-      }
+      // if (currentScore > highScore){
+      //   highScore = currentScore
+      //   localStorage.setItem('highScore', highScore)
+      //   highScoreSpan.innerText = highScore
+      // }
+
+      // if(currentScore === levelOneEnd){
+      //   youWin()
+      // } else if (currentScore === levelTwoEnd){
+      //   youWin()
+      // } else if (currentScore === levelThreeEnd){ 
+      //   youWinGame()
+      // }
 
       if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
         cells[lastCell].classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls')  ? console.log('wall on left!') : currentPosition--
@@ -267,7 +279,8 @@ function init(){
   }
 
   function addWall(){
-    if (currentScore < levelOnePlusBonus){
+    // if (currentScore < levelOnePlusBonus){
+      if (levelsCleared === 0 ){
       wallCells.forEach(wall => {
         //? console.log(wall) // each of these is a number, that number needs to be a cells[i]
         if (window.localStorage.getItem('pacman') === 'pacman'){
@@ -287,7 +300,8 @@ function init(){
           sections.forEach(section => section.style.backgroundColor = 'white')
         }
       })
-    } else if (currentScore === levelOnePlusBonus){
+    // } else if (currentScore === levelOnePlusBonus){
+    } else if (levelsCleared === 1){
       wallCells.forEach(wall => {
         cells[wall].classList.remove('wall') || cells[wall].classList.remove('parappa-walls') || cells[wall].classList.remove('chuchu-walls')
       })
@@ -309,11 +323,11 @@ function init(){
           sections.forEach(section => section.style.backgroundColor = 'white')
         }
       })
-
       ghostPathFinderMovement()
       addFlashingFood()  //? it was important to call addFlashingFood before addFood, otherwise the color would be overwritten by CSS and the flashing food would be green instead of gold
       addFood()
-    } else if (currentScore === levelTwoPlusBonus) {
+    // } else if (currentScore === levelTwoPlusBonus) {
+    } else if (levelsCleared === 2){
       wallCellsSecondLevel.forEach(newWall => {
         cells[newWall].classList.remove('wall') || cells[newWall].classList.remove('parappa-walls') || cells[newWall].classList.remove('chuchu-walls')
       })
@@ -332,7 +346,6 @@ function init(){
           main.style.backgroundColor = 'rgba(0,0,0,0.6)'
         }
       })
-
       ghostPathFinderMovement()
       addFlashingFood()
       addFood()
@@ -505,7 +518,8 @@ function init(){
   }
 
   function addFlashingFood(){
-    if (currentScore < levelOnePlusBonus){
+    // if (currentScore < levelOnePlusBonus){
+      if (levelsCleared === 0){
     flashingFood.forEach((food) => {
       if (window.localStorage.getItem('pacman') === 'pacman'){
         cells[food].classList.add('flashing-food')
@@ -515,7 +529,8 @@ function init(){
         cells[food].classList.add('chuchu-flashing-food')
       }
     })
-    } else if (currentScore === levelOnePlusBonus){
+    // } else if (currentScore === levelOnePlusBonus){
+  } else if (levelsCleared === 1){
       flashingFood.forEach((food) => {
         if (window.localStorage.getItem('pacman') === 'pacman'){
           cells[food].classList.remove('flashing-food')
@@ -534,7 +549,8 @@ function init(){
           cells[newFood].classList.add('chuchu-flashing-food')
         }
       })
-    } else if (currentScore === levelTwoPlusBonus) {
+    // } else if (currentScore === levelTwoPlusBonus) {
+    } else if (levelsCleared === 2){
       flashingFoodSecondLevel.forEach((food) => {
         if (window.localStorage.getItem('pacman') === 'pacman'){
           cells[food].classList.remove('flashing-food')

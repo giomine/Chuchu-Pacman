@@ -114,7 +114,7 @@ section div{
 }
 
 .flashing-food{
-  background-image: url('./themes/food/purple-food.svg');
+  background-image: url('./themes/food/purple-food.png');
   background-position: center;
   background-size: 15px;
   background-repeat: no-repeat;
