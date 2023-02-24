@@ -579,7 +579,7 @@ function init(){
     }
     addWall()
     setTimeout(() => {
-      alert('Winner!! Have 100 bonus points 😃')
+      alert('Level complete!! Have 100 bonus points 😃')
     }, 100)
   }
 
