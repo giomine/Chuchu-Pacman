@@ -185,6 +185,7 @@ function init(){
     }
   }
 
+  let moves = 0
   function movePacman(e) {
     if (lives === 0){
       currentPosition = currentPosition
@@ -220,17 +221,21 @@ function init(){
       }
 
       if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
+        moves++
         cells[lastCell].classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls')  ? console.log('wall on left!') : currentPosition--
       } else if ((e.key === 'ArrowRight' || e.key ===  'd') && currentPosition % width !== width - 1) {
+        moves++
         cells[nextCell].classList.contains('wall') || cells[nextCell].classList.contains('parappa-walls') || cells[nextCell].classList.contains('chuchu-walls') ? console.log('wall on right!') : currentPosition++
       } else if ((e.key === 'ArrowUp' || e.key === 'w') && currentPosition >= width) {
+        moves++
         cells[cellAbove].classList.contains('wall') || cells[cellAbove].classList.contains('parappa-walls') || cells[cellAbove].classList.contains('chuchu-walls') ? console.log('wall above!') : currentPosition -= width
       } else if ((e.key === 'ArrowDown' || e.key === 's') && currentPosition + width < cellCount){
+        moves++
         cells[cellBelow].classList.contains('wall') || cells[cellBelow].classList.contains('parappa-walls') || cells[cellBelow].classList.contains('chuchu-walls') ? console.log('wall below!') : currentPosition += width
       } else {
         // console.log('well now i\'m not doing it 🙅🏻‍♀️')
       }
-      
+
       addPacman(currentPosition)
       ghostCollision()
 
@@ -239,6 +244,7 @@ function init(){
       pacmanCoordsX = pacmanCoords.x
       pacmanCoordsY = pacmanCoords.y 
     }
+    if (moves === 1) { if (confirm('Do you want to play with music?') === true) { audio.play() } }
   }
 
   function removePacman() {
