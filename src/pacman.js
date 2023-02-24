@@ -1,7 +1,4 @@
 function init(){
-  
-  // const startButton = document.querySelector('#start-bottom div')
-  // startButton.addEventListener('click', function(){console.log('clicked start')})
   // ! VISUAL THEMES
   let bg = document.querySelector('body')
   let main = document.querySelector('main')
@@ -11,7 +8,6 @@ function init(){
   const pacManTheme = document.querySelector('.pacman-theme')
   pacManTheme?.addEventListener('click', function(){
     console.log('chose pacman!') 
-    // alert('Pacman theme chosen. Click start to play!')
     clicked.src = './sounds/pacwakawaka.m4a'
     clicked.play()
     window.localStorage.setItem('pacman', 'pacman')
@@ -20,7 +16,6 @@ function init(){
   const parappaTheme = document.querySelector('.parappa-theme')
   parappaTheme?.addEventListener('click', function(){ 
   console.log('chose parappa!') 
-  // alert('Parappa theme chosen. Click start to play!')
   clicked.src = './sounds/badabada.m4a'
   clicked.play()
   window.localStorage.setItem('pacman', 'parappa')
@@ -29,7 +24,6 @@ function init(){
   const chuchuTheme = document.querySelector('.chuchu-theme')
   chuchuTheme?.addEventListener('click', function(){
     console.log('chose chuchu!') 
-    // alert('Chuchu theme chosen. Click start to play!')
     clicked.src = './sounds/chuchu-start.m4a'
     clicked.play()
     window.localStorage.setItem('pacman', 'chuchu')
@@ -130,12 +124,6 @@ function init(){
   let interval
   let timer
   let currentScore = 0
-  // let levelOneEnd = 696 // triggers youWin (all of these will need altering if i change level designs)
-  // let levelOnePlusBonus = 796 // bonus points after the youWin alert trigers next level
-  // let levelTwoEnd = 1485
-  // let levelTwoPlusBonus = 1585
-  // let levelThreeEnd = 2244
-  // let levelThreePlusBonus = 2306
   let ateFlashingFood = false
   let currentScoreDisplay = document.querySelector('#bottom div span')
   currentScoreDisplay.innerText = currentScore
@@ -188,7 +176,6 @@ function init(){
   }
 
   function addPacman(position){
-    // console.log(pacman)
     if (window.localStorage.getItem('pacman') === 'pacman'){
       cells[position].classList.add('pacman')
     } else if (window.localStorage.getItem('pacman') === 'parappa'){
@@ -232,20 +219,6 @@ function init(){
         }
       }
 
-      // if (currentScore > highScore){
-      //   highScore = currentScore
-      //   localStorage.setItem('highScore', highScore)
-      //   highScoreSpan.innerText = highScore
-      // }
-
-      // if(currentScore === levelOneEnd){
-      //   youWin()
-      // } else if (currentScore === levelTwoEnd){
-      //   youWin()
-      // } else if (currentScore === levelThreeEnd){ 
-      //   youWinGame()
-      // }
-
       if ((e.key === 'ArrowLeft' || e.key === 'a') && currentPosition % width !== 0){
         cells[lastCell].classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls')  ? console.log('wall on left!') : currentPosition--
       } else if ((e.key === 'ArrowRight' || e.key ===  'd') && currentPosition % width !== width - 1) {
@@ -279,7 +252,6 @@ function init(){
   }
 
   function addWall(){
-    // if (currentScore < levelOnePlusBonus){
       if (levelsCleared === 0 ){
       wallCells.forEach(wall => {
         //? console.log(wall) // each of these is a number, that number needs to be a cells[i]
@@ -300,7 +272,6 @@ function init(){
           sections.forEach(section => section.style.backgroundColor = 'white')
         }
       })
-    // } else if (currentScore === levelOnePlusBonus){
     } else if (levelsCleared === 1){
       wallCells.forEach(wall => {
         cells[wall].classList.remove('wall') || cells[wall].classList.remove('parappa-walls') || cells[wall].classList.remove('chuchu-walls')
@@ -326,7 +297,6 @@ function init(){
       ghostPathFinderMovement()
       addFlashingFood()  //? it was important to call addFlashingFood before addFood, otherwise the color would be overwritten by CSS and the flashing food would be green instead of gold
       addFood()
-    // } else if (currentScore === levelTwoPlusBonus) {
     } else if (levelsCleared === 2){
       wallCellsSecondLevel.forEach(newWall => {
         cells[newWall].classList.remove('wall') || cells[newWall].classList.remove('parappa-walls') || cells[newWall].classList.remove('chuchu-walls')
@@ -363,9 +333,6 @@ function init(){
 
   function addGhost(position){
     for (let i = 0; i < ghosts.length; i++){
-      // if (cells[position]?.classList.contains('ghost')){
-      // } 
-      // else {
         if (window.localStorage.getItem('pacman') === 'pacman'){
           cells[ghosts[i].ghostCurrentPosition]?.classList.add('ghost')
         } else if (window.localStorage.getItem('pacman') === 'parappa'){
@@ -377,7 +344,6 @@ function init(){
     }
   }
 
-  //? if ghosts are flashing, 5 second timer starts in which you can catch them and they return to their starting position
   //! sometimes timer only runs for 0.5 seconds
   //! sometimes ghost doesn't return to starting position
   function flashingGhosts(position){
@@ -496,7 +462,7 @@ function init(){
           // console.log('loop: ' + lowestX, lowestY)
           // console.warn('position: ' + ghosts[i].ghostCurrentPosition)
           ateFlashingFood ? flashingGhosts(ghosts[i].ghostCurrentPosition) : addGhost(ghosts[i].ghostCurrentPosition)
-        }, i * (speed + 500)) //! end of timer
+        }, i * (speed + 2000)) //! end of timer
 
       }
       ghostCollision()
@@ -518,19 +484,17 @@ function init(){
   }
 
   function addFlashingFood(){
-    // if (currentScore < levelOnePlusBonus){
-      if (levelsCleared === 0){
-    flashingFood.forEach((food) => {
-      if (window.localStorage.getItem('pacman') === 'pacman'){
-        cells[food].classList.add('flashing-food')
-      } else if (window.localStorage.getItem('pacman') === 'parappa'){
-        cells[food].classList.add('parappa-flashing-food')
-      } else if (window.localStorage.getItem('pacman') === 'chuchu'){
-        cells[food].classList.add('chuchu-flashing-food')
-      }
-    })
-    // } else if (currentScore === levelOnePlusBonus){
-  } else if (levelsCleared === 1){
+    if (levelsCleared === 0){
+      flashingFood.forEach((food) => {
+        if (window.localStorage.getItem('pacman') === 'pacman'){
+          cells[food].classList.add('flashing-food')
+        } else if (window.localStorage.getItem('pacman') === 'parappa'){
+          cells[food].classList.add('parappa-flashing-food')
+        } else if (window.localStorage.getItem('pacman') === 'chuchu'){
+          cells[food].classList.add('chuchu-flashing-food')
+        }
+      })
+    } else if (levelsCleared === 1){
       flashingFood.forEach((food) => {
         if (window.localStorage.getItem('pacman') === 'pacman'){
           cells[food].classList.remove('flashing-food')
@@ -549,7 +513,6 @@ function init(){
           cells[newFood].classList.add('chuchu-flashing-food')
         }
       })
-    // } else if (currentScore === levelTwoPlusBonus) {
     } else if (levelsCleared === 2){
       flashingFoodSecondLevel.forEach((food) => {
         if (window.localStorage.getItem('pacman') === 'pacman'){
@@ -626,34 +589,20 @@ function init(){
     }, 100)
   }
 
-    
-  // ! call startGame() when click startButton, and keep defaultValues() function so that we use restart button within game too
-  //? Start game + set everything back to defaultValue()
-  // function startGame(){
-    // defaultValues()
-  // }
-  
-  //? All default game values incl. score, lives, positions, and empty grid
-  function defaultValues() {
-    currentScore = 0
-    lives = 3
-    livesDisplay.innerText = lives ? '❤️'.repeat(lives) : '💔' 
+  function restartGame(){
+  //? I can't find a way to remove the grid in order to recreate it from scratch 🤷‍♀️
+    if (confirm("Are you sure you want to restart?") === true){
+      window.location.reload()
+    } else {
+    }
   }
 
-  function restartGame(){
-    //? I can't find a way to remove the grid in order to recreate it from scratch 🤷‍♀️
-      if (confirm("Are you sure you want to restart?") === true){
-        window.location.reload()
-      } else {
-      }
+  function clickedHomeButton(){
+    if (confirm("Are you sure you want to return to home screen?") === true){
+      window.location = 'index.html'
+    } else {
     }
-
-    function clickedHomeButton(){
-        if (confirm("Are you sure you want to return to home screen?") === true){
-          window.location = 'index.html'
-        } else {
-        }
-      }
+  }
 
 
   // ! CHEAT CODE 😃🤓 only works if it's the first thing you do on gameload
@@ -683,7 +632,6 @@ function init(){
   
 
   // ! EVENT LISTENERS
-  // startButton.addEventListener('click', startGame)
   homeButton.addEventListener('click', clickedHomeButton)
   restartButton?.addEventListener('click', restartGame)
   document.addEventListener('keydown', movePacman)
@@ -697,6 +645,3 @@ function init(){
 }
 
 window.addEventListener('DOMContentLoaded', init)
-
-//! The biggest challenge here is the logic which moves the ghosts. While their movement may appear random, they are always moving 
-//! toward Pac Man, who is himself being moved by the player.
