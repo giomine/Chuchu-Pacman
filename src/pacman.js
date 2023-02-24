@@ -252,7 +252,7 @@ function init(){
       pacmanCoordsX = pacmanCoords.x
       pacmanCoordsY = pacmanCoords.y 
     }
-    if (moves === 1) { if (confirm('Do you want to play with music?') === true) { audio.play() } }
+    if (moves === 1) { if (confirm('Do you want to play with music?') === true) { audio.play() } else { audio.pause() } }
   }
 
   function removePacman() {
