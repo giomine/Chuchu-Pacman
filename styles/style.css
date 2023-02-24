@@ -32,7 +32,7 @@ section{
 
 section:not(:nth-of-type(2)){
   height: 10vh;
-  width: 750px;
+  width: 55vw;
   margin: 0 auto;
 }
 
@@ -79,7 +79,7 @@ section div{
 }
 
 #grid-wrapper {
-  padding: 2% 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,7 +94,7 @@ section div{
   justify-content: center;
   align-items: center;
   height: 500px;
-  width: 750px;
+  width: 55vw;
   padding: 0;
 }
 
@@ -212,10 +212,13 @@ section div{
 .start-screen-main{
   background-color: black;
   color: whitesmoke;
+  width: 100vw;
 }
 
 #start-screen-top{
   justify-content: end;
+  width: 35vw;
+  margin: 0 50%;
 }
 #start-screen-top div{
   height: 70px;
@@ -224,7 +227,7 @@ section div{
 }
 #start-screen-middle{
   height: 300px;
-  width: 750px;
+  width: 100vw;
   justify-content: center;
   background-image: url('./themes/pacman-start.png');
   background-size: contain;
@@ -310,36 +313,49 @@ audio{
   }
 }
 
-@media (max-width: 1480px){
-  main{
-    width: 100vw;
-    /* height: 50vh; */
+@media (max-width: 915px){
+  section{
+    width: 100vw !important;
   }
-  #grid-wrapper{
+  main{
     padding: 0;
   }
-  /* .grid div{
-    font-size: 8px;
-  } */
+  .grid{
+    width: 100vw;
+    height: 72vh;
+  }
+  section:not(:nth-of-type(2)){
+    height: 14vh;
+  }
+  #top div:nth-child(3){
+    height: 50px;
+  }
+  #start-screen-top{
+    height: 15vh;
+  }
+  #start-screen-top div{
+    height: 40px;
+  }
+  #start-screen-middle{
+    height: 30vh;
+  }
+  #start-bottom a{
+    background-color: black;
+  }
 } 
 
-/* @media (max-width: 650px){
+@media (max-width: 450px){
   .grid{
-    height: 50vh;
+    width: 100vw;
+    height: 30vh;
   }
-}  */
-
-@media (max-width: 500px){
-  /* .grid{
-    height: 40vh;
-  } */
-  .grid div{
-    border-radius: 1px;
+  #top, #bottom{
+    padding: 0;
   }
-} 
-
-/* @media (max-width: 380px){
-  .grid{
-    height: 35vh;
+  #top div{
+    width: 120px;
   }
-}  */
+  #start-bottom div{
+    width: 100%;
+  }
+}
