@@ -5,6 +5,7 @@ function init(){
   let sections = document.querySelectorAll('section')
   const clicked = document.createElement('audio')
   let pacman = window.localStorage.getItem('pacman')
+  if (!pacman) { window.localStorage.setItem('pacman', 'pacman') }
   const pacManTheme = document.querySelector('.pacman-theme')
   pacManTheme?.addEventListener('click', function(){
     console.log('chose pacman!') 
@@ -31,6 +32,7 @@ function init(){
 
   //! DIFFICULTY MODES
   let difficulty = window.localStorage.getItem('difficulty')
+  if (!difficulty) { window.localStorage.setItem('difficulty', 'medium') }
   let speed = 0
   const easyMode = document.querySelector('.easy')
   const mediumMode = document.querySelector('.medium')
@@ -209,6 +211,12 @@ function init(){
         cells[currentPosition].classList.remove('flashing-food') || cells[currentPosition].classList.remove('parappa-flashing-food') || cells[currentPosition].classList.remove('chuchu-flashing-food')
       }
 
+      if (currentScore > highScore){
+        highScore = currentScore
+        localStorage.setItem('highScore', highScore)
+        highScoreSpan.innerText = highScore
+      }
+
       let stillFood = document.getElementsByClassName('food')
       if (stillFood.length > 0){
       } else {
@@ -258,6 +266,7 @@ function init(){
   }
 
   function addWall(){
+    if (!pacman) { window.localStorage.setItem('pacman', 'pacman') }
       if (levelsCleared === 0 ){
       wallCells.forEach(wall => {
         //? console.log(wall) // each of these is a number, that number needs to be a cells[i]
@@ -490,6 +499,7 @@ function init(){
   }
 
   function addFlashingFood(){
+    if (!pacman) { window.localStorage.setItem('pacman', 'pacman') }
     if (levelsCleared === 0){
       flashingFood.forEach((food) => {
         if (window.localStorage.getItem('pacman') === 'pacman'){
