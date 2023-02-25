@@ -112,6 +112,10 @@ function init(){
   })
 
   // ! VARIABLES
+  let swipeRight
+  let swipeLeft
+  let swipeUp
+  let swipeDown
   let levelsCleared = 0
   let pacmanCoords
   let pacmanCoordsX
@@ -652,10 +656,109 @@ function init(){
   restartButton?.addEventListener('click', restartGame)
   document.addEventListener('keydown', movePacman)
   
-  // ? If I have time left for swipes (eg: swipe left will do same thing as keypress ArrowLeft)
-  // document.addEventListener('touchstart', swipeStart)
-  // document.addEventListener('touchmove', swipeMove)
-  // document.addEventListener('touchend', swipeEnd)
+  // ! SWIPING
+    let start = {}
+    let end = {}
+    let tracking = false
+    let thresholdTime = 500
+    let thresholdDistance = 100
+    swipeStart = function(e) {
+      if (e.touches.length>1) {
+        tracking = false
+        return
+      } else {
+        tracking = true
+        start.t = new Date().getTime()
+        start.x = e.targetTouches[0].clientX
+        start.y = e.targetTouches[0].clientY
+      }
+    };
+    swipeMove = function(e) {
+      if (tracking) {
+        // e.preventDefault()
+        end.x = e.targetTouches[0].clientX
+        end.y = e.targetTouches[0].clientY
+      }
+    }
+    swipeEnd = function(e) {
+      if (lives === 0){
+        currentPosition = currentPosition
+        // console.log('well he can\'t move now, he\s dead!')
+      } else {
+        const nextCell = currentPosition + 1
+        const lastCell = currentPosition - 1
+        const cellAbove = currentPosition - width
+        const cellBelow = currentPosition + width
+      removePacman()
+      if (cells[currentPosition].classList.contains('food')){
+        cells[currentPosition].classList.remove('food')
+        currentScore++
+        currentScoreDisplay.innerText = currentScore
+      }
+      if (cells[currentPosition].classList.contains('flashing-food') || cells[currentPosition].classList.contains('parappa-flashing-food') || cells[currentPosition].classList.contains('chuchu-flashing-food')){
+        ateFlashingFood = true
+        currentScore += 100
+        currentScoreDisplay.innerText = currentScore
+        cells[currentPosition].classList.remove('flashing-food') || cells[currentPosition].classList.remove('parappa-flashing-food') || cells[currentPosition].classList.remove('chuchu-flashing-food')
+      }
+      if (currentScore > highScore){
+        highScore = currentScore
+        localStorage.setItem('highScore', highScore)
+        highScoreSpan.innerText = highScore
+      }
+
+      let stillFood = document.getElementsByClassName('food')
+      if (stillFood.length > 0){
+      } else {
+        levelsCleared++
+        if (levelsCleared < 3){
+          youWin()
+        } else {
+        youWinGame()
+        }
+      }
+      tracking = false
+      let now = new Date().getTime()
+      let deltaTime = now - start.t
+      let deltaX = end.x - start.x
+      let deltaY = end.y - start.y
+      // work out what the movement was
+      if (deltaTime > thresholdTime) {
+        // swipe too slow
+        return
+      } else {
+        if ((deltaX > thresholdDistance) && (Math.abs(deltaY) < thresholdDistance) && ((currentPosition + 1) % width !== 0)) {
+          moves++
+          cells[nextCell].classList.contains('wall') || cells[nextCell].classList.contains('parappa-walls') || cells[nextCell].classList.contains('chuchu-walls') ? console.log('wall on right!') : swipeRight = currentPosition++
+          console.log(swipeRight)
+        } else if ((-deltaX > thresholdDistance)&&(Math.abs(deltaY) < thresholdDistance) && currentPosition % width !== 0) {
+          moves++
+          cells[lastCell].classList.contains('wall') || cells[lastCell]?.classList.contains('parappa-walls') || cells[lastCell]?.classList.contains('chuchu-walls')  ? console.log('wall on left!') : swipeLeft = currentPosition--
+          console.log(swipeLeft)
+        } else if ((deltaY > thresholdDistance)&&(Math.abs(deltaX) < thresholdDistance) && currentPosition + width < cellCount) {
+          moves++
+          cells[cellBelow].classList.contains('wall') || cells[cellBelow].classList.contains('parappa-walls') || cells[cellBelow].classList.contains('chuchu-walls') ? console.log('wall below!') : swipeDown = currentPosition += width
+          console.log(swipeDown)
+        } else if ((-deltaY > thresholdDistance)&&(Math.abs(deltaX) < thresholdDistance) && currentPosition >= width) {
+          moves++
+          cells[cellAbove].classList.contains('wall') || cells[cellAbove].classList.contains('parappa-walls') || cells[cellAbove].classList.contains('chuchu-walls') ? console.log('wall above!') : swipeUp = currentPosition -= width
+          console.log(swipeUp)
+        } else {
+          // console.log('well now i\'m not doing it 🙅🏻‍♀️')
+        }
+        addPacman(currentPosition)
+        ghostCollision()
+        pacmanCoords = cells[currentPosition].getBoundingClientRect()
+        pacmanCoordsX = pacmanCoords.x
+        pacmanCoordsY = pacmanCoords.y 
+      }
+      }
+      if (moves === 1) { if (confirm('Do you want to play with music?') === true) { audio.play() } else { audio.pause() } }
+    }
+    document.addEventListener('touchstart', swipeStart, false)
+    document.addEventListener('touchmove', swipeMove, false)
+    document.addEventListener('touchend', swipeEnd, false)
+
 
   createGrid()
 }
