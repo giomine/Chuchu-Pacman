@@ -1,0 +1,35 @@
+{
+  "name": "ga-project-1--pacman",
+  "version": "1.0.0",
+  "description": "## Description",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giomine/GA-Project-1--Pacman.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/giomine/GA-Project-1--Pacman/issues"
+  },
+  "homepage": "https://github.com/giomine/GA-Project-1--Pacman#readme",
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.5",
+    "@electron-forge/maker-deb": "^6.0.5",
+    "@electron-forge/maker-rpm": "^6.0.5",
+    "@electron-forge/maker-squirrel": "^6.0.5",
+    "@electron-forge/maker-zip": "^6.0.5",
+    "@electron-forge/publisher-github": "^6.0.5",
+    "electron": "23.1.1"
+  }
+}

@@ -661,7 +661,7 @@ function init(){
     let end = {}
     let tracking = false
     let thresholdTime = 500
-    let thresholdDistance = 100
+    let thresholdDistance = 50
     swipeStart = function(e) {
       if (e.touches.length>1) {
         tracking = false
@@ -675,7 +675,7 @@ function init(){
     };
     swipeMove = function(e) {
       if (tracking) {
-        // e.preventDefault()
+        e.preventDefault()
         end.x = e.targetTouches[0].clientX
         end.y = e.targetTouches[0].clientY
       }
