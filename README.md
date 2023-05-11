@@ -22,18 +22,18 @@ HTML, CSS, JavaScript, Excalidraw.
 
 ## Brief
 
-> The player aims to eat all the food in a maze whilst being hunted by ghosts. If the player eats special flashing food the ghosts start to flash and can now be captured by the player, sending them back to their holding pen, from where they can once again start to hunt the player. The aim is to achieve the highest score possible before being killed by the ghosts.
+The player aims to eat all the food in a maze whilst being hunted by ghosts. If the player eats special flashing food the ghosts start to flash and can now be captured by the player, sending them back to their holding pen, from where they can once again start to hunt the player. The aim is to achieve the highest score possible before being killed by the ghosts.
 
-> Requirements:
-The player should be able to clear at least one board
-The player's score should be displayed at the end of the game
+Requirements:
+* The player should be able to clear at least one board.
+* The player's score should be displayed at the end of the game.
 
-> Suggested Enhancements:
-Responsive design
-Each board gets more difficult
-Persistent leaderboard using localStorage
+Suggested Enhancements:
+* Responsive design.
+* Each board gets more difficult.
+* Persistent leaderboard using localStorage.
 
-> The biggest challenge here is the logic which moves the ghosts. While their movement may appear random, they are always moving toward Pac Man, who is himself being moved by the player.
+The biggest challenge here is the logic which moves the ghosts. While their movement may appear random, they are always moving toward Pac Man, who is himself being moved by the player.
 
 
 ## Planning
@@ -58,8 +58,8 @@ I followed similar logic for placing the ghosts, pacman, flashing food, and food
 I was able to enforce collisions with walls and ghosts by checking the cells around pacman and the ghosts every time they move using conditions and ternary statements. For example, if the cell on the right contains a class of ‘wall’ then the character will not be able to move in that direction. This logic was also applied to the ghosts to ensure that they too cannot walk through walls. In the ghostCollision() function, a collision with a ghost decrements lives by one and if lives reaches 0 it triggers game over.
 ![wall_collisions](./readme_images/Picture5.png)
 
-Once all of these game requirements were fulfilled, I really wanted to have some fun adding extras.
-I started by adding more levels to my game. I created two more walls arrays and two more flashing food arrays all with different variable names, so that when one level is completed, the next wall layout and flashing food positions will be loaded. 
+Once all of these game requirements were fulfilled, I really wanted to have some fun adding extras.<br><br>
+I started by adding more levels to my game. I created two more walls arrays and two more flashing food arrays all with different variable names, so that when one level is completed, the next wall layout and flashing food positions will be loaded.<br><br> 
 I then added more themes to my game, so the player can choose if they want to play with a classic Pacman theme, or Parappa the Rapper, or ChuChu Rocket theme. The choice is saved in local storage, and this then affects the walls, food, music, player character, and ghosts that load up.
 ![themes](./readme_images/Picture6.png)
 ![audios](./readme_images/Picture7.png)
@@ -67,11 +67,11 @@ I then added more themes to my game, so the player can choose if they want to pl
 I also created a cheat code for my game. What is a retro game without a cheat for infinite lives! (This also really helped me out when testing my game).
 ![cheatcode](./readme_images/Picture8.png)
 
-With most of the extras I wanted now complete, I had plenty of time left to focus on creating a pathfinder for the ghosts to make them follow Pacman rather than just let them move at random.
+With most of the extras I wanted now complete, I had plenty of time left to focus on creating a pathfinder for the ghosts to make them follow Pacman rather than just let them move at random.<br>
 I started by researching what a pathfinder is and how it works. I discovered there are four main types of pathfinding algorithms, however the theory behind them was very complex and did nothing more than intimidate me, so I decided to step away and plan according to what I specifically needed.
 ![brainstorm](./readme_images/Picture9.jpg)
  
-By approaching the problem in such simple terms, it really felt very manageable and I was able to work towards solving it step by step. 
+By approaching the problem in such simple terms, it really felt very manageable and I was able to work towards solving it step by step.<br> 
 I started by getting Pacman’s coordinates each time he moves. I then got the coordinates of each cell surrounding each ghost at any given time, and with each ghost movement these coordinates are pushed into two arrays representing options for movement on the X axis and on the Y axis.
 ![coords_arrays](./readme_images/Picture10.png)
 
@@ -101,13 +101,13 @@ I’m proud that I came up with my own algorithm for pathfinding despite being v
 
 ## Key Learnings/Takeaways
 
-I gained a lot more confidence tackling unfamiliar problems since I was able to implement a pathfinder, something I had not heard of before, within the given time.
+I gained a lot more confidence tackling unfamiliar problems since I was able to implement a pathfinder, something I had not heard of before, within the given time.<br>
 It was also fascinating to learn what amazing things can be created on a dynamic grid and I would love to use this for more projects.
 
 
 ## Bugs
 
-I was very attentive to bugs throughout this project so I was able to squash most of them as they appeared.
+I was very attentive to bugs throughout this project so I was able to squash most of them as they appeared.<br>
 The trickiest bug occurred while creating the pathfinder. Initially only the fourth ghost followed Pacman everywhere while the other three ghosts only followed left and right. Using coloured console logs and checking each part of the pathfinder, I was able to narrow down the issue. Eventually I found that it was only the up and down movements that weren’t working correctly, and this led to the discovery that I had just written two lines in the wrong place. Then all I had to do was switch them over and the issue was fixed!
 ![debugging](./readme_images/Picture11.png)
 ![switch](./readme_images/Picture12.png)
@@ -119,7 +119,7 @@ One known bug remains, and that is that the flashing food doesn’t always work 
 
 I would love to create a mobile version of this game so that I can send it to my nephew! This would involve adding responsive CSS as well as adding swiping functionality.
 
-*Update*
+[Update]
 Post-deadline I did complete the mobile version. I also turned it into an app using Electron.js which was really exciting to see my game work as an app on my laptop!
 I had some difficulty learning how to use the GITHUB_TOKEN in a way that allowed Forge to publish the app, however this solution I found online solved the issue:
 ![github_token](./readme_images/Picture13.png)
