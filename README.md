@@ -1,26 +1,39 @@
 # GA Project 1 - Pacman
 
-## Description
+# Contents
+- [Description](#description)
+- [Technology used](#technologies-used)
+- [Project brief](#brief)
+- [Planning](#planning)
+- [Build process](#build-process) <!-- - [Pathfinder](#pathfinder) -->
+- [Challenges](#challenges)
+- [Wins](#wins)
+- [Key learnings](#key-learnings)
+- [Bugs](#bugs)
+- [Future improvements](#future-improvements)
+
+
+# Description
 
 The aim of this project was to create a Pacman-style game in a week using only HTML, CSS, and JavaScript.
 
 
-## Deployment link
+# Deployment link
 
 https://giomine.github.io/Chuchu-Pacman/
 
 
-## Timeframe & Working Team (Solo/Pair/Group)
+# Timeframe & Working Team (Solo/Pair/Group)
 
 This project was to be completed independently within a week.
 
 
-## Technologies Used
+# Technologies Used
 
 HTML, CSS, JavaScript, Excalidraw.
 
 
-## Brief
+# Brief
 
 The player aims to eat all the food in a maze whilst being hunted by ghosts. If the player eats special flashing food the ghosts start to flash and can now be captured by the player, sending them back to their holding pen, from where they can once again start to hunt the player. The aim is to achieve the highest score possible before being killed by the ghosts.
 
@@ -36,7 +49,7 @@ Suggested Enhancements:
 The biggest challenge here is the logic which moves the ghosts. While their movement may appear random, they are always moving toward Pac Man, who is himself being moved by the player.
 
 
-## Planning
+# Planning
 
 Before writing any code I took several steps to ensure I had a clear plan. I first created a wireframe on [excalidraw](https://www.excalidraw.com) so that I had a clear picture of how I wanted my game to look and how this would be divided into sections and functions on the page.
 ![wireframe](./readme_images/Picture1.png)
@@ -45,7 +58,7 @@ I made sure I understood both the brief and the rules of the game very thoroughl
 ![pseudocode](./readme_images/Picture2.png)
 
 
-## Build/Code Process
+# Build Process
 
 I started by creating a grid dynamically using JavaScript rather than hard-coding cells.
 ![grid](./readme_images/Picture3.png)
@@ -67,6 +80,7 @@ I then added more themes to my game, so the player can choose if they want to pl
 I also created a cheat code for my game. What is a retro game without a cheat for infinite lives! (This also really helped me out when testing my game).
 ![cheatcode](./readme_images/Picture8.png)
 
+<!-- # Pathfinder -->
 With most of the extras I wanted now complete, I had plenty of time left to focus on creating a pathfinder for the ghosts to make them follow Pacman rather than just let them move at random.<br>
 I started by researching what a pathfinder is and how it works. I discovered there are four main types of pathfinding algorithms, however the theory behind them was very complex and did nothing more than intimidate me, so I decided to step away and plan according to what I specifically needed.
 ![brainstorm](./readme_images/Picture9.jpg)
@@ -89,23 +103,23 @@ Game over triggers a sound from Parappa the Rapper, and beating the game trigger
 And a bump sound plays if you collide with a ghost.
 
 
-## Challenges
+# Challenges
 
 The most challenging part was of course the pathfinder! It was quite difficult to keep track of the necessary steps and calculations in my mind as there was a lot of maths, timing, coordinates, array mutation and positioning involved. Careful debugging was required at every step, and debugging while the ghosts are moving is tricky because there are many sets of coordinates and arrays being produced with every single movement. I made debugging a little easier by colour-coding my logs in the console. For example I made coordinates relating to the ghosts log in yellow, pacman in red, and arrays in white. This made it easier to compare one part to another and check that everything was working as intended.
 
 
-## Wins
+# Wins
 
 I’m proud that I came up with my own algorithm for pathfinding despite being very intimidated by it! I’m also happy with the final design, sounds, and all the extras I was able to implement due to managing my time well.
 
 
-## Key Learnings/Takeaways
+# Key Learnings
 
 I gained a lot more confidence tackling unfamiliar problems since I was able to implement a pathfinder, something I had not heard of before, within the given time.<br>
 It was also fascinating to learn what amazing things can be created on a dynamic grid and I would love to use this for more projects.
 
 
-## Bugs
+# Bugs
 
 I was very attentive to bugs throughout this project so I was able to squash most of them as they appeared.<br>
 The trickiest bug occurred while creating the pathfinder. Initially only the fourth ghost followed Pacman everywhere while the other three ghosts only followed left and right. Using coloured console logs and checking each part of the pathfinder, I was able to narrow down the issue. Eventually I found that it was only the up and down movements that weren’t working correctly, and this led to the discovery that I had just written two lines in the wrong place. Then all I had to do was switch them over and the issue was fixed!
@@ -115,7 +129,7 @@ The trickiest bug occurred while creating the pathfinder. Initially only the fou
 One known bug remains, and that is that the flashing food doesn’t always work as intended. If a few seconds lapse between eating flashing food then the effects last 5 seconds as expected, however if they are eaten in quick succession then the second food only makes the ghosts catchable for about half a second. I suspect this is due to the timer not having time to reset properly. If I had more time I would love to investigate further and fix this bug.
 
 
-## Future Improvements
+# Future Improvements
 
 I would love to create a mobile version of this game so that I can send it to my nephew! This would involve adding responsive CSS as well as adding swiping functionality.
 
