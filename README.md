@@ -1,5 +1,7 @@
 # GA Project 1 - Pacman
 
+![pacman](./readme_images/pacman.png)
+
 # Contents
 - [Description](#description)
 - [Technology used](#technologies-used)
